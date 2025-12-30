@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="container">
+    <header class="article-header">
+      <a href="/blog" class="back-link">← Back to blog</a>
+      <h1 class="article-title">{post.data.title}</h1>
+      <time class="article-date" datetime={post.data.date.toISOString()}>
+        {formatDate(post.data.date)}
+      </time>
+    </header>
+
+    <div class="article-content prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-header {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-lg);
+    transition: color 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .article-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+    letter-spacing: -0.025em;
+  }
+
+  .article-date {
+    display: block;
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .article-content {
+    max-width: 100%;
+  }
+
+  .prose :global(h2) {
+    font-size: 1.5rem;
+    margin-top: var(--space-3xl);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--jet-black);
+  }
+
+  .prose :global(h3) {
+    font-size: 1.25rem;
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .prose :global(p) {
+    margin-bottom: var(--space-lg);
+    line-height: 1.75;
+  }
+
+  .prose :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose :global(a:hover) {
+    color: var(--accent-hover);
+  }
+
+  .prose :global(img) {
+    border-radius: var(--radius-md);
+    margin: var(--space-2xl) 0;
+    border: 1px solid var(--jet-black);
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-xl);
+  }
+
+  .prose :global(li) {
+    margin-bottom: var(--space-sm);
+    line-height: 1.75;
+  }
+
+  .prose :global(blockquote) {
+    margin: var(--space-2xl) 0;
+    padding: var(--space-lg);
+    background-color: var(--ink-black-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .prose :global(blockquote p) {
+    margin: 0;
+    color: var(--text-secondary);
+  }
+
+  .prose :global(pre) {
+    margin: var(--space-2xl) 0;
+  }
+
+  @media (max-width: 640px) {
+    .article-title {
+      font-size: 1.875rem;
+    }
+  }
+</style>
+

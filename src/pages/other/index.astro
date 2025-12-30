@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const items = await getCollection('other');
+const sortedItems = items.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout title="Other Stuff" description="Publications, talks, and other things I've done">
+  <div class="container">
+    <header class="page-header">
+      <h1>Other Stuff</h1>
+      <p class="page-header__description">Publications, talks, and other things I've worked on.</p>
+    </header>
+
+    {sortedItems.length === 0 ? (
+      <p class="empty-state">Nothing here yet. Check back soon!</p>
+    ) : (
+      <ul class="item-list">
+        {sortedItems.map((item) => (
+          <li>
+            {item.data.link ? (
+              <a href={item.data.link} class="item-card item-card--external" target="_blank" rel="noopener noreferrer">
+                <time class="item-card__date" datetime={item.data.date.toISOString()}>
+                  {formatDate(item.data.date)}
+                </time>
+                <h2 class="item-card__title">
+                  {item.data.title}
+                  <svg class="item-card__external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </h2>
+                <p class="item-card__description">{item.data.description}</p>
+              </a>
+            ) : (
+              <a href={`/other/${item.id}`} class="item-card">
+                <time class="item-card__date" datetime={item.data.date.toISOString()}>
+                  {formatDate(item.data.date)}
+                </time>
+                <h2 class="item-card__title">{item.data.title}</h2>
+                <p class="item-card__description">{item.data.description}</p>
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .page-header__description {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    margin: 0;
+  }
+
+  .empty-state {
+    color: var(--text-muted);
+    text-align: center;
+    padding: var(--space-3xl);
+  }
+
+  .item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .item-card {
+    display: block;
+    padding: var(--space-lg);
+    background-color: var(--ink-black-2);
+    border: 1px solid var(--jet-black);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+  }
+
+  .item-card:hover {
+    background-color: var(--jet-black);
+    border-color: var(--gunmetal);
+    transform: translateY(-2px);
+  }
+
+  .item-card__date {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+    font-family: var(--font-mono);
+  }
+
+  .item-card__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+  }
+
+  .item-card:hover .item-card__title {
+    color: var(--accent);
+  }
+
+  .item-card__external-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .item-card:hover .item-card__external-icon {
+    color: var(--accent);
+  }
+
+  .item-card__description {
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+  }
+</style>
+

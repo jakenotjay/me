@@ -1,0 +1,117 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Personal website and blog" } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/other', label: 'Other Stuff' },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="container nav">
+        <a href="/" class="nav__logo">~</a>
+        <ul class="nav__links">
+          {navLinks.map(link => (
+            <li>
+              <a 
+                href={link.href} 
+                class:list={['nav__link', { 'nav__link--active': currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--ink-black);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav__logo {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .nav__logo:hover {
+    color: var(--accent);
+  }
+
+  .nav__links {
+    display: flex;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav__link {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    padding: var(--space-sm) 0;
+    position: relative;
+  }
+
+  .nav__link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav__link--active {
+    color: var(--text-primary);
+  }
+
+  .nav__link--active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--accent);
+  }
+
+  .site-main {
+    min-height: calc(100vh - 64px);
+    /* padding: var(--space-3xl) 0; */
+  }
+</style>
+
