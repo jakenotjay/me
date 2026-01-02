@@ -11,7 +11,6 @@ const base = import.meta.env.BASE_URL;
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
-  { href: base, label: 'Home' },
   { href: `${base}/blog`, label: 'Blog' },
   { href: `${base}/other`, label: 'Other Stuff' },
 ];
@@ -35,7 +34,7 @@ const navLinks = [
             <li>
               <a 
                 href={link.href} 
-                class:list={['nav__link', { 'nav__link--active': currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+                class:list={['nav__link', { 'nav__link--active': currentPath === link.href || (link.href !== base && currentPath.startsWith(link.href)) }]}
               >
                 {link.label}
               </a>
