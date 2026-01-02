@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { Content } = await render(item);
+const base = import.meta.env.BASE_URL;
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString('en-US', {
@@ -25,7 +26,7 @@ function formatDate(date: Date): string {
 <BaseLayout title={item.data.title} description={item.data.description}>
   <article class="container">
     <header class="article-header">
-      <a href="/other" class="back-link">← Back to other stuff</a>
+      <a href={`${base}/other`} class="back-link">← Back to other stuff</a>
       <h1 class="article-title">{item.data.title}</h1>
       <time class="article-date" datetime={item.data.date.toISOString()}>
         {formatDate(item.data.date)}
