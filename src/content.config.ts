@@ -17,6 +17,7 @@ const other = defineCollection({
     date: z.coerce.date(),
     description: z.string(),
     link: z.string().url().optional(),
+    links: z.array(z.object({ label: z.string(), url: z.string().url() })).optional(),
   }),
 });
 

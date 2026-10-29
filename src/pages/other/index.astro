@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
+const base = import.meta.env.BASE_URL;
 const items = await getCollection('other');
 const sortedItems = items.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
@@ -27,7 +28,20 @@ function formatDate(date: Date): string {
       <ul class="item-list">
         {sortedItems.map((item) => (
           <li>
-            {item.data.link ? (
+            {item.data.links ? (
+              <div class="item-card">
+                <time class="item-card__date" datetime={item.data.date.toISOString()}>
+                  {formatDate(item.data.date)}
+                </time>
+                <h2 class="item-card__title">{item.data.title}</h2>
+                <p class="item-card__description">{item.data.description}</p>
+                <div class="item-card__links">
+                  {item.data.links.map((l) => (
+                    <a href={l.url} class="item-card__link" target="_blank" rel="noopener noreferrer">{l.label} →</a>
+                  ))}
+                </div>
+              </div>
+            ) : item.data.link ? (
               <a href={item.data.link} class="item-card item-card--external" target="_blank" rel="noopener noreferrer">
                 <time class="item-card__date" datetime={item.data.date.toISOString()}>
                   {formatDate(item.data.date)}
@@ -43,7 +57,7 @@ function formatDate(date: Date): string {
                 <p class="item-card__description">{item.data.description}</p>
               </a>
             ) : (
-              <a href={`/other/${item.id}`} class="item-card">
+              <a href={`${base}/other/${item.id}`} class="item-card">
                 <time class="item-card__date" datetime={item.data.date.toISOString()}>
                   {formatDate(item.data.date)}
                 </time>
@@ -97,7 +111,7 @@ function formatDate(date: Date): string {
     transition: all 0.2s ease;
   }
 
-  .item-card:hover {
+  a.item-card:hover {
     background-color: var(--jet-black);
     border-color: var(--gunmetal);
     transform: translateY(-2px);
@@ -121,7 +135,7 @@ function formatDate(date: Date): string {
     transition: color 0.2s ease;
   }
 
-  .item-card:hover .item-card__title {
+  a.item-card:hover .item-card__title {
     color: var(--accent);
   }
 
@@ -132,8 +146,29 @@ function formatDate(date: Date): string {
     flex-shrink: 0;
   }
 
-  .item-card:hover .item-card__external-icon {
+  a.item-card:hover .item-card__external-icon {
     color: var(--accent);
+  }
+
+  .item-card__links {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .item-card__link {
+    font-size: 0.9375rem;
+    color: var(--accent);
+    padding: var(--space-xs) var(--space-md);
+    background-color: var(--jet-black);
+    border: 1px solid var(--gunmetal);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+  }
+
+  .item-card__link:hover {
+    background-color: var(--gunmetal);
+    color: var(--accent-hover);
   }
 
   .item-card__description {
