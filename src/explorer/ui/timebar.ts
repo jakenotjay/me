@@ -1,5 +1,4 @@
-import { LAYERS } from "../catalog";
-import { timeRange, type ExplorerState, type Store } from "../state";
+import { clampMonth, monthAt, monthIndex, timeAxis, type ExplorerState, type Store, type TimeAxis } from "../state";
 import { el } from "./dom";
 
 export const MIN_DWELL_MS = 900;
@@ -15,7 +14,29 @@ export function shouldStep(elapsedMs: number, loaded: boolean, dwell = MIN_DWELL
   return loaded && elapsedMs >= dwell;
 }
 
-/** Bottom-centre time bar: year slider, play/pause (loops) and the current year. */
+/** What Play sets next: the following year or month, wrapping to the start from the end (or from outside the range). */
+export function nextTime(s: ExplorerState, axis: TimeAxis): Partial<ExplorerState> {
+  if (axis.unit === "year") {
+    const y = s.year;
+    return { year: y >= axis.range[1] || y < axis.range[0] ? axis.range[0] : y + 1 };
+  }
+  const i = monthIndex(s.month);
+  const month = i >= monthIndex(axis.range[1]) || i < monthIndex(axis.range[0]) ? axis.range[0] : monthAt(i + 1);
+  return { month, year: Number(month.slice(0, 4)) };
+}
+
+/** Slider position (a year, or a month offset from the axis start) and the label shown for the current time. */
+export function timeLabel(s: ExplorerState, axis: TimeAxis): { value: number; min: number; max: number; label: string } {
+  if (axis.unit === "year") {
+    const y = Math.min(Math.max(s.year, axis.range[0]), axis.range[1]);
+    return { value: y, min: axis.range[0], max: axis.range[1], label: String(y) };
+  }
+  const m = clampMonth(s.month, axis.range);
+  const start = monthIndex(axis.range[0]);
+  return { value: monthIndex(m) - start, min: 0, max: monthIndex(axis.range[1]) - start, label: m };
+}
+
+/** Bottom-centre time bar: slider, play/pause (loops) and the current year, or month while a monthly layer is on. */
 export function mountTimebar(root: HTMLElement, store: Store, isLoaded: () => boolean = () => true): void {
   const play = el("button", "playbtn", "▶");
   play.type = "button";
@@ -36,10 +57,9 @@ export function mountTimebar(root: HTMLElement, store: Store, isLoaded: () => bo
   let steppedAt = 0;
   const step = () => {
     steppedAt = Date.now();
-    const r = timeRange(store.get(), LAYERS);
-    if (!r) return stop();
-    const y = store.get().year;
-    store.set({ year: y >= r[1] || y < r[0] ? r[0] : y + 1 });
+    const axis = timeAxis(store.get());
+    if (!axis) return stop();
+    store.set(nextTime(store.get(), axis));
   };
   play.addEventListener("click", () => {
     if (timer !== undefined) return stop();
@@ -50,18 +70,25 @@ export function mountTimebar(root: HTMLElement, store: Store, isLoaded: () => bo
       if (shouldStep(Date.now() - steppedAt, isLoaded())) step();
     }, POLL_MS);
   });
-  slider.addEventListener("input", () => store.set({ year: Number(slider.value) }));
+  slider.addEventListener("input", () => {
+    const axis = timeAxis(store.get());
+    if (!axis) return;
+    if (axis.unit === "year") return store.set({ year: Number(slider.value) });
+    const month = monthAt(monthIndex(axis.range[0]) + Number(slider.value));
+    store.set({ month, year: Number(month.slice(0, 4)) });
+  });
 
   const update = (s: ExplorerState) => {
-    const r = timeRange(s, LAYERS);
-    root.hidden = !r;
-    document.body.classList.toggle("has-time", !!r);
-    if (!r) return stop();
-    slider.min = String(r[0]);
-    slider.max = String(r[1]);
-    const y = Math.min(Math.max(s.year, r[0]), r[1]);
-    slider.value = String(y);
-    year.textContent = String(y);
+    const axis = timeAxis(s);
+    root.hidden = !axis;
+    document.body.classList.toggle("has-time", !!axis);
+    if (!axis) return stop();
+    const t = timeLabel(s, axis);
+    slider.setAttribute("aria-label", axis.unit === "month" ? "Month" : "Year");
+    slider.min = String(t.min);
+    slider.max = String(t.max);
+    slider.value = String(t.value);
+    year.textContent = t.label;
   };
   store.subscribe(update);
   update(store.get());

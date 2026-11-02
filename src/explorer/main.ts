@@ -45,7 +45,7 @@ onFailuresChanged(() => legend.refresh());
 mountTimebar($("timebar"), store, () =>
   store
     .get()
-    .visible.filter((id) => layerById(id)?.years?.length)
+    .visible.filter((id) => layerById(id)?.years?.length || layerById(id)?.months?.length)
     .every(isLayerSettled),
 );
 let marker: InspectPoint | null = null;

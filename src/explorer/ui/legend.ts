@@ -1,5 +1,5 @@
 import { layerById } from "../catalog";
-import { yearFor, type ExplorerState, type Store } from "../state";
+import { activeYear, monthFor, yearFor, type ExplorerState, type Store } from "../state";
 import type { LayerDef } from "../types";
 import { displayTitle, el } from "./dom";
 
@@ -9,17 +9,25 @@ export function showingNote(def: LayerDef, year: number): string | undefined {
   return shown !== undefined && shown !== year ? `showing ${shown}` : undefined;
 }
 
+/** "showing YYYY-MM" when the selected month is outside the layer's months and its nearest one is used. */
+export function showingMonthNote(def: LayerDef, month: string): string | undefined {
+  const shown = monthFor(def, month);
+  return shown !== undefined && shown !== month ? `showing ${shown}` : undefined;
+}
+
 export const FAILED_NOTE = "Some tiles failed to load — pan or zoom to retry.";
 
 function block(def: LayerDef, s: ExplorerState, failed: boolean): HTMLElement {
   const box = el("div", "lblock");
   const head = el("div", "ltitle", displayTitle(def.title));
-  const shown = yearFor(def, s.year);
-  if (def.id === "surface-water") head.append(" ", el("span", "mono", s.month));
+  const year = activeYear(s);
+  const shown = yearFor(def, year);
+  const shownMonth = monthFor(def, s.month);
+  if (shownMonth !== undefined) head.append(" ", el("span", "mono", shownMonth));
   else if (shown !== undefined) head.append(" ", el("span", "mono", String(shown)));
   box.append(head);
 
-  const showing = showingNote(def, s.year);
+  const showing = def.months ? showingMonthNote(def, s.month) : showingNote(def, year);
   if (showing) box.append(el("div", "note", showing));
   if (s.view.zoom < def.minZoom) {
     box.append(el("div", "note warn", `Zoom in to see this layer (zoom ${def.minZoom}+).`));
@@ -57,8 +65,8 @@ export function mountLegend(
     root.hidden = defs.length === 0;
     // Zoom only matters through each layer's minZoom gate, so key on that, not the raw zoom.
     const key = JSON.stringify([
-      defs.map((d) => [d.id, s.view.zoom < d.minZoom, yearFor(d, s.year), d.id === "surface-water" ? s.month : ""]),
-      s.year,
+      defs.map((d) => [d.id, s.view.zoom < d.minZoom, yearFor(d, activeYear(s)), monthFor(d, s.month) ?? "", d.months ? showingMonthNote(d, s.month) ?? "" : ""]),
+      activeYear(s),
       defs.map((d) => failed(d.id)),
     ]);
     if (key === lastKey) return;

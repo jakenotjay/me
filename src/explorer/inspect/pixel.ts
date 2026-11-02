@@ -23,12 +23,19 @@ export function pixelFor(
   return { col, row };
 }
 
-// --- GeoTIFF open cache (LRU 128) -----------------------------------------
+// --- GeoTIFF open caches (LRU) --------------------------------------------
 
-const CACHE_MAX = 128;
-const opened = new Map<string, Promise<GeoTIFF>>();
+type OpenCache = { max: number; chunkSize?: number; map: Map<string, Promise<GeoTIFF>> };
+const general: OpenCache = { max: 128, map: new Map() };
+// One surface-water click opens 96 monthly files. They get their own LRU (two zones' worth) so a water click
+// cannot evict the ForTy/TMF opens, and a second click in the same zone reuses all 96.
+// 16 KiB header chunks (the library default is 64 KiB) cut a pre-2022 `tiles/` file from ~200 KB / 4 requests to
+// ~52 KB / 4 requests per point read: its TileOffsets array is read lazily, one chunk of it, not eagerly.
+const water: OpenCache = { max: 192, chunkSize: 16 * 1024, map: new Map() };
+const cacheFor = (url: string): OpenCache => (url.includes("/jrc-global-surface-water-monthly/") ? water : general);
 
 function open(url: string): Promise<GeoTIFF> {
+  const { max, chunkSize, map: opened } = cacheFor(url);
   const hit = opened.get(url);
   if (hit) {
     opened.delete(url); // refresh recency
@@ -36,10 +43,10 @@ function open(url: string): Promise<GeoTIFF> {
     return hit;
   }
   // Not tied to a caller's AbortSignal: the open is shared and cached.
-  const p = GeoTIFF.fromUrl(url, { concurrencyLimiter: sourceCoopLimiter });
+  const p = GeoTIFF.fromUrl(url, { concurrencyLimiter: sourceCoopLimiter, ...(chunkSize ? { chunkSize } : {}) });
   p.catch(() => opened.delete(url));
   opened.set(url, p);
-  while (opened.size > CACHE_MAX) opened.delete(opened.keys().next().value as string);
+  while (opened.size > max) opened.delete(opened.keys().next().value as string);
   return p;
 }
 
@@ -76,12 +83,14 @@ export async function readLayerPoint(
   lat: number,
   signal?: AbortSignal,
 ): Promise<number[] | null> {
-  const month = t.month !== undefined ? monthFor(def, t.month) : undefined;
+  // Layers with an inspect url (surface water) read any month it covers, not just the map's.
+  const month = t.month === undefined ? undefined : def.inspectUrl ? t.month : monthFor(def, t.month);
+  const urlFor = def.inspectUrl && month !== undefined ? def.inspectUrl : def.url;
   const candidates: (string | undefined)[] = def.index ? (items ?? []).map((i) => i.id) : [undefined];
   for (const id of candidates) {
     signal?.throwIfAborted();
     try {
-      const v = await readPoint(def.url({ id, year: t.year, month }), lon, lat, signal);
+      const v = await readPoint(urlFor({ id, year: t.year, month }), lon, lat, signal);
       if (v) return v;
     } catch (err) {
       if (signal?.aborted) throw err;

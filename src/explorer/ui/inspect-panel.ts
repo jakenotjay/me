@@ -1,11 +1,11 @@
-import { layerById } from "../catalog";
+import { layerById, SURFACE_WATER_SEAM } from "../catalog";
 import { decodeValue } from "../inspect/decode";
 import { runReads, type ReadJob } from "../inspect/coordinator";
 import { readLayerPoint } from "../inspect/pixel";
 import { itemsAt, loadIndex } from "../indexes";
-import { monthFor, yearFor, type ExplorerState, type Store } from "../state";
+import { activeYear, clampMonth, monthFor, yearFor, type ExplorerState, type Store } from "../state";
 import type { IndexItem, LayerDef } from "../types";
-import { forTyChart, tmfStrip } from "./chart";
+import { forTyChart, tmfStrip, waterStrip } from "./chart";
 import { displayTitle, el } from "./dom";
 
 export type InspectPoint = { lon: number; lat: number };
@@ -13,12 +13,14 @@ export type InspectPoint = { lon: number; lat: number };
 type Result =
   | { kind: "single"; values: number[] | null }
   | { kind: "forty"; years: number[]; bands: (number[] | null)[] }
-  | { kind: "strip"; years: number[]; values: (number[] | null)[] };
+  | { kind: "strip"; years: number[]; values: (number[] | null)[] }
+  | { kind: "water"; months: string[]; values: (number[] | null)[] };
 
 const phone = () => window.matchMedia("(max-width: 600px)").matches;
 
-/** Which reads a layer needs: one value, or one per year (ForTy bands / TMF annual classes). */
+/** Which reads a layer needs: one value, or one per year (ForTy bands / TMF annual classes) or per month (surface water). */
 function resultKind(def: LayerDef): Result["kind"] {
+  if (def.inspectMonths?.length) return "water";
   if (!def.years?.length) return "single";
   return def.render === "forty-argmax" ? "forty" : "strip";
 }
@@ -33,6 +35,19 @@ async function readLayer(def: LayerDef, p: InspectPoint, month: string, signal: 
   const kind = resultKind(def);
   if (kind === "single") {
     return { kind, values: await readLayerPoint(def, items, { month }, p.lon, p.lat, signal) };
+  }
+  if (kind === "water") {
+    // 96 months in parallel through the shared limiter. A missing file (404) reads as null: no observation.
+    const months = def.inspectMonths!;
+    const values = await Promise.all(
+      months.map((m) =>
+        readLayerPoint(def, items, { month: m }, p.lon, p.lat, signal).catch((err) => {
+          if (signal.aborted) throw err;
+          return null;
+        }),
+      ),
+    );
+    return { kind, months, values };
   }
   // All years in parallel; the shared limiter (SOURCE_COOP_MAX_REQUESTS) keeps this polite.
   const years = def.years!;
@@ -71,7 +86,9 @@ export function mountInspectPanel(
   let controller: AbortController | null = null;
   const results = new Map<string, Result | "loading">();
 
-  const keyFor = (def: LayerDef, s: ExplorerState) => `${def.id}|${def.months ? monthFor(def, s.month) : ""}`;
+  // A month-strip layer reads all its months once, so its key does not depend on the selected month.
+  const keyFor = (def: LayerDef, s: ExplorerState) =>
+    `${def.id}|${def.months && !def.inspectMonths ? monthFor(def, s.month) : ""}`;
   const readable = (def: LayerDef, s: ExplorerState) => s.view.zoom >= def.minZoom;
 
   function ensureReads() {
@@ -115,22 +132,37 @@ export function mountInspectPanel(
       box.append(el("div", "note", "loading…"));
       return box;
     }
-    const year = yearFor(def, s.year);
+    const year = yearFor(def, activeYear(s));
     let values: number[] | null;
+    let shownMonth = def.months ? monthFor(def, s.month) : undefined;
     if (r.kind === "single") values = r.values;
-    else {
+    else if (r.kind === "water") {
+      // The strip reaches back past the map's months: the header and value follow the selected month inside it.
+      shownMonth = clampMonth(s.month, [r.months[0], r.months[r.months.length - 1]]);
+      values = r.values[r.months.indexOf(shownMonth)] ?? null;
+    } else {
       const i = r.years.indexOf(year ?? -1);
       values = i >= 0 ? (r.kind === "forty" ? r.bands[i] : r.values[i]) : null;
     }
-    if (def.months) head.append(" ", el("span", "mono", monthFor(def, s.month) ?? ""));
+    if (shownMonth) head.append(" ", el("span", "mono", shownMonth));
     else if (year !== undefined) head.append(" ", el("span", "mono", String(year)));
     const d = decodeValue(def, values);
+    if (r.kind === "water" && d.label === "no data") d.label = "No observation";
     const sw = el("i", "sq");
     if (d.color) sw.style.background = d.color;
     else sw.hidden = true;
     box.append(el("div", "pxval", [sw, el("b", "", d.label)]));
     if (d.detail) box.append(el("div", "note", d.detail));
-    if (r.kind === "forty") {
+    if (r.kind === "water") {
+      box.append(
+        waterStrip(
+          def,
+          r.months.map((m, i) => ({ month: m, value: r.values[i]?.[0] ?? null })),
+          shownMonth!,
+          SURFACE_WATER_SEAM,
+        ),
+      );
+    } else if (r.kind === "forty") {
       box.append(forTyChart(def, r.years.map((y, i) => ({ year: y, bands: r.bands[i] })), year ?? s.year));
     } else if (r.kind === "strip") {
       box.append(
@@ -210,7 +242,7 @@ export function mountInspectPanel(
       return;
     }
     // Pans sync `view` constantly; only redraw when something this panel shows can have changed.
-    const sig = [s.visible.join(), s.year, s.month, ...s.visible.map((id) => (readable(layerById(id)!, s) ? 1 : 0))].join("|");
+    const sig = [s.visible.join(), activeYear(s), s.month, ...s.visible.map((id) => (readable(layerById(id)!, s) ? 1 : 0))].join("|");
     if (sig === lastSig) return;
     lastSig = sig;
     ensureReads();

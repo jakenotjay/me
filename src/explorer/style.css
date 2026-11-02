@@ -130,7 +130,7 @@ i.sq { flex: none; display: inline-block; width: 10px; height: 10px; border-radi
 #timebar input[type="range"] { flex: 1; min-width: 0; accent-color: var(--blue); }
 .playbtn { font: inherit; font-size: 11px; width: 30px; height: 26px; flex: none; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 4px; cursor: pointer; }
 .playbtn:hover { background: var(--blue-soft); }
-.yearout { width: 42px; text-align: right; font-size: 13px; font-weight: 700; }
+.yearout { min-width: 42px; text-align: right; font-size: 13px; font-weight: 700; }
 
 /* About */
 #about { z-index: 6; top: 64px; left: 50%; transform: translateX(-50%); width: min(400px, calc(100% - 24px)); max-height: calc(100% - 100px); }

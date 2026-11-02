@@ -1,3 +1,4 @@
+import { LAYERS } from "./catalog";
 import type { LayerDef } from "./types";
 
 export type ExplorerState = {
@@ -80,6 +81,50 @@ export function timeRange(s: ExplorerState, defs: LayerDef[]): [number, number] 
   return lo <= hi ? [lo, hi] : null;
 }
 
+const MONTH_RE = /^(\d{4})-(0[1-9]|1[0-2])$/;
+export const monthIndex = (m: string): number => Number(m.slice(0, 4)) * 12 + Number(m.slice(5, 7)) - 1;
+export const monthAt = (i: number): string => `${Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, "0")}`;
+
+/**
+ * The time bar's unit. When a visible layer has months (surface water) the bar works in months over the union of
+ * those months and the yearly layers' years (Jan of the first year to Dec of the last); otherwise in years.
+ */
+export type TimeAxis = { unit: "month"; range: [string, string] } | { unit: "year"; range: [number, number] };
+
+export function timeAxis(s: ExplorerState, defs: LayerDef[] = LAYERS): TimeAxis | null {
+  const years = timeRange(s, defs);
+  let lo = Infinity;
+  let hi = -Infinity;
+  let any = false;
+  for (const id of s.visible) {
+    const ms = defs.find((d) => d.id === id)?.months;
+    if (!ms?.length) continue;
+    any = true;
+    lo = Math.min(lo, monthIndex(ms[0]));
+    hi = Math.max(hi, monthIndex(ms[ms.length - 1]));
+  }
+  if (!any) return years ? { unit: "year", range: years } : null;
+  if (years) {
+    lo = Math.min(lo, years[0] * 12);
+    hi = Math.max(hi, years[1] * 12 + 11);
+  }
+  return { unit: "month", range: [monthAt(lo), monthAt(hi)] };
+}
+
+/** The selected month clamped into a month axis. */
+export function clampMonth(m: string, range: [string, string]): string {
+  return monthIndex(m) < monthIndex(range[0]) ? range[0] : monthIndex(m) > monthIndex(range[1]) ? range[1] : m;
+}
+
+/**
+ * The year yearly layers should use. While a month layer is visible the time bar is in months, so it is the
+ * year of the selected month; otherwise the plain year slider value.
+ */
+export function activeYear(s: ExplorerState, defs: LayerDef[] = LAYERS): number {
+  const axis = timeAxis(s, defs);
+  return axis?.unit === "month" ? Number(clampMonth(s.month, axis.range).slice(0, 4)) : s.year;
+}
+
 const r = (n: number, d: number) => Number(n.toFixed(d));
 
 export function encodeHash(s: ExplorerState): string {
@@ -119,7 +164,9 @@ export function decodeHash(hash: string, defs: LayerDef[]): ExplorerState {
   if (p.has("y") && defs.some((d) => d.years?.includes(y))) out.year = y;
 
   const m = p.get("m");
-  if (m && defs.some((d) => d.months?.includes(m))) out.month = m;
+  // Any real month the time bar can reach (it spans the yearly layers' years too), not only the map's months.
+  const mm = m ? MONTH_RE.exec(m) : null;
+  if (mm && Number(mm[1]) >= 1984 && Number(mm[1]) <= 2030 && defs.some((d) => d.months?.length)) out.month = m!;
 
   const b = p.get("b");
   if (b && (BASEMAPS as readonly string[]).includes(b)) out.basemap = b as ExplorerState["basemap"];
