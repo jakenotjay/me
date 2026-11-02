@@ -15,7 +15,7 @@
 - The page is served at `/me/explorer/` (`astro.config.mjs` keeps `base: '/me'`). Build every runtime URL from `import.meta.env.BASE_URL`.
 - The existing site (blog, other pages, `BaseLayout`, deploy workflow `.github/workflows/deploy.yml`) stays unchanged. The one exception is an "Explorer" nav link added in Task 7.
 - `pnpm build` must succeed after every task.
-- Data base URL: `https://data.source.coop/epoch/`. No other data hosts. Basemaps: Esri World Imagery `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}` (default) and OSM `https://tile.openstreetmap.org/{z}/{y}/{x}.png`. Note the OSM path is `{z}/{x}/{y}`, so use that order.
+- Data base URL: `https://data.source.coop/epoch/`. No other data hosts. Basemaps: Esri World Imagery `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}` (default) and OSM `https://tile.openstreetmap.org/{z}/{x}/{y}.png`.
 - Theme tokens are copied from the shed-resolver page:
   - `--ink:#0A1628; --muted:#5B6878; --blue:#376FD0; --blue-soft:#DCE7FB; --green:#3FB557; --magma:#F2795A; --plum:#3B0F4F; --cream:#F4F1EA; --red:#D64545; --line:#C9CFD8; --card:#fff; --shadow:0 6px 22px rgba(10,22,40,.18)`
   - body `13px/1.45` sans
@@ -184,6 +184,7 @@ export type IndexItem = { id: string; bbox: [number, number, number, number] };
     - natural-planted 6;
     - surface-water 6;
     - drivers, gfc and gft 0.
+  - **Surface water:** `months` = 2022-01..2024-12 only (v1_5 COGs). The 2017–2021 `tiles/` files have no overviews, so they are left out; say so in its description. Classes: 1 Not water #FFFCB8, 2 Water #0905FF; nodata `[0]`.
   - **defaultOpacity:** 0.85.
   - **Descriptions:** one plain sentence each. Name ForTy v2 as "beta".
 - [ ] **Step 4:** Run `pnpm test`. Expect PASS. Commit `explorer: layer catalog and legends`.
