@@ -13,34 +13,91 @@ export function hexToRgb(hex: string): [number, number, number] {
 /**
  * Build a 256-entry RGBA lookup table (1024 bytes) indexed by uint8 value.
  *
- * - `classes`: each listed value gets its colour at alpha 255; every other
- *   value is fully transparent.
- * - `ramp`: `colors` are spread linearly over indices 0..255 (index 0 = first
- *   colour, 255 = last); the caller maps data into 0..255.
+ * - `classes`: each listed value in 0..255 gets its colour at alpha 255; every
+ *   other value (and any out-of-range class value) is fully transparent.
+ * - `ramp`: index 0 is reserved as transparent ("no data"); the colours are
+ *   spread linearly over indices 1..255. Map data into 1..255 with
+ *   {@link rescaleToIndex}.
  *
- * Nodata values are not known here; the caller zeroes their alpha.
+ * `nodata` values get alpha 0 afterwards, so they are explicit rather than
+ * relying on a default.
  */
-export function buildLut(legend: Legend): Uint8Array {
+export function buildLut(legend: Legend, nodata: readonly number[] = []): Uint8Array {
   const lut = new Uint8Array(256 * 4);
   if (legend.kind === "classes") {
     for (const c of legend.classes) {
-      if (c.value < 0 || c.value > 255) continue;
+      if (!Number.isInteger(c.value) || c.value < 0 || c.value > 255) continue;
       const [r, g, b] = hexToRgb(c.color);
       lut.set([r, g, b, 255], c.value * 4);
     }
-    return lut;
+  } else {
+    const stops = legend.colors.map(hexToRgb);
+    if (stops.length === 0) throw new Error("ramp needs at least one colour");
+    for (let i = 1; i < 256; i++) {
+      const t = ((i - 1) / 254) * (stops.length - 1);
+      const k = Math.min(Math.floor(t), Math.max(stops.length - 2, 0));
+      const f = stops.length === 1 ? 0 : t - k;
+      const a = stops[k];
+      const b = stops[Math.min(k + 1, stops.length - 1)];
+      for (let ch = 0; ch < 3; ch++) lut[i * 4 + ch] = Math.round(a[ch] + (b[ch] - a[ch]) * f);
+      lut[i * 4 + 3] = 255;
+    }
   }
-  const stops = legend.colors.map(hexToRgb);
-  for (let i = 0; i < 256; i++) {
-    const t = (i / 255) * (stops.length - 1);
-    const k = Math.min(Math.floor(t), stops.length - 2);
-    const f = stops.length === 1 ? 0 : t - k;
-    const a = stops[Math.max(k, 0)];
-    const b = stops[Math.min(k + 1, stops.length - 1)];
-    for (let ch = 0; ch < 3; ch++) lut[i * 4 + ch] = Math.round(a[ch] + (b[ch] - a[ch]) * f);
-    lut[i * 4 + 3] = 255;
-  }
+  for (const v of nodata) if (Number.isInteger(v) && v >= 0 && v <= 255) lut[v * 4 + 3] = 0;
   return lut;
+}
+
+/** LUT where every non-zero value shows one colour (index 0 transparent). */
+export function presenceLut(color: string): Uint8Array {
+  const lut = new Uint8Array(256 * 4);
+  const [r, g, b] = hexToRgb(color);
+  for (let i = 1; i < 256; i++) lut.set([r, g, b, 255], i * 4);
+  return lut;
+}
+
+/**
+ * Rescale wide values (e.g. uint16 years) into ramp-LUT indices: nodata -> 0,
+ * everything else min..max -> 1..255 (clamped).
+ */
+export function rescaleToIndex(
+  data: ArrayLike<number>,
+  min: number,
+  max: number,
+  nodata: readonly number[],
+): Uint8Array {
+  const out = new Uint8Array(data.length);
+  const span = max - min || 1;
+  for (let i = 0; i < data.length; i++) {
+    const v = data[i];
+    if (nodata.includes(v)) continue;
+    const t = Math.min(1, Math.max(0, (v - min) / span));
+    out[i] = 1 + Math.round(t * 254);
+  }
+  return out;
+}
+
+/**
+ * Turn any band into uint8 class indices. uint8 passes through untouched;
+ * values outside 0..255 in wider types become 255 (never a legend class).
+ */
+export function toClassIndices(data: ArrayLike<number>): Uint8Array {
+  if (data instanceof Uint8Array) return data;
+  const out = new Uint8Array(data.length);
+  for (let i = 0; i < data.length; i++) {
+    const v = data[i];
+    out[i] = v >= 0 && v <= 255 && Number.isInteger(v) ? v : 255;
+  }
+  return out;
+}
+
+/** One lazily-created LUT texture per device for a given LUT. */
+export function lutTextureProvider(bytes: Uint8Array): (device: Device) => Texture {
+  const byDevice = new WeakMap<Device, Texture>();
+  return (device) => {
+    let t = byDevice.get(device);
+    if (!t) byDevice.set(device, (t = createLutTexture(device, bytes)));
+    return t;
+  };
 }
 
 /** Upload a 1024-byte LUT as a 256×1 rgba8unorm texture (nearest sampling). */

@@ -151,7 +151,7 @@ export const LAYERS: LayerDef[] = [
       "Annual 10 m forest typology for 2017–2025 (beta), showing the most likely class per pixel: primary, naturally regenerating, planted, plantation, tree crops or other land.",
     sourceUrl: readme("forest-typology-2020"),
     years: range(2017, 2025),
-    minZoom: 8,
+    minZoom: 10,
     index: "forty",
     url: fortyUrl("v2"),
     legend: {
@@ -170,7 +170,7 @@ export const LAYERS: LayerDef[] = [
     description:
       "Forest typology for 2020 at 10 m, showing the most likely class per pixel; anything not forest is other land.",
     sourceUrl: readme("forest-typology-2020"),
-    minZoom: 8,
+    minZoom: 10,
     index: "forty",
     url: fortyUrl("v1"),
     legend: {
