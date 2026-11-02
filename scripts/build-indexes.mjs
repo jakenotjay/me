@@ -6,13 +6,17 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const UA = { "User-Agent": "Mozilla/5.0 (compatible; epoch-explorer-index-builder)" };
 const OUT = new URL("../public/explorer/index/", import.meta.url);
 const ROOT = "https://data.source.coop/epoch/";
-// ForTy source. Switch to v2_beta/<year>/items.parquet once published
-// (then update fortyItem below to match its id/asset layout).
-const FORTY_SOURCE = `${ROOT}forest-typology-2020/v1/stac/forty_2020_stac.parquet`;
-// Maps one ForTy STAC row to [id, w, s, e, n]; id is the path after /v1/ without .tif.
+// ForTy source: the published v2 beta STAC items for one year. Every v2 year
+// (and v1) shares the same tile grid, so one year's items index them all.
+const FORTY_YEAR = 2025;
+const FORTY_SOURCE = `${ROOT}forest-typology-2020/v2_beta/${FORTY_YEAR}/items.parquet`;
+// Maps one ForTy STAC row to [id, w, s, e, n]; id is the path after
+// /v2_beta/<year>/ without .tif, e.g. "31U/raster_31U_20_0_0".
 function fortyItem(row) {
-  const href = hrefOf(row, "forty");
-  return [href.split("/v1/")[1].replace(/\.tif$/, ""), ...bboxOf(row)];
+  const href = hrefOf(row, "data");
+  const marker = `/v2_beta/${FORTY_YEAR}/`;
+  if (!href.includes(marker)) throw new Error(`unexpected ForTy href: ${href}`);
+  return [href.split(marker)[1].replace(/\.tif$/, ""), ...bboxOf(row)];
 }
 const r4 = (x) => Math.round(x * 1e4) / 1e4;
 
