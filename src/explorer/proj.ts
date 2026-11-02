@@ -37,3 +37,12 @@ function toDefinition(str: string, title: string): ProjectionDefinition {
   const proj = new proj4.Proj(str) as unknown as ProjectionDefinition;
   return { ...proj, title };
 }
+
+/** Project WGS84 lon/lat into the CRS of an EPSG code (4326 or WGS84 UTM). Throws on anything else. */
+export function lonLatToCrs(code: number, lon: number, lat: number): [number, number] {
+  if (code === 4326) return [lon, lat];
+  const str = projString(code);
+  if (!str) throw new Error(`Unsupported EPSG code ${code}`);
+  const [x, y] = proj4("EPSG:4326", str, [lon, lat]);
+  return [x, y];
+}

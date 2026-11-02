@@ -100,6 +100,28 @@ h2 + .layer { border-top: 0; }
 .ramp > i { display: block; height: 100%; border-radius: 2px; }
 .ends { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 
+/* Pixel panel (left card, reference theme) */
+#left { top: 12px; left: 12px; width: 360px; max-height: calc(100% - 60px); z-index: 4; }
+#left .hbtns { display: flex; gap: 6px; }
+#left .coords { margin-bottom: 4px; }
+.pxlayer { padding: 8px 0; border-top: 1px solid var(--line); }
+.pxlayer:first-of-type { border-top: 0; }
+.pxval { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+i.sq { flex: none; display: inline-block; width: 10px; height: 10px; border-radius: 2px; border: 1px solid rgba(10, 22, 40, 0.25); }
+.chart { position: relative; margin-top: 8px; }
+.cv { display: block; width: 100%; height: auto; touch-action: none; }
+.tip { position: absolute; top: 0; z-index: 2; pointer-events: none; background: var(--card); border: 1px solid var(--line); border-radius: 6px; box-shadow: var(--shadow); padding: 5px 8px; font-size: 11.5px; white-space: nowrap; }
+.tip-h { color: var(--muted); }
+.tip-r { display: flex; align-items: center; gap: 6px; }
+.tip-r b { margin-left: auto; padding-left: 10px; }
+.clegend { display: flex; flex-wrap: wrap; gap: 2px 12px; margin-top: 6px; font-size: 11px; color: var(--muted); }
+.clegend span { display: inline-flex; align-items: center; gap: 4px; }
+.ctable { margin-top: 6px; font-size: 11px; color: var(--muted); }
+.ctable summary { cursor: pointer; }
+.ctable table { border-collapse: collapse; width: 100%; margin-top: 4px; }
+.ctable th, .ctable td { text-align: right; padding: 1px 3px; font-weight: 400; }
+.ctable th { font-size: 9.5px; vertical-align: bottom; }
+
 /* Time bar: bottom centre of the space left of the dock */
 #timebar {
   bottom: 36px; left: 12px; right: calc(var(--dock-w) + 24px); width: 560px; max-width: calc(100% - var(--dock-w) - 36px);
@@ -126,6 +148,8 @@ h2 + .layer { border-top: 0; }
     position: fixed; z-index: 7; top: auto; left: 0; right: 0; bottom: 0; width: auto; transform: none;
     max-height: 60%; border-radius: 12px 12px 0 0; border-bottom: 0;
   }
+  #left { position: fixed; z-index: 7; top: auto; left: 0; right: 0; bottom: 0; width: auto; max-height: 60%; border-radius: 12px 12px 0 0; border-bottom: 0; }
+  body:has(#left:not([hidden])) #legend, body:has(#left:not([hidden])) #timebar { display: none; }
   body:has(#right:not([hidden])) #legend, body:has(#about:not([hidden])) #legend,
   body:has(#right:not([hidden])) #timebar, body:has(#about:not([hidden])) #timebar { display: none; }
 }

@@ -28,6 +28,7 @@ export function mountTopbtns(root: HTMLElement, store: Store, about: HTMLElement
   });
   aboutBtn.addEventListener("click", () => {
     const open = about.hidden;
+    if (open && phone()) window.dispatchEvent(new Event("explorer:close-pixel"));
     if (open && phone() && store.get().controlsOpen) store.set({ controlsOpen: false });
     setAbout(open);
   });

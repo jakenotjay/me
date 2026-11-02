@@ -1,5 +1,6 @@
 // Bootstrap: store + map + deck overlay + UI mounts + URL hash.
 import type { Layer } from "@deck.gl/core";
+import { ScatterplotLayer } from "@deck.gl/layers";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -10,6 +11,7 @@ import { installRetryingFetch, retryStats } from "./raster/retry-fetch";
 import { buildDeckLayers, isLayerLoaded, onLayersChanged, PRESENCE_MAX_ZOOM } from "./raster/layers";
 import { createStore, decodeHash, encodeHash, type ExplorerState } from "./state";
 import { mountAbout } from "./ui/about";
+import { mountInspectPanel, type InspectPoint } from "./ui/inspect-panel";
 import { mountLayersCard } from "./ui/layers-card";
 import { mountLegend } from "./ui/legend";
 import { mountTimebar } from "./ui/timebar";
@@ -26,6 +28,13 @@ mountTopbtns($("topbtns"), store, $("about"));
 mountLayersCard($("right"), store);
 mountLegend($("legend"), store);
 mountTimebar($("timebar"), store);
+let marker: InspectPoint | null = null;
+const inspectPanel = mountInspectPanel($("left"), store, {
+  onPoint: (p) => {
+    marker = p;
+    render();
+  },
+});
 
 const BASEMAP_LAYER: Record<ExplorerState["basemap"], string | undefined> = {
   satellite: "esri",
@@ -92,7 +101,38 @@ let lastLayers: Layer[] = [];
 function render() {
   ensureIndexes();
   lastLayers = buildDeckLayers(store.get(), indexes, map.getZoom());
-  overlay.setProps({ layers: lastLayers });
+  const markerLayers: Layer[] = marker
+    ? [
+        new ScatterplotLayer<InspectPoint>({
+          id: "inspect-marker-halo",
+          data: [marker],
+          getPosition: (d) => [d.lon, d.lat],
+          stroked: true,
+          filled: false,
+          getLineColor: [255, 255, 255, 235],
+          getRadius: 9,
+          radiusUnits: "pixels",
+          lineWidthUnits: "pixels",
+          getLineWidth: 6,
+          parameters: { depthCompare: "always" },
+        }),
+        new ScatterplotLayer<InspectPoint>({
+          id: "inspect-marker",
+          data: [marker],
+          getPosition: (d) => [d.lon, d.lat],
+          stroked: true,
+          filled: true,
+          getFillColor: [242, 121, 90, 0],
+          getLineColor: [242, 121, 90, 255],
+          getRadius: 9,
+          radiusUnits: "pixels",
+          lineWidthUnits: "pixels",
+          getLineWidth: 3,
+          parameters: { depthCompare: "always" },
+        }),
+      ]
+    : [];
+  overlay.setProps({ layers: [...lastLayers, ...markerLayers] });
 }
 onLayersChanged(render);
 
@@ -129,10 +169,22 @@ map.on("moveend", syncView);
 map.on("zoomend", render);
 map.on("load", render);
 
+// --- inspect --------------------------------------------------------------
+map.on("click", (e) => {
+  if (!store.get().inspect) return;
+  const { lng, lat } = e.lngLat.wrap();
+  inspectPanel.inspectAt(lng, lat);
+});
+const setCursor = (on: boolean) => {
+  map.getCanvas().style.cursor = on ? "crosshair" : "";
+};
+setCursor(store.get().inspect);
+
 // --- store -> map / hash -------------------------------------------------
 let prev = store.get();
 let hashTimer: ReturnType<typeof setTimeout> | undefined;
 store.subscribe((s) => {
+  if (s.inspect !== prev.inspect) setCursor(s.inspect);
   if (s.basemap !== prev.basemap) {
     for (const [b, layer] of Object.entries(BASEMAP_LAYER)) {
       if (layer && map.getLayer(layer)) {
@@ -158,6 +210,7 @@ Object.assign(window, {
       return store.get();
     },
     render,
+    inspectAt: (lon: number, lat: number) => inspectPanel.inspectAt(lon, lat),
     retryStats,
     isLayerLoaded,
     layerIds: () => lastLayers.map((l) => l.id),
