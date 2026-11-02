@@ -30,8 +30,8 @@ describe("catalog", () => {
   it("urls", () => {
     expect(layerById("forty-v2")!.url({ id: "31U/raster_31U_20_0_0", year: 2025 })).toBe("https://data.source.coop/epoch/forest-typology-2020/v2_beta/2025/31U/raster_31U_20_0_0.tif");
     expect(layerById("forty-v1")!.url({ id: "31U/raster_31U_20_0_0" })).toBe("https://data.source.coop/epoch/forest-typology-2020/v1/31U/raster_31U_20_0_0.tif");
-    expect(layerById("tmf-annual-change")!.url({ id: "S20_W70", year: 1990 })).toMatch(/\/jrc-tmf\/v1_2025\/S20_W70\/AnnualChange_1990\.tif$/);
-    expect(layerById("surface-water")!.url({ id: "0E_10N", month: "2024-01" })).toMatch(/\/v1_5\/2024\/2024_01\/monthlyhistory_0E_10N_v1_5_2024_01\.tif$/);
+    expect(layerById("tmf-annual-change")!.url({ id: "S20_W70", year: 1990 })).toBe("https://data.source.coop/epoch/jrc-tmf/v1_2025/S20_W70/AnnualChange_1990.tif");
+    expect(layerById("surface-water")!.url({ id: "0E_10N", month: "2024-01" })).toBe("https://data.source.coop/epoch/jrc-global-surface-water-monthly/v1_5/2024/2024_01/monthlyhistory_0E_10N_v1_5_2024_01.tif");
   });
   it("forty-v2 legend", () => {
     const lg = layerById("forty-v2")!.legend;
@@ -47,6 +47,50 @@ describe("catalog", () => {
   });
   it("gft render mode", () => {
     expect(layerById("gft-2020")!.render).toBe("presence-below-z14");
+  });
+  it("url builders throw on missing args", () => {
+    expect(() => layerById("forty-v2")!.url({ id: "31U/x" })).toThrow();
+    expect(() => layerById("forty-v2")!.url({ year: 2020 })).toThrow();
+    expect(() => layerById("forty-v1")!.url({})).toThrow();
+    expect(() => layerById("tmf-annual-change")!.url({ id: "S20_W70" })).toThrow();
+    expect(() => layerById("tmf-annual-change")!.url({ year: 1990 })).toThrow();
+    expect(() => layerById("tmf-transition-main")!.url({})).toThrow();
+    expect(() => layerById("natural-planted")!.url({})).toThrow();
+    expect(() => layerById("surface-water")!.url({ id: "0E_10N" })).toThrow();
+    expect(() => layerById("surface-water")!.url({ id: "0E_10N", month: "2024-1" })).toThrow();
+    expect(() => layerById("surface-water")!.url({ month: "2024-01" })).toThrow();
+  });
+  it("pins real class values", () => {
+    const classes = (id: string) => {
+      const lg = layerById(id)!.legend;
+      if (lg.kind !== "classes") throw new Error("kind");
+      return new Map(lg.classes.map((c) => [c.value, c.color.toUpperCase()]));
+    };
+    const sub = classes("tmf-transition-subtypes");
+    expect(sub.get(10)).toBe("#005000");
+    expect(sub.get(53)).toBe("#8C641E");
+    expect(sub.get(94)).toBe("#D6FABC");
+    const main = classes("tmf-transition-main");
+    expect(main.get(10)).toBe("#005000");
+    expect(main.get(41)).toBe("#FFC894");
+    expect(main.get(60)).toBe("#0046A0");
+    expect(main.get(70)).toBe("#FFFFFF");
+    const annual = classes("tmf-annual-change");
+    expect(annual.get(1)).toBe("#005A00");
+    expect(annual.get(3)).toBe("#FF870F");
+    expect(annual.get(5)).toBe("#008CBE");
+    const v2 = classes("forty-v2");
+    expect(v2.get(0)).toBe("#1B7837");
+    expect(v2.get(6)).toBe("#35978F");
+  });
+  it("surface-water months and drivers config", () => {
+    const m = layerById("surface-water")!.months!;
+    expect(m).toHaveLength(36);
+    expect(m[0]).toBe("2022-01");
+    expect(m[35]).toBe("2024-12");
+    const d = layerById("drivers")!;
+    expect(d.band).toBe(0);
+    expect(d.nodata).toEqual([255, 0]);
   });
   it("index fields", () => {
     expect(layerById("forty-v1")!.index).toBe("forty");

@@ -2,6 +2,10 @@ import type { ClassEntry, LayerDef, Legend } from "./types";
 
 const BASE = "https://data.source.coop/epoch";
 const readme = (slug: string) => `${BASE}/${slug}/README.md`;
+function need<T>(v: T | undefined, name: string): T {
+  if (v === undefined || v === null || (v as unknown) === "") throw new Error(`catalog url: missing ${name}`);
+  return v;
+}
 const range = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
 
 const FORTY_COLORS = {
@@ -79,7 +83,7 @@ const TMF_MAIN_CLASSES: ClassEntry[] = [
   { value: 41, label: "Deforested, now plantations", color: "#FFC894" },
   { value: 42, label: "Deforested, now water", color: "#00C896" },
   { value: 43, label: "Deforested, now other land", color: "#FFE664" },
-  { value: 50, label: "Ongoing deforestation/degradation 2023-25", color: "#FA8C0A" },
+  { value: 50, label: "Ongoing deforestation/degradation 2023–25", color: "#FA8C0A" },
   { value: 60, label: "Permanent and seasonal water", color: "#0046A0" },
   { value: 70, label: "Other land cover", color: "#FFFFFF" },
 ];
@@ -125,7 +129,14 @@ const tmfYearRamp = (what: string): Legend => ({
 const tmfUrl =
   (product: (year?: number) => string) =>
   ({ id, year }: { id?: string; year?: number }) =>
-    `${BASE}/jrc-tmf/v1_2025/${id}/${product(year)}.tif`;
+    `${BASE}/jrc-tmf/v1_2025/${need(id, "id")}/${product(year)}.tif`;
+
+const fortyUrl =
+  (version: "v1" | "v2") =>
+  ({ id, year }: { id?: string; year?: number }) =>
+    version === "v2"
+      ? `${BASE}/forest-typology-2020/v2_beta/${need(year, "year")}/${need(id, "id")}.tif`
+      : `${BASE}/forest-typology-2020/v1/${need(id, "id")}.tif`;
 
 const SURFACE_WATER_MONTHS = range(2022, 2024).flatMap((y) =>
   range(1, 12).map((m) => `${y}-${String(m).padStart(2, "0")}`),
@@ -137,15 +148,12 @@ export const LAYERS: LayerDef[] = [
     group: "forty",
     title: "ForTy v2 (beta)",
     description:
-      "Annual 10 m forest typology for 2017-2025 (beta), showing the most likely class per pixel: primary, naturally regenerating, planted, plantation, tree crops or other land.",
+      "Annual 10 m forest typology for 2017–2025 (beta), showing the most likely class per pixel: primary, naturally regenerating, planted, plantation, tree crops or other land.",
     sourceUrl: readme("forest-typology-2020"),
     years: range(2017, 2025),
     minZoom: 8,
     index: "forty",
-    url: ({ id, year }) => {
-      // id is "<cell>/raster_<cell>_20_<r>_<c>"
-      return `${BASE}/forest-typology-2020/v2_beta/${year}/${id}.tif`;
-    },
+    url: fortyUrl("v2"),
     legend: {
       kind: "classes",
       classes: FORTY_V2_CLASSES,
@@ -164,7 +172,7 @@ export const LAYERS: LayerDef[] = [
     sourceUrl: readme("forest-typology-2020"),
     minZoom: 8,
     index: "forty",
-    url: ({ id }) => `${BASE}/forest-typology-2020/v1/${id}.tif`,
+    url: fortyUrl("v1"),
     legend: {
       kind: "classes",
       classes: FORTY_V1_CLASSES,
@@ -184,7 +192,7 @@ export const LAYERS: LayerDef[] = [
     years: range(1990, 2025),
     minZoom: 3,
     index: "tmf",
-    url: tmfUrl((y) => `AnnualChange_${y}`),
+    url: tmfUrl((y) => `AnnualChange_${need(y, "year")}`),
     legend: { kind: "classes", classes: TMF_ANNUAL_CLASSES },
     render: "classes",
     nodata: [0],
@@ -194,7 +202,7 @@ export const LAYERS: LayerDef[] = [
     id: "tmf-deforestation-year",
     group: "tmf",
     title: "TMF deforestation year",
-    description: "JRC TMF: the year each pixel of tropical moist forest was first deforested, 1984-2025.",
+    description: "JRC TMF: the year each pixel of tropical moist forest was first deforested, 1984–2025.",
     sourceUrl: readme("jrc-tmf"),
     minZoom: 3,
     index: "tmf",
@@ -208,7 +216,7 @@ export const LAYERS: LayerDef[] = [
     id: "tmf-degradation-year",
     group: "tmf",
     title: "TMF degradation year",
-    description: "JRC TMF: the year each pixel of tropical moist forest was first degraded, 1984-2025.",
+    description: "JRC TMF: the year each pixel of tropical moist forest was first degraded, 1984–2025.",
     sourceUrl: readme("jrc-tmf"),
     minZoom: 3,
     index: "tmf",
@@ -266,11 +274,11 @@ export const LAYERS: LayerDef[] = [
     group: "other",
     title: "Forest loss drivers",
     description:
-      "Global map at 1 km of the main driver of forest loss for 2001-2025, such as agriculture, logging or wildfire.",
+      "Global map at 1 km of the main driver of forest loss for 2001–2025, such as agriculture, logging or wildfire.",
     sourceUrl: readme("global-forest-loss-drivers"),
     minZoom: 0,
     url: () => `${BASE}/global-forest-loss-drivers/v1_3/drivers_forest_loss_1km_2001_2025_v1_3.tif`,
-    legend: { kind: "classes", classes: DRIVER_CLASSES, note: "Dominant driver of loss, 2001-2025 composite." },
+    legend: { kind: "classes", classes: DRIVER_CLASSES, note: "Dominant driver of loss, 2001–2025 composite." },
     render: "classes",
     band: 0,
     nodata: [255, 0],
@@ -284,7 +292,7 @@ export const LAYERS: LayerDef[] = [
     sourceUrl: readme("global-natural-planted-forests"),
     minZoom: 6,
     index: "natural-planted",
-    url: ({ id }) => `${BASE}/global-natural-planted-forests/v1/tiles/${id}.tif`,
+    url: ({ id }) => `${BASE}/global-natural-planted-forests/v1/tiles/${need(id, "id")}.tif`,
     legend: {
       kind: "classes",
       classes: [
@@ -335,13 +343,16 @@ export const LAYERS: LayerDef[] = [
     group: "other",
     title: "Surface water (monthly)",
     description:
-      "JRC monthly water observations at 0.00025 degrees, for 2022-2024 only: the 2017-2021 files have no overviews and are left out.",
+      "JRC monthly water observations at 0.00025 degrees, for 2022–2024 only: the 2017–2021 files have no overviews and are left out.",
     sourceUrl: readme("jrc-global-surface-water-monthly"),
     months: SURFACE_WATER_MONTHS,
     minZoom: 6,
     index: "surface-water",
     url: ({ id, month }) => {
-      const [y, m] = (month ?? "").split("-");
+      const mo = need(month, "month");
+      if (!/^\d{4}-\d{2}$/.test(mo)) throw new Error(`catalog url: bad month ${mo}`);
+      const [y, m] = mo.split("-");
+      need(id, "id");
       return `${BASE}/jrc-global-surface-water-monthly/v1_5/${y}/${y}_${m}/monthlyhistory_${id}_v1_5_${y}_${m}.tif`;
     },
     legend: {
