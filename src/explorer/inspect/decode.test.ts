@@ -4,6 +4,14 @@ import { decodeValue } from "./decode";
 
 const L = (id: string) => layerById(id)!;
 
+describe("decodeValue gfc-2020", () => {
+  it("0 is Not forest, 1 Forest, 255 no data", () => {
+    expect(decodeValue(L("gfc-2020"), [0]).label).toBe("Not forest");
+    expect(decodeValue(L("gfc-2020"), [1]).label).toBe("Forest");
+    expect(decodeValue(L("gfc-2020"), [255]).label).toBe("no data");
+  });
+});
+
 describe("decodeValue", () => {
   it("null is no data", () => {
     expect(decodeValue(L("forty-v2"), null)).toEqual({ label: "no data" });

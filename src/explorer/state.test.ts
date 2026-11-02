@@ -43,6 +43,11 @@ describe("hash", () => {
   it("round-trips a non-default state", () => {
     expect(decodeHash(encodeHash(custom), LAYERS)).toEqual(custom);
   });
+  it("default view is ForTy v2 at a zoom where it draws", () => {
+    const d = defaultState();
+    expect(d.visible).toEqual(["forty-v2"]);
+    expect(d.view.zoom).toBeGreaterThanOrEqual(layerById("forty-v2")!.minZoom);
+  });
   it("round-trips the default state", () => {
     expect(decodeHash(encodeHash(defaultState()), LAYERS)).toEqual(defaultState());
   });

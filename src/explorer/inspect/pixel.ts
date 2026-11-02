@@ -23,9 +23,9 @@ export function pixelFor(
   return { col, row };
 }
 
-// --- GeoTIFF open cache (LRU 64) -----------------------------------------
+// --- GeoTIFF open cache (LRU 128) -----------------------------------------
 
-const CACHE_MAX = 64;
+const CACHE_MAX = 128;
 const opened = new Map<string, Promise<GeoTIFF>>();
 
 function open(url: string): Promise<GeoTIFF> {

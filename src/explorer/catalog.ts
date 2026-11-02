@@ -157,7 +157,7 @@ export const LAYERS: LayerDef[] = [
     legend: {
       kind: "classes",
       classes: FORTY_V2_CLASSES,
-      note: "Dominant class per pixel (highest of 7 probability bands). Zoom in to see it.",
+      note: "Dominant class per pixel (highest of 7 probability bands).",
     },
     render: "forty-argmax",
     nodata: [255],

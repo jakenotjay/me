@@ -1,5 +1,6 @@
 import { layerById } from "../catalog";
 import { decodeValue } from "../inspect/decode";
+import { runReads, type ReadJob } from "../inspect/coordinator";
 import { readLayerPoint } from "../inspect/pixel";
 import { itemsAt, loadIndex } from "../indexes";
 import { monthFor, yearFor, type ExplorerState, type Store } from "../state";
@@ -78,26 +79,27 @@ export function mountInspectPanel(
     const s = store.get();
     const ctl = controller;
     const p = point;
+    const jobs: ReadJob<Result>[] = [];
     for (const id of s.visible) {
       const def = layerById(id);
       if (!def || !readable(def, s)) continue;
       const key = keyFor(def, s);
       if (results.has(key)) continue;
       results.set(key, "loading");
-      readLayer(def, p, s.month, ctl.signal).then(
-        (r) => {
-          if (controller !== ctl) return;
-          results.set(key, r);
-          render();
-        },
-        (err) => {
-          if (controller !== ctl || ctl.signal.aborted) return;
-          console.warn(`inspect ${def.id} failed`, err);
-          results.set(key, { kind: "single", values: null });
-          render();
-        },
-      );
+      jobs.push({ key, read: () => readLayer(def, p, s.month, ctl.signal) });
     }
+    void runReads(jobs, {
+      isCurrent: () => controller === ctl && !ctl.signal.aborted,
+      onResult: (key, r) => {
+        results.set(key, r);
+        render();
+      },
+      onFail: (key, err) => {
+        console.warn(`inspect ${key} failed`, err);
+        results.set(key, { kind: "single", values: null });
+        render();
+      },
+    });
   }
 
   function section(def: LayerDef, s: ExplorerState): HTMLElement {

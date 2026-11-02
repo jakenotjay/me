@@ -67,6 +67,8 @@ export function decodeValue(def: LayerDef, values: number[] | null): Decoded {
   }
 
   const v = values[0];
+  // GFC 2020 marks "not forest" with 0, which the map treats as transparent; the panel says so.
+  if (def.id === "gfc-2020" && v === 0) return { label: "Not forest" };
   if ((def.nodata ?? []).includes(v)) return NO_DATA;
   const entry = cls.find((c) => c.value === v);
   return entry ? { label: entry.label, color: entry.color } : NO_DATA;

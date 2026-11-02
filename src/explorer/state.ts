@@ -17,8 +17,9 @@ export type Store = {
   subscribe(fn: (s: ExplorerState) => void): void;
 };
 
-// Rondônia; Task 7 finalises the default view.
-export const DEFAULT_VIEW = { lon: -63.0, lat: -10.0, zoom: 11 };
+// Northern Mato Grosso, Brazil: a forest frontier where ForTy v2 visibly changes between 2017 and 2025
+// (primary forest turning "regrowing", cleared patches reclaimed). Above ForTy's minZoom of 8.
+export const DEFAULT_VIEW = { lon: -55.0, lat: -11.0, zoom: 9 };
 const BASEMAPS = ["satellite", "osm", "none"] as const;
 
 export function defaultState(): ExplorerState {
