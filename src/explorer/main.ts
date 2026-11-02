@@ -8,7 +8,18 @@ import "./style.css";
 import { LAYERS, layerById } from "./catalog";
 import { loadIndex } from "./indexes";
 import { installRetryingFetch, retryStats } from "./raster/retry-fetch";
-import { buildDeckLayers, isLayerLoaded, onLayersChanged, PRESENCE_MAX_ZOOM } from "./raster/layers";
+import {
+  buildDeckLayers,
+  isLayerLoaded,
+  isLayerSettled,
+  layerFailed,
+  liveTextureCount,
+  markIndexFailed,
+  onFailuresChanged,
+  onLayersChanged,
+  PRESENCE_MAX_ZOOM,
+  scheduleDispose,
+} from "./raster/layers";
 import { createStore, decodeHash, encodeHash, type ExplorerState } from "./state";
 import { mountAbout } from "./ui/about";
 import { mountInspectPanel, type InspectPoint } from "./ui/inspect-panel";
@@ -26,8 +37,17 @@ const $ = (id: string) => document.getElementById(id) as HTMLElement;
 mountAbout($("about"));
 mountTopbtns($("topbtns"), store, $("about"));
 mountLayersCard($("right"), store);
-mountLegend($("legend"), store);
-mountTimebar($("timebar"), store);
+const legend = mountLegend($("legend"), store, (id) => {
+  const d = layerById(id);
+  return !!d && layerFailed(d);
+});
+onFailuresChanged(() => legend.refresh());
+mountTimebar($("timebar"), store, () =>
+  store
+    .get()
+    .visible.filter((id) => layerById(id)?.years?.length)
+    .every(isLayerSettled),
+);
 let marker: InspectPoint | null = null;
 const inspectPanel = mountInspectPanel($("left"), store, {
   onPoint: (p) => {
@@ -87,10 +107,12 @@ function ensureIndexes() {
     loadIndex(name).then(
       (items) => {
         indexes[name] = items;
+        markIndexFailed(name, false);
         render();
       },
       (err) => {
         requested.delete(name);
+        markIndexFailed(name, true);
         console.error(`index ${name} failed`, err);
       },
     );
@@ -133,6 +155,7 @@ function render() {
       ]
     : [];
   overlay.setProps({ layers: [...lastLayers, ...markerLayers] });
+  scheduleDispose();
 }
 onLayersChanged(render);
 
@@ -213,6 +236,7 @@ Object.assign(window, {
     inspectAt: (lon: number, lat: number) => inspectPanel.inspectAt(lon, lat),
     retryStats,
     isLayerLoaded,
+    liveTextureCount,
     layerIds: () => lastLayers.map((l) => l.id),
   },
 });

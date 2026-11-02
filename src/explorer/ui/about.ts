@@ -54,6 +54,9 @@ export function mountAbout(root: HTMLElement): void {
     list.append(el("li", "", link(def.sourceUrl, PRODUCT_NAMES[slug] ?? slug)));
   }
   body.append(list);
+  const back = el("a", "", "Back to site");
+  back.href = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
+  body.append(el("p", "", back));
   body.append(
     el("div", "credit", ["Built with ", link("https://github.com/developmentseed/deck.gl-raster", "deck.gl-raster"), "."]),
   );

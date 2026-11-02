@@ -9,7 +9,9 @@ export function showingNote(def: LayerDef, year: number): string | undefined {
   return shown !== undefined && shown !== year ? `showing ${shown}` : undefined;
 }
 
-function block(def: LayerDef, s: ExplorerState): HTMLElement {
+export const FAILED_NOTE = "Some tiles failed to load — pan or zoom to retry.";
+
+function block(def: LayerDef, s: ExplorerState, failed: boolean): HTMLElement {
   const box = el("div", "lblock");
   const head = el("div", "ltitle", displayTitle(def.title));
   const shown = yearFor(def, s.year);
@@ -22,6 +24,8 @@ function block(def: LayerDef, s: ExplorerState): HTMLElement {
   if (s.view.zoom < def.minZoom) {
     box.append(el("div", "note warn", `Zoom in to see this layer (zoom ${def.minZoom}+).`));
   }
+
+  if (failed) box.append(el("div", "note warn", FAILED_NOTE));
 
   const lg = def.legend;
   if (lg.kind === "classes") {
@@ -42,7 +46,11 @@ function block(def: LayerDef, s: ExplorerState): HTMLElement {
 }
 
 /** Bottom-right legend: one block per visible layer, top layer first. Rebuilds only when its inputs change. */
-export function mountLegend(root: HTMLElement, store: Store): void {
+export function mountLegend(
+  root: HTMLElement,
+  store: Store,
+  failed: (layerId: string) => boolean = () => false,
+): { refresh: () => void } {
   let lastKey = "";
   const update = (s: ExplorerState) => {
     const defs = s.visible.map(layerById).filter((d): d is LayerDef => !!d);
@@ -51,11 +59,13 @@ export function mountLegend(root: HTMLElement, store: Store): void {
     const key = JSON.stringify([
       defs.map((d) => [d.id, s.view.zoom < d.minZoom, yearFor(d, s.year), d.id === "surface-water" ? s.month : ""]),
       s.year,
+      defs.map((d) => failed(d.id)),
     ]);
     if (key === lastKey) return;
     lastKey = key;
-    root.replaceChildren(...defs.reverse().map((d) => block(d, s)));
+    root.replaceChildren(...defs.reverse().map((d) => block(d, s, failed(d.id))));
   };
   store.subscribe(update);
   update(store.get());
+  return { refresh: () => update(store.get()) };
 }

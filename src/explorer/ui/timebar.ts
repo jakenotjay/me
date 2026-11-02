@@ -2,10 +2,21 @@ import { LAYERS } from "../catalog";
 import { timeRange, type ExplorerState, type Store } from "../state";
 import { el } from "./dom";
 
-const STEP_MS = 900;
+export const MIN_DWELL_MS = 900;
+export const MAX_WAIT_MS = 8000;
+const POLL_MS = 100;
+
+/**
+ * Play steps once the frame has been shown for the minimum dwell AND its layers have loaded,
+ * or unconditionally after the max wait so a failed tile cannot stall play.
+ */
+export function shouldStep(elapsedMs: number, loaded: boolean, dwell = MIN_DWELL_MS, maxWait = MAX_WAIT_MS): boolean {
+  if (elapsedMs >= maxWait) return true;
+  return loaded && elapsedMs >= dwell;
+}
 
 /** Bottom-centre time bar: year slider, play/pause (loops) and the current year. */
-export function mountTimebar(root: HTMLElement, store: Store): void {
+export function mountTimebar(root: HTMLElement, store: Store, isLoaded: () => boolean = () => true): void {
   const play = el("button", "playbtn", "▶");
   play.type = "button";
   play.setAttribute("aria-label", "Play");
@@ -22,7 +33,9 @@ export function mountTimebar(root: HTMLElement, store: Store): void {
     play.textContent = "▶";
     play.setAttribute("aria-label", "Play");
   };
+  let steppedAt = 0;
   const step = () => {
+    steppedAt = Date.now();
     const r = timeRange(store.get(), LAYERS);
     if (!r) return stop();
     const y = store.get().year;
@@ -33,7 +46,9 @@ export function mountTimebar(root: HTMLElement, store: Store): void {
     play.textContent = "❚❚";
     play.setAttribute("aria-label", "Pause");
     step();
-    timer = setInterval(step, STEP_MS);
+    timer = setInterval(() => {
+      if (shouldStep(Date.now() - steppedAt, isLoaded())) step();
+    }, POLL_MS);
   });
   slider.addEventListener("input", () => store.set({ year: Number(slider.value) }));
 

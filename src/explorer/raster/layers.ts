@@ -94,8 +94,6 @@ function fnsFor(def: LayerDef, mode: "main" | "presence"): TileFns {
   return f;
 }
 
-const destroyTexture = (tile: { content?: ClassTileData | null }) => tile.content?.texture.destroy();
-
 // --- generations (year-swap with keep-previous) ---------------------------
 
 type Gen = {
@@ -108,11 +106,77 @@ type Gen = {
   viewport: string[] | null; // mosaic sources in the viewport (once known)
   loadedSources: Set<string>;
   failedSources: Set<string>; // sources whose header read failed: settled, so they do not stall the generation
+  tileFailed: boolean; // a tile of this generation failed after all retries
+  /**
+   * Live GPU textures made for this generation's tiles. deck's Tileset2D.finalize() clears its
+   * cache without calling onTileUnload, so whenever a whole generation is dropped we destroy
+   * whatever is left in here.
+   */
+  textures: Set<Texture>;
+  disposed: boolean;
 };
 type Track = { current: Gen; previous?: Gen; timer?: ReturnType<typeof setTimeout> };
 
 const tracks = new Map<string, Track>();
 let onChange: (() => void) | null = null;
+let onFailures: (() => void) | null = null;
+/** Called when a layer's failure state may have changed (so the legend can refresh). */
+export function onFailuresChanged(fn: (() => void) | null) {
+  onFailures = fn;
+}
+const indexFailed = new Set<string>();
+export function markIndexFailed(name: string, failed: boolean) {
+  if (failed ? indexFailed.has(name) : !indexFailed.has(name)) return;
+  if (failed) indexFailed.add(name);
+  else indexFailed.delete(name);
+  onFailures?.();
+}
+/** True when the layer's index failed to load, or a source/tile of its current generation failed after all retries. */
+export function layerFailed(def: LayerDef): boolean {
+  if (def.index && indexFailed.has(def.index)) return true;
+  const g = tracks.get(def.id)?.current;
+  return !!g && (g.failedSources.size > 0 || g.tileFailed);
+}
+
+// Generations that left the track but may still be drawn by deck until the next setProps.
+let dropped: Gen[] = [];
+function drop(gen: Gen | undefined) {
+  if (gen && !dropped.includes(gen)) dropped.push(gen);
+}
+/** Destroy the textures of every dropped generation. Call after the overlay no longer holds their layers. */
+export function disposeDropped(): number {
+  let n = 0;
+  const list = dropped;
+  dropped = [];
+  for (const g of list) {
+    g.disposed = true;
+    for (const t of g.textures) {
+      t.destroy();
+      n++;
+    }
+    g.textures.clear();
+  }
+  return n;
+}
+let pendingFlush = false;
+/** Destroy dropped generations' textures one frame after the caller's setProps, so deck has stopped drawing them. */
+export function scheduleDispose() {
+  if (pendingFlush || dropped.length === 0) return;
+  pendingFlush = true;
+  const run = () => {
+    pendingFlush = false;
+    disposeDropped();
+  };
+  if (typeof requestAnimationFrame === "function") requestAnimationFrame(() => requestAnimationFrame(run));
+  else setTimeout(run, 0);
+}
+/** Live (not yet destroyed) texture count over the generations still tracked, for measurement. */
+export function liveTextureCount(): number {
+  let n = 0;
+  for (const t of tracks.values()) n += t.current.textures.size + (t.previous?.textures.size ?? 0);
+  for (const g of dropped) n += g.textures.size;
+  return n;
+}
 /** Called when a previous-year layer is dropped (so the app can re-render). */
 export function onLayersChanged(fn: (() => void) | null) {
   onChange = fn;
@@ -123,11 +187,14 @@ const KEEP_PREVIOUS_MS = 20000;
 
 function finish(track: Track, gen: Gen) {
   gen.loaded = true;
-  if (track.current === gen && track.previous) {
+  const settled = track.current === gen;
+  if (settled && track.previous) {
+    drop(track.previous);
     track.previous = undefined;
     if (track.timer) clearTimeout(track.timer);
     onChange?.();
   }
+  if (settled) onFailures?.();
 }
 const hasContent = (gen: Gen) => gen.loaded || gen.loadedSources.size > 0;
 function checkMosaic(track: Track, gen: Gen) {
@@ -135,9 +202,11 @@ function checkMosaic(track: Track, gen: Gen) {
   if (gen.viewport.every((id) => gen.loadedSources.has(id) || gen.failedSources.has(id))) finish(track, gen);
 }
 
+const genKey = (def: LayerDef, t: TimeKey, mode: Gen["mode"]) => `${def.id}|${t.year ?? ""}|${t.month ?? ""}|${mode}`;
+
 function newGen(def: LayerDef, t: TimeKey, mode: Gen["mode"], items: IndexItem[] | undefined): Gen {
   return {
-    key: `${def.id}|${t.year ?? ""}|${t.month ?? ""}|${mode}`,
+    key: genKey(def, t, mode),
     t,
     mode,
     items,
@@ -146,6 +215,9 @@ function newGen(def: LayerDef, t: TimeKey, mode: Gen["mode"], items: IndexItem[]
     viewport: null,
     loadedSources: new Set(),
     failedSources: new Set(),
+    tileFailed: false,
+    textures: new Set(),
+    disposed: false,
   };
 }
 
@@ -156,9 +228,17 @@ function cogFor(def: LayerDef, gen: Gen, id: string, url: string, opacity: numbe
     geotiff: url,
     concurrencyLimiter: sourceCoopLimiter,
     epsgResolver,
-    getTileData: fns.getTileData,
+    getTileData: async (image, o) => {
+      const data = await fns.getTileData(image, o);
+      if (gen.disposed) data.texture.destroy(); // finished after its generation was dropped
+      else gen.textures.add(data.texture);
+      return data;
+    },
     renderTile: fns.renderTile,
-    onTileUnload: destroyTexture,
+    onTileUnload: (tile: { content?: ClassTileData | null }) => {
+      const tex = tile.content?.texture;
+      if (tex && gen.textures.delete(tex)) tex.destroy();
+    },
     opacity,
     // A header that still fails after the fetch retries counts as settled, so the generation can finish.
     onError: (err: Error) => {
@@ -167,10 +247,16 @@ function cogFor(def: LayerDef, gen: Gen, id: string, url: string, opacity: numbe
         gen.failedSources.add(srcId);
         checkMosaic(track, gen);
       } else {
+        gen.failedSources.add(id);
         finish(track, gen);
       }
+      onFailures?.();
     },
-    onTileError: (err: Error) => logFailureOnce(`tile of ${url}`, err),
+    onTileError: (err: Error) => {
+      logFailureOnce(`tile of ${url}`, err);
+      gen.tileFailed = true;
+      onFailures?.();
+    },
     onViewportLoad: () => {
       if (srcId) {
         gen.loadedSources.add(srcId);
@@ -192,9 +278,8 @@ function layersFor(def: LayerDef, gen: Gen, opacity: number, track: Track): Laye
     sources: gen.sources,
     opacity,
     getSource: undefined,
-    renderSource: (source: { id: string; itemId?: string }) => {
-      const s = gen.sources!.find((x) => x.id === source.id) ?? (source as { itemId: string });
-      return cogFor(def, gen, source.id, def.url({ ...urlArgs, id: s.itemId }), opacity, track, source.id);
+    renderSource: (source: { id: string; itemId: string }) => {
+      return cogFor(def, gen, source.id, def.url({ ...urlArgs, id: source.itemId }), opacity, track, source.id);
     },
     onViewportLoad: (entries: { source: { id: string } }[]) => {
       gen.viewport = entries.map((e) => e.source.id);
@@ -230,22 +315,26 @@ export function buildDeckLayers(
 
     const t: TimeKey = { year: yearFor(def, state.year), month: monthFor(def, state.month) };
     const mode: Gen["mode"] = def.render === "presence-below-z14" && zoom < PRESENCE_MAX_ZOOM ? "presence" : "main";
-    const gen = newGen(def, t, mode, items);
+    const key = genKey(def, t, mode);
 
     let track = tracks.get(def.id);
     if (!track) {
-      track = { current: gen };
+      track = { current: newGen(def, t, mode, items) };
       tracks.set(def.id, track);
-    } else if (track.current.key !== gen.key) {
+    } else if (track.current.key !== key) {
+      // Only build a generation (135k sources for ForTy) when the key actually changed.
+      const gen = newGen(def, t, mode, items);
       // Keep the old year underneath if it has anything on screen (even if some of its
       // sources never finished), otherwise fall back to the one before it.
       let previous = hasContent(track.current) ? track.current : track.previous;
       if (previous?.key === gen.key) previous = undefined;
+      for (const g of [track.current, track.previous]) if (g !== previous) drop(g);
       if (track.timer) clearTimeout(track.timer);
       const next: Track = { current: gen, previous };
       if (previous) {
         next.timer = setTimeout(() => {
           if (next.previous) {
+            drop(next.previous);
             next.previous = undefined;
             onChange?.();
           }
@@ -261,6 +350,8 @@ export function buildDeckLayers(
   }
   for (const [id, track] of tracks) {
     if (!seen.has(id)) {
+      drop(track.current);
+      drop(track.previous);
       if (track.timer) clearTimeout(track.timer);
       tracks.delete(id);
     }
@@ -271,4 +362,10 @@ export function buildDeckLayers(
 /** True once the current generation of a layer has fully loaded (for measurement / tests). */
 export function isLayerLoaded(defId: string): boolean {
   return tracks.get(defId)?.current.loaded ?? false;
+}
+
+/** True when a layer is not being rendered (hidden / below minZoom) or its current generation has loaded. */
+export function isLayerSettled(defId: string): boolean {
+  const t = tracks.get(defId);
+  return !t || t.current.loaded;
 }
