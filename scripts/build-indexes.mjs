@@ -6,6 +6,14 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const UA = { "User-Agent": "Mozilla/5.0 (compatible; epoch-explorer-index-builder)" };
 const OUT = new URL("../public/explorer/index/", import.meta.url);
 const ROOT = "https://data.source.coop/epoch/";
+// ForTy source. Switch to v2_beta/<year>/items.parquet once published
+// (then update fortyItem below to match its id/asset layout).
+const FORTY_SOURCE = `${ROOT}forest-typology-2020/v1/stac/forty_2020_stac.parquet`;
+// Maps one ForTy STAC row to [id, w, s, e, n]; id is the path after /v1/ without .tif.
+function fortyItem(row) {
+  const href = hrefOf(row, "forty");
+  return [href.split("/v1/")[1].replace(/\.tif$/, ""), ...bboxOf(row)];
+}
 const r4 = (x) => Math.round(x * 1e4) / 1e4;
 
 async function readParquet(url) {
@@ -47,15 +55,7 @@ function write(name, items) {
 }
 
 async function forty() {
-  const rows = await readParquet(`${ROOT}forest-typology-2020/v1/stac/forty_2020_stac.parquet`);
-  write(
-    "forty",
-    rows.map((row) => {
-      const href = hrefOf(row, "forty");
-      const id = href.split("/v1/")[1].replace(/\.tif$/, "");
-      return [id, ...bboxOf(row)];
-    }),
-  );
+  write("forty", (await readParquet(FORTY_SOURCE)).map(fortyItem));
 }
 
 async function byId(name, url) {
