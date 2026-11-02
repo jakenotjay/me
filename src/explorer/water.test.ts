@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { LAYERS, layerById, monthsOf, surfaceWaterInspectUrl, surfaceWaterOffsets } from "./catalog";
 import { decodeValue } from "./inspect/decode";
-import { activeYear, clampMonth, decodeHash, defaultState, encodeHash, monthAt, monthIndex, timeAxis, type ExplorerState } from "./state";
+import { activeYear, clampMonth, decodeHash, defaultState, encodeHash, monthAt, monthIndex, monthLayerRange, timeAxis, toggleLayer, type ExplorerState } from "./state";
 import { waterLabel } from "./ui/chart";
 import { showingMonthNote } from "./ui/legend";
 import { nextTime, timeLabel } from "./ui/timebar";
@@ -141,5 +141,41 @@ describe("decode of monthly water values", () => {
     expect(waterLabel(1)).toBe("not water");
     expect(waterLabel(0)).toBe("no observation");
     expect(waterLabel(null)).toBe("no observation");
+  });
+});
+
+describe("toggling water on", () => {
+  it("seeds the month from the year when a yearly layer is visible", () => {
+    const s = st(["forty-v2"], { year: 2019, month: "2024-12" });
+    expect(toggleLayer(s, "surface-water", true)).toEqual({ visible: ["forty-v2", "surface-water"], month: "2019-01" });
+  });
+  it("leaves the month alone for water alone, when turning off, or for other layers", () => {
+    expect(toggleLayer(st([], { year: 2019 }), "surface-water", true)).toEqual({ visible: ["surface-water"] });
+    expect(toggleLayer(st(["forty-v2", "surface-water"]), "surface-water", false)).toEqual({ visible: ["forty-v2"] });
+    expect(toggleLayer(st(["forty-v2"]), "drivers", true)).toEqual({ visible: ["forty-v2", "drivers"] });
+  });
+  it("the seeded month keeps the yearly layer on the same year", () => {
+    const s = st(["forty-v2"], { year: 2019 });
+    const next = { ...s, ...toggleLayer(s, "surface-water", true) } as ExplorerState;
+    expect(activeYear(next, LAYERS)).toBe(2019);
+  });
+});
+
+describe("union-mode play", () => {
+  const s0 = st(["forty-v2", "surface-water"]);
+  const axis = timeAxis(s0, LAYERS)!; // 2017-01..2025-12
+  const range = monthLayerRange(s0, LAYERS);
+  it("map range of the visible month layers", () => expect(range).toEqual(["2022-01", "2024-12"]));
+  it("steps a year at a time before the water range, landing on its start", () => {
+    expect(nextTime(st([], { month: "2017-03" }), axis, range)).toEqual({ month: "2018-03", year: 2018 });
+    expect(nextTime(st([], { month: "2021-05" }), axis, range)).toEqual({ month: "2022-01", year: 2022 });
+  });
+  it("steps a month at a time inside the range", () => {
+    expect(nextTime(st([], { month: "2022-01" }), axis, range)).toEqual({ month: "2022-02", year: 2022 });
+    expect(nextTime(st([], { month: "2024-11" }), axis, range)).toEqual({ month: "2024-12", year: 2024 });
+  });
+  it("steps a year at a time after the range, then wraps", () => {
+    expect(nextTime(st([], { month: "2024-12" }), axis, range)).toEqual({ month: "2025-01", year: 2025 });
+    expect(nextTime(st([], { month: "2025-01" }), axis, range)).toEqual({ month: "2017-01", year: 2017 });
   });
 });

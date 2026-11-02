@@ -1,5 +1,5 @@
 import { LAYERS } from "../catalog";
-import type { ExplorerState, Store } from "../state";
+import { toggleLayer, type ExplorerState, type Store } from "../state";
 import type { LayerDef, LayerGroup } from "../types";
 import { displayTitle, el } from "./dom";
 
@@ -81,9 +81,7 @@ function buildRow(def: LayerDef, store: Store): { box: HTMLElement; row: Row } {
   const check = el("input");
   check.type = "checkbox";
   check.addEventListener("change", () => {
-    const vis = store.get().visible.filter((id) => id !== def.id);
-    // Newly shown layers go on top (last in the draw order).
-    store.set({ visible: check.checked ? [...vis, def.id] : vis });
+    store.set(toggleLayer(store.get(), def.id, check.checked));
   });
   const title = el("span", "ltitle", displayTitle(def.title));
   const label = el("label", "lname", [check, title]);

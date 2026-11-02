@@ -11,6 +11,7 @@ const ROOT = "https://data.source.coop/epoch/";
 // rows index them all.
 const FORTY_YEAR = 2025;
 const FORTY_SOURCE = `${ROOT}forest-typology-2020/v2_beta/items.parquet`;
+const FORTY_EXPECTED_ROWS = 135542;
 const FORTY_COLUMNS = ["year", "forty:cell", "forty:tile_id", "bbox"];
 // Maps one ForTy STAC row to [id, w, s, e, n]; id is "<cell>/<tile id>",
 // e.g. "31U/raster_31U_20_0_0" (the path after /v2_beta/<year>/ without .tif).
@@ -72,7 +73,8 @@ async function forty() {
     const stats = group.columns.find((c) => c.meta_data.path_in_schema.join(".") === "year")?.meta_data?.statistics;
     const lo = Number(stats?.min_value ?? stats?.min);
     const hi = Number(stats?.max_value ?? stats?.max);
-    if (!(lo <= FORTY_YEAR && FORTY_YEAR <= hi) && Number.isFinite(lo)) {
+    // Skip a group only when its statistics prove FORTY_YEAR is absent; with missing stats, read it.
+    if (Number.isFinite(lo) && Number.isFinite(hi) && (FORTY_YEAR < lo || FORTY_YEAR > hi)) {
       start += n;
       continue;
     }
@@ -81,6 +83,10 @@ async function forty() {
     });
     rows.push(...part.filter((r) => Number(r.year) === FORTY_YEAR));
     start += n;
+  }
+  if (rows.length === 0) throw new Error(`ForTy index: no rows for ${FORTY_YEAR}`);
+  if (Math.abs(rows.length - FORTY_EXPECTED_ROWS) > FORTY_EXPECTED_ROWS * 0.01) {
+    throw new Error(`ForTy index: ${rows.length} rows, expected about ${FORTY_EXPECTED_ROWS} (within 1%)`);
   }
   write("forty", rows.map(fortyItem));
 }

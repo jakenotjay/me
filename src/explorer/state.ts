@@ -111,6 +111,34 @@ export function timeAxis(s: ExplorerState, defs: LayerDef[] = LAYERS): TimeAxis 
   return { unit: "month", range: [monthAt(lo), monthAt(hi)] };
 }
 
+/** Union of the months of the visible month layers (what the map can show), or null. */
+export function monthLayerRange(s: ExplorerState, defs: LayerDef[] = LAYERS): [string, string] | null {
+  let lo = Infinity;
+  let hi = -Infinity;
+  for (const id of s.visible) {
+    const ms = defs.find((d) => d.id === id)?.months;
+    if (!ms?.length) continue;
+    lo = Math.min(lo, monthIndex(ms[0]));
+    hi = Math.max(hi, monthIndex(ms[ms.length - 1]));
+  }
+  return lo <= hi ? [monthAt(lo), monthAt(hi)] : null;
+}
+
+/**
+ * Patch for toggling layer `id`. Turning a month layer on while a yearly layer is visible seeds `month` from
+ * the current year (`YYYY-01`) so the yearly layer does not jump (the month layer then shows its nearest month).
+ */
+export function toggleLayer(s: ExplorerState, id: string, on: boolean, defs: LayerDef[] = LAYERS): Partial<ExplorerState> {
+  const vis = s.visible.filter((v) => v !== id);
+  // Newly shown layers go on top (last in the draw order).
+  const patch: Partial<ExplorerState> = { visible: on ? [...vis, id] : vis };
+  const def = defs.find((d) => d.id === id);
+  const hasYearly = vis.some((v) => defs.find((d) => d.id === v)?.years?.length);
+  const hasMonthly = vis.some((v) => defs.find((d) => d.id === v)?.months?.length);
+  if (on && def?.months?.length && hasYearly && !hasMonthly) patch.month = `${s.year}-01`;
+  return patch;
+}
+
 /** The selected month clamped into a month axis. */
 export function clampMonth(m: string, range: [string, string]): string {
   return monthIndex(m) < monthIndex(range[0]) ? range[0] : monthIndex(m) > monthIndex(range[1]) ? range[1] : m;
@@ -166,7 +194,7 @@ export function decodeHash(hash: string, defs: LayerDef[]): ExplorerState {
   const m = p.get("m");
   // Any real month the time bar can reach (it spans the yearly layers' years too), not only the map's months.
   const mm = m ? MONTH_RE.exec(m) : null;
-  if (mm && Number(mm[1]) >= 1984 && Number(mm[1]) <= 2030 && defs.some((d) => d.months?.length)) out.month = m!;
+  if (mm && Number(mm[1]) >= 1984 && Number(mm[1]) <= 2030) out.month = m!;
 
   const b = p.get("b");
   if (b && (BASEMAPS as readonly string[]).includes(b)) out.basemap = b as ExplorerState["basemap"];

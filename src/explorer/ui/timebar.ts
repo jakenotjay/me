@@ -1,4 +1,4 @@
-import { clampMonth, monthAt, monthIndex, timeAxis, type ExplorerState, type Store, type TimeAxis } from "../state";
+import { clampMonth, monthAt, monthLayerRange, monthIndex, timeAxis, type ExplorerState, type Store, type TimeAxis } from "../state";
 import { el } from "./dom";
 
 export const MIN_DWELL_MS = 900;
@@ -15,13 +15,20 @@ export function shouldStep(elapsedMs: number, loaded: boolean, dwell = MIN_DWELL
 }
 
 /** What Play sets next: the following year or month, wrapping to the start from the end (or from outside the range). */
-export function nextTime(s: ExplorerState, axis: TimeAxis): Partial<ExplorerState> {
+export function nextTime(s: ExplorerState, axis: TimeAxis, mapRange: [string, string] | null = null): Partial<ExplorerState> {
   if (axis.unit === "year") {
     const y = s.year;
     return { year: y >= axis.range[1] || y < axis.range[0] ? axis.range[0] : y + 1 };
   }
   const i = monthIndex(s.month);
-  const month = i >= monthIndex(axis.range[1]) || i < monthIndex(axis.range[0]) ? axis.range[0] : monthAt(i + 1);
+  const end = monthIndex(axis.range[1]);
+  let next = i + 1;
+  if (mapRange) {
+    // Outside the monthly layer's own range only the yearly layers change: step a year, landing on the range start.
+    if (i < monthIndex(mapRange[0])) next = Math.min(i + 12, monthIndex(mapRange[0]));
+    else if (i > monthIndex(mapRange[1])) next = i + 12;
+  }
+  const month = i >= end || i < monthIndex(axis.range[0]) || next > end ? axis.range[0] : monthAt(next);
   return { month, year: Number(month.slice(0, 4)) };
 }
 
@@ -59,7 +66,7 @@ export function mountTimebar(root: HTMLElement, store: Store, isLoaded: () => bo
     steppedAt = Date.now();
     const axis = timeAxis(store.get());
     if (!axis) return stop();
-    store.set(nextTime(store.get(), axis));
+    store.set(nextTime(store.get(), axis, monthLayerRange(store.get())));
   };
   play.addEventListener("click", () => {
     if (timer !== undefined) return stop();

@@ -1,11 +1,11 @@
 import { layerById, SURFACE_WATER_SEAM } from "../catalog";
 import { decodeValue } from "../inspect/decode";
-import { runReads, type ReadJob } from "../inspect/coordinator";
+import { mapLimit, runReads, type ReadJob } from "../inspect/coordinator";
 import { readLayerPoint } from "../inspect/pixel";
 import { itemsAt, loadIndex } from "../indexes";
 import { activeYear, clampMonth, monthFor, yearFor, type ExplorerState, type Store } from "../state";
 import type { IndexItem, LayerDef } from "../types";
-import { forTyChart, tmfStrip, waterStrip } from "./chart";
+import { forTyChart, tmfStrip, WATER_FAILED_NOTE, waterStrip } from "./chart";
 import { displayTitle, el } from "./dom";
 
 export type InspectPoint = { lon: number; lat: number };
@@ -14,7 +14,12 @@ type Result =
   | { kind: "single"; values: number[] | null }
   | { kind: "forty"; years: number[]; bands: (number[] | null)[] }
   | { kind: "strip"; years: number[]; values: (number[] | null)[] }
-  | { kind: "water"; months: string[]; values: (number[] | null)[] };
+  | { kind: "water"; months: string[]; values: (number[] | null | typeof FAILED)[] };
+
+/** A month whose read failed for a reason other than 404 (a 404 is a plain null: no observation). */
+const FAILED = "failed" as const;
+/** Months read at once per click; unstarted months stop when a newer click aborts. */
+const WATER_CONCURRENCY = 24;
 
 const phone = () => window.matchMedia("(max-width: 600px)").matches;
 
@@ -37,15 +42,18 @@ async function readLayer(def: LayerDef, p: InspectPoint, month: string, signal: 
     return { kind, values: await readLayerPoint(def, items, { month }, p.lon, p.lat, signal) };
   }
   if (kind === "water") {
-    // 96 months in parallel through the shared limiter. A missing file (404) reads as null: no observation.
+    // 96 months, WATER_CONCURRENCY at a time through the shared limiter. A missing file (404) reads as null:
+    // no observation. Any other failure is its own result, so it never passes for "no observation".
     const months = def.inspectMonths!;
-    const values = await Promise.all(
-      months.map((m) =>
+    const values = await mapLimit(
+      months,
+      WATER_CONCURRENCY,
+      (m) =>
         readLayerPoint(def, items, { month: m }, p.lon, p.lat, signal).catch((err) => {
           if (signal.aborted) throw err;
-          return null;
+          return FAILED;
         }),
-      ),
+      signal,
     );
     return { kind, months, values };
   }
@@ -134,12 +142,15 @@ export function mountInspectPanel(
     }
     const year = yearFor(def, activeYear(s));
     let values: number[] | null;
+    let shownFailed = false;
     let shownMonth = def.months ? monthFor(def, s.month) : undefined;
     if (r.kind === "single") values = r.values;
     else if (r.kind === "water") {
       // The strip reaches back past the map's months: the header and value follow the selected month inside it.
       shownMonth = clampMonth(s.month, [r.months[0], r.months[r.months.length - 1]]);
-      values = r.values[r.months.indexOf(shownMonth)] ?? null;
+      const v = r.values[r.months.indexOf(shownMonth)];
+      values = v === FAILED ? null : (v ?? null);
+      shownFailed = v === FAILED;
     } else {
       const i = r.years.indexOf(year ?? -1);
       values = i >= 0 ? (r.kind === "forty" ? r.bands[i] : r.values[i]) : null;
@@ -147,17 +158,18 @@ export function mountInspectPanel(
     if (shownMonth) head.append(" ", el("span", "mono", shownMonth));
     else if (year !== undefined) head.append(" ", el("span", "mono", String(year)));
     const d = decodeValue(def, values);
-    if (r.kind === "water" && d.label === "no data") d.label = "No observation";
+    if (r.kind === "water" && d.label === "no data") d.label = shownFailed ? "Failed to load" : "No observation";
     const sw = el("i", "sq");
     if (d.color) sw.style.background = d.color;
     else sw.hidden = true;
     box.append(el("div", "pxval", [sw, el("b", "", d.label)]));
     if (d.detail) box.append(el("div", "note", d.detail));
     if (r.kind === "water") {
+      if (r.values.includes(FAILED)) box.append(el("div", "note warn", WATER_FAILED_NOTE));
       box.append(
         waterStrip(
           def,
-          r.months.map((m, i) => ({ month: m, value: r.values[i]?.[0] ?? null })),
+          r.months.map((m, i) => ({ month: m, value: r.values[i] === FAILED ? FAILED : ((r.values[i] as number[] | null)?.[0] ?? null) })),
           shownMonth!,
           SURFACE_WATER_SEAM,
         ),

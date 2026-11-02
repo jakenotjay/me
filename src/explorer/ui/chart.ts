@@ -15,6 +15,7 @@ const INK = "var(--ink)";
 const MUTED = "var(--muted)";
 const GRID = "var(--line)";
 const SURFACE = "var(--card)";
+const ERR = "#c0392b";
 
 /** Linear scale helper (exported for tests). */
 export function scale(d0: number, d1: number, r0: number, r1: number): (v: number) => number {
@@ -236,15 +237,17 @@ export type WaterSeries = {
   /** `YYYY-MM`. */
   month: string;
   /** 0 no observation, 1 not water, 2 water; null when the file is missing or unreadable (shown as no observation). */
-  value: number | null;
+  value: number | null | "failed";
 }[];
+
+export const WATER_FAILED_NOTE = "Some months failed to load — click again to retry.";
 
 export const WATER_SEAM_NOTE =
   "2017–2021: JRC GSW VER5-0 (Landsat C1); 2022–2024: v1.5 (Landsat C2) — processing differs across the seam.";
 
 /** Tooltip / table wording for one monthly water class. */
-export function waterLabel(value: number | null): string {
-  return value === 2 ? "water" : value === 1 ? "not water" : "no observation";
+export function waterLabel(value: number | null | "failed"): string {
+  return value === "failed" ? "failed to load" : value === 2 ? "water" : value === 1 ? "not water" : "no observation";
 }
 
 /**
@@ -286,12 +289,17 @@ export function waterStrip(def: LayerDef, series: WaterSeries, currentMonth: str
   });
 
   const cellXY = (s: { month: string }) => ({ x: L + (Number(s.month.slice(5, 7)) - 1) * cw, y: rowY(years.indexOf(s.month.slice(0, 4))) });
-  const present = new Set<number | null>();
+  const present = new Set<number | null | "failed">();
   for (const s of series) {
-    const c = s.value === null ? undefined : byValue.get(s.value);
-    present.add(c ? c.value : null);
+    const failed = s.value === "failed";
+    const c = s.value === null || s.value === "failed" ? undefined : byValue.get(s.value);
+    present.add(failed ? "failed" : c ? c.value : null);
     const { x, y } = cellXY(s);
-    const cell = svg("rect", { x: x + 0.6, y: y + 0.6, width: cw - 1.2, height: RH - 1.2, rx: 1.5, fill: c ? c.color : "url(#nodata-hatch)", stroke: c ? "rgba(10,22,40,.18)" : "none", "stroke-width": 0.6 });
+    const cell = svg("rect", {
+      x: x + 0.6, y: y + 0.6, width: cw - 1.2, height: RH - 1.2, rx: 1.5, fill: c ? c.color : "url(#nodata-hatch)",
+      stroke: failed ? ERR : c ? "rgba(10,22,40,.18)" : "none", "stroke-width": failed ? 1.5 : 0.6,
+    });
+    if (failed) cell.setAttribute("data-failed", "1");
     cell.setAttribute("data-month", s.month);
     root.append(cell);
   }
@@ -327,7 +335,7 @@ export function waterStrip(def: LayerDef, series: WaterSeries, currentMonth: str
     cursor.setAttribute("x", String(x));
     cursor.setAttribute("y", String(y));
     cursor.setAttribute("visibility", "visible");
-    const c = s.value === null ? undefined : byValue.get(s.value);
+    const c = s.value === null || s.value === "failed" ? undefined : byValue.get(s.value);
     tip.replaceChildren(el("div", "tip-r", [...(c ? [swatch(c.color)] : []), el("b", "mono", s.month), el("span", "", waterLabel(s.value))]));
     placeTip(tip, wrap, ((x + cw / 2) * r.width) / W);
   };
@@ -345,6 +353,12 @@ export function waterStrip(def: LayerDef, series: WaterSeries, currentMonth: str
     const sq = el("i", "sq");
     sq.style.background = "#dfe3e9";
     legend.append(el("span", "", [sq, "No observation"]));
+  }
+  if (present.has("failed")) {
+    const sq = el("i", "sq");
+    sq.style.background = "#eef0f3";
+    sq.style.borderColor = ERR;
+    legend.append(el("span", "", [sq, "Failed to load"]));
   }
   wrap.append(legend);
   if (seamRow > 0) wrap.append(el("div", "note seamnote", WATER_SEAM_NOTE));
