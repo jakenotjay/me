@@ -1,24 +1,42 @@
-import { expect, test, type ConsoleMessage } from "@playwright/test";
+import { expect, test as base, type ConsoleMessage } from "@playwright/test";
 
 // These tests hit live source.coop, so reads get generous timeouts.
 
-/** Console errors that are not ours: basemap tile/network failures. */
-const benign = (m: ConsoleMessage) => {
-  const t = m.text();
-  return /Failed to load resource|net::ERR|tile|arcgisonline|openstreetmap|AJAXError/i.test(t);
-};
+const BASEMAP_HOSTS = ["server.arcgisonline.com", "tile.openstreetmap.org"];
+
+/**
+ * Console errors we tolerate: a failed basemap tile request (third-party host), or a transient
+ * 503/429 from data.source.coop (the app retries these, but the browser still logs the failed
+ * request). Everything else, including other source.coop failures, fails the test.
+ */
+function benign(m: ConsoleMessage): boolean {
+  const url = m.location().url;
+  const text = m.text();
+  if (BASEMAP_HOSTS.some((h) => url.includes(h) || text.includes(h))) return true;
+  if (url.includes("data.source.coop") && /status of (503|429)\b/.test(text)) return true;
+  return false;
+}
+
+const test = base.extend<{ errors: string[] }>({
+  errors: [
+    async ({ page }, use) => {
+      const errors: string[] = [];
+      page.on("console", (m) => {
+        if (m.type() === "error" && !benign(m)) errors.push(`${m.text()} (${m.location().url})`);
+      });
+      page.on("pageerror", (e) => errors.push(`pageerror: ${e.message}`));
+      await use(errors);
+      expect(errors, "console/page errors").toEqual([]);
+    },
+    { auto: true },
+  ],
+});
 
 test("loads with ForTy v2 legend and 2025 on the time bar", async ({ page }) => {
-  const errors: string[] = [];
-  page.on("console", (m) => {
-    if (m.type() === "error" && !benign(m)) errors.push(m.text());
-  });
-  page.on("pageerror", (e) => errors.push(`pageerror: ${e.message}`));
   await page.goto("explorer/");
   await expect(page.locator("#legend")).toContainText("ForTy v2", { timeout: 30_000 });
   await expect(page.locator("#timebar output")).toHaveText("2025");
   await page.waitForTimeout(3000);
-  expect(errors).toEqual([]);
 });
 
 test("moving the slider to 2019 updates the hash and keeps the legend", async ({ page }) => {
