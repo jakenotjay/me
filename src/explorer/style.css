@@ -50,8 +50,17 @@ ul.plain li { padding: 2px 0; }
 #right { position: static; flex: 0 1 auto; min-height: 0; }
 #legend {
   flex: 0 1 auto; min-height: 0; margin-top: auto; overflow-y: auto; max-height: 55%;
-  background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px;
+  background-color: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px;
   font-size: 11.5px; box-shadow: var(--shadow);
+  /* Scroll cue: shadows at the top/bottom edge appear only where there is more to scroll. */
+  background-image:
+    linear-gradient(var(--card) 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), var(--card) 70%),
+    radial-gradient(farthest-side at 50% 0, rgba(10, 22, 40, 0.28), rgba(10, 22, 40, 0)),
+    radial-gradient(farthest-side at 50% 100%, rgba(10, 22, 40, 0.28), rgba(10, 22, 40, 0));
+  background-repeat: no-repeat;
+  background-position: top, bottom, top, bottom;
+  background-size: 100% 24px, 100% 24px, 100% 10px, 100% 10px;
+  background-attachment: local, local, scroll, scroll;
 }
 #right:not([hidden]) + #legend { max-height: 40%; }
 
@@ -108,11 +117,15 @@ h2 + .layer { border-top: 0; }
 
 @media (max-width: 600px) {
   #topbtns { top: 8px; right: 8px; }
-  #dock { top: 48px; left: 8px; right: 8px; bottom: 36px; width: auto; }
+  #dock { top: auto; left: 8px; right: 8px; bottom: 36px; width: auto; }
   body.has-time #dock { bottom: 94px; }
-  #right { border-radius: 8px; }
-  #legend { max-height: 32%; }
-  #right:not([hidden]) + #legend { max-height: 28%; }
+  #legend { max-height: 32vh; }
   #timebar { left: 8px; right: 8px; bottom: 36px; width: auto; max-width: none; margin: 0; border-radius: 12px; }
-  #about { top: 48px; }
+  /* Layers and About are bottom sheets; the legend and time bar sit beneath them. */
+  #right, #about {
+    position: fixed; z-index: 7; top: auto; left: 0; right: 0; bottom: 0; width: auto; transform: none;
+    max-height: 60%; border-radius: 12px 12px 0 0; border-bottom: 0;
+  }
+  body:has(#right:not([hidden])) #legend, body:has(#about:not([hidden])) #legend,
+  body:has(#right:not([hidden])) #timebar, body:has(#about:not([hidden])) #timebar { display: none; }
 }

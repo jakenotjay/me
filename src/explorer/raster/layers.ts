@@ -19,6 +19,7 @@ import {
 } from "./colormap";
 import { monthFor, yearFor, type ExplorerState } from "../state";
 import { sourceCoopLimiter } from "./limiter";
+import { logFailureOnce } from "./retry-fetch";
 import { ARGMAX_NODATA, argmaxClasses } from "./forty";
 
 type TimeKey = { year?: number; month?: string };
@@ -106,6 +107,7 @@ type Gen = {
   loaded: boolean;
   viewport: string[] | null; // mosaic sources in the viewport (once known)
   loadedSources: Set<string>;
+  failedSources: Set<string>; // sources whose header read failed: settled, so they do not stall the generation
 };
 type Track = { current: Gen; previous?: Gen; timer?: ReturnType<typeof setTimeout> };
 
@@ -130,7 +132,7 @@ function finish(track: Track, gen: Gen) {
 const hasContent = (gen: Gen) => gen.loaded || gen.loadedSources.size > 0;
 function checkMosaic(track: Track, gen: Gen) {
   if (gen.loaded || !gen.viewport) return;
-  if (gen.viewport.every((id) => gen.loadedSources.has(id))) finish(track, gen);
+  if (gen.viewport.every((id) => gen.loadedSources.has(id) || gen.failedSources.has(id))) finish(track, gen);
 }
 
 function newGen(def: LayerDef, t: TimeKey, mode: Gen["mode"], items: IndexItem[] | undefined): Gen {
@@ -143,6 +145,7 @@ function newGen(def: LayerDef, t: TimeKey, mode: Gen["mode"], items: IndexItem[]
     loaded: false,
     viewport: null,
     loadedSources: new Set(),
+    failedSources: new Set(),
   };
 }
 
@@ -157,6 +160,17 @@ function cogFor(def: LayerDef, gen: Gen, id: string, url: string, opacity: numbe
     renderTile: fns.renderTile,
     onTileUnload: destroyTexture,
     opacity,
+    // A header that still fails after the fetch retries counts as settled, so the generation can finish.
+    onError: (err: Error) => {
+      logFailureOnce(url, err);
+      if (srcId) {
+        gen.failedSources.add(srcId);
+        checkMosaic(track, gen);
+      } else {
+        finish(track, gen);
+      }
+    },
+    onTileError: (err: Error) => logFailureOnce(`tile of ${url}`, err),
     onViewportLoad: () => {
       if (srcId) {
         gen.loadedSources.add(srcId);

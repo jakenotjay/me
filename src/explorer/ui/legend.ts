@@ -3,6 +3,12 @@ import { yearFor, type ExplorerState, type Store } from "../state";
 import type { LayerDef } from "../types";
 import { displayTitle, el } from "./dom";
 
+/** "showing YYYY" when the selected year is outside the layer's years and its nearest one is used. */
+export function showingNote(def: LayerDef, year: number): string | undefined {
+  const shown = yearFor(def, year);
+  return shown !== undefined && shown !== year ? `showing ${shown}` : undefined;
+}
+
 function block(def: LayerDef, s: ExplorerState): HTMLElement {
   const box = el("div", "lblock");
   const head = el("div", "ltitle", displayTitle(def.title));
@@ -11,7 +17,8 @@ function block(def: LayerDef, s: ExplorerState): HTMLElement {
   else if (shown !== undefined) head.append(" ", el("span", "mono", String(shown)));
   box.append(head);
 
-  if (shown !== undefined && shown !== s.year) box.append(el("div", "note", `showing ${shown}`));
+  const showing = showingNote(def, s.year);
+  if (showing) box.append(el("div", "note", showing));
   if (s.view.zoom < def.minZoom) {
     box.append(el("div", "note warn", `Zoom in to see this layer (zoom ${def.minZoom}+).`));
   }

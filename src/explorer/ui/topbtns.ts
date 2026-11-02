@@ -15,10 +15,21 @@ export function mountTopbtns(root: HTMLElement, store: Store, about: HTMLElement
   root.replaceChildren(inspect, layers, aboutBtn);
 
   inspect.addEventListener("click", () => store.set({ inspect: !store.get().inspect }));
-  layers.addEventListener("click", () => store.set({ controlsOpen: !store.get().controlsOpen }));
+  const phone = () => window.matchMedia("(max-width: 600px)").matches;
+  const setAbout = (open: boolean) => {
+    about.hidden = !open;
+    aboutBtn.setAttribute("aria-expanded", String(open));
+  };
+  // On a phone both cards are bottom sheets, so only one can be open.
+  layers.addEventListener("click", () => {
+    const open = !store.get().controlsOpen;
+    if (open && phone()) setAbout(false);
+    store.set({ controlsOpen: open });
+  });
   aboutBtn.addEventListener("click", () => {
-    about.hidden = !about.hidden;
-    aboutBtn.setAttribute("aria-expanded", String(!about.hidden));
+    const open = about.hidden;
+    if (open && phone() && store.get().controlsOpen) store.set({ controlsOpen: false });
+    setAbout(open);
   });
 
   const update = (s: ExplorerState) => {

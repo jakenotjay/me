@@ -6,6 +6,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import "./style.css";
 import { LAYERS, layerById } from "./catalog";
 import { loadIndex } from "./indexes";
+import { installRetryingFetch, retryStats } from "./raster/retry-fetch";
 import { buildDeckLayers, isLayerLoaded, onLayersChanged, PRESENCE_MAX_ZOOM } from "./raster/layers";
 import { createStore, decodeHash, encodeHash, type ExplorerState } from "./state";
 import { mountAbout } from "./ui/about";
@@ -15,6 +16,7 @@ import { mountTimebar } from "./ui/timebar";
 import { mountTopbtns } from "./ui/topbtns";
 import type { IndexItem, IndexName } from "./types";
 
+installRetryingFetch();
 const store = createStore(decodeHash(location.hash, LAYERS));
 const initial = store.get();
 
@@ -156,6 +158,7 @@ Object.assign(window, {
       return store.get();
     },
     render,
+    retryStats,
     isLayerLoaded,
     layerIds: () => lastLayers.map((l) => l.id),
   },

@@ -77,4 +77,26 @@ describe("buildDeckLayers", () => {
     expect(lo[0].id).toContain("presence");
     expect(hi[0].id).toContain("main");
   });
+
+  it("a source whose header fails counts as settled and drops the previous year", () => {
+    const changed = vi.fn();
+    onLayersChanged(changed);
+    const a = buildDeckLayers(st({ visible: ["tmf-annual-change"], year: 2019 }), idx, 5);
+    markLoaded(a[0]);
+    const b = buildDeckLayers(st({ visible: ["tmf-annual-change"], year: 2020 }), idx, 5);
+    expect(b).toHaveLength(2);
+    const mosaic = b[1] as unknown as {
+      props: {
+        onViewportLoad: (e: unknown[]) => void;
+        renderSource: (s: { id: string; itemId: string }) => { props: { onError: (e: Error) => void } };
+      };
+    };
+    const srcId = (mosaic as unknown as { props: { sources: { id: string }[] } }).props.sources[0].id;
+    mosaic.props.onViewportLoad([{ source: { id: srcId } }]);
+    expect(changed).not.toHaveBeenCalled();
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    mosaic.props.renderSource({ id: srcId, itemId: "S10_W70" }).props.onError(new Error("503"));
+    expect(changed).toHaveBeenCalledTimes(1);
+    expect(ids(buildDeckLayers(st({ visible: ["tmf-annual-change"], year: 2020 }), idx, 5))).toHaveLength(1);
+  });
 });
