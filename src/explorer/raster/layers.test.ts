@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { layerById } from "../catalog";
-import { monthFor, sourceId, yearFor } from "./layers";
+import { monthFor, yearFor } from "../state";
+import { sourceId } from "./layers";
 
 const forty = layerById("forty-v2")!;
 describe("sourceId", () => {

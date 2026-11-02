@@ -1,4 +1,8 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const fontCss = `
+@font-face { font-family: 'iA Writer Quattro S'; src: url('${base}/explorer/fonts/iAWriterQuattroS-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'iA Writer Quattro S'; src: url('${base}/explorer/fonts/iAWriterQuattroS-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }`;
 ---
 
 <html lang="en">
@@ -6,13 +10,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Epoch open data explorer</title>
-    <style is:global>
-      html, body { margin: 0; height: 100%; }
-      #map { position: absolute; inset: 0; }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <style is:inline set:html={fontCss}></style>
   </head>
   <body>
     <div id="map"></div>
+    <div id="topbtns"></div>
+    <div id="dock">
+      <aside id="right" class="card" hidden></aside>
+      <div id="legend" hidden></div>
+    </div>
+    <div id="timebar" class="card" hidden></div>
+    <aside id="about" class="card" hidden></aside>
     <script>
       import "../explorer/main.ts";
     </script>

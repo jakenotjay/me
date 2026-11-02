@@ -17,36 +17,9 @@ import {
   rescaleToIndex,
   toClassIndices,
 } from "./colormap";
+import { monthFor, yearFor, type ExplorerState } from "../state";
+import { sourceCoopLimiter } from "./limiter";
 import { ARGMAX_NODATA, argmaxClasses } from "./forty";
-
-// Task 5 moves ExplorerState and yearFor to state.ts unchanged.
-export type ExplorerState = {
-  visible: string[];
-  opacity: Record<string, number>;
-  year: number;
-  month: string;
-  basemap: "satellite" | "osm" | "none";
-  inspect: boolean;
-  view: { lon: number; lat: number; zoom: number };
-  controlsOpen: boolean;
-};
-
-/** Nearest available year in `def.years`; undefined if the layer has no years. */
-export function yearFor(def: LayerDef, year: number): number | undefined {
-  if (!def.years?.length) return undefined;
-  let best = def.years[0];
-  for (const y of def.years) if (Math.abs(y - year) < Math.abs(best - year)) best = y;
-  return best;
-}
-
-/** Nearest available month (`YYYY-MM`) in `def.months`; undefined without months. */
-export function monthFor(def: LayerDef, month: string): string | undefined {
-  const ms = def.months;
-  if (!ms?.length) return undefined;
-  if (ms.includes(month)) return month;
-  if (month < ms[0]) return ms[0];
-  return ms[ms.length - 1];
-}
 
 type TimeKey = { year?: number; month?: string };
 
@@ -65,7 +38,7 @@ type TileFns = {
 
 /** ForTy v2 has 7 probability bands; v1 has 5 and an implicit "other" class. */
 const GFT_PRESENCE_COLOR = "#4D9221";
-const PRESENCE_MAX_ZOOM = 14;
+export const PRESENCE_MAX_ZOOM = 14;
 
 function nodataOf(def: LayerDef): number[] {
   return def.nodata ?? [];
@@ -178,6 +151,7 @@ function cogFor(def: LayerDef, gen: Gen, id: string, url: string, opacity: numbe
   return new COGLayer<ClassTileData>({
     id,
     geotiff: url,
+    concurrencyLimiter: sourceCoopLimiter,
     epsgResolver,
     getTileData: fns.getTileData,
     renderTile: fns.renderTile,
@@ -278,4 +252,9 @@ export function buildDeckLayers(
     }
   }
   return out;
+}
+
+/** True once the current generation of a layer has fully loaded (for measurement / tests). */
+export function isLayerLoaded(defId: string): boolean {
+  return tracks.get(defId)?.current.loaded ?? false;
 }

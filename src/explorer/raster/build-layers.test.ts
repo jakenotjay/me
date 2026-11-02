@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { IndexItem } from "../types";
-import { buildDeckLayers, onLayersChanged, type ExplorerState } from "./layers";
+import type { ExplorerState } from "../state";
+import { buildDeckLayers, onLayersChanged } from "./layers";
 
 const base: ExplorerState = {
   visible: [],
@@ -27,7 +28,7 @@ afterEach(() => {
 
 describe("buildDeckLayers", () => {
   it("renders nothing below minZoom or for hidden layers", () => {
-    expect(buildDeckLayers(st({ visible: ["forty-v2"] }), { forty: [{ id: "a", bbox: [0, 0, 1, 1] }] }, 9)).toHaveLength(0);
+    expect(buildDeckLayers(st({ visible: ["forty-v2"] }), { forty: [{ id: "a", bbox: [0, 0, 1, 1] }] }, 7)).toHaveLength(0);
     expect(buildDeckLayers(st({ visible: [] }), idx, 5)).toHaveLength(0);
   });
 
