@@ -1,5 +1,5 @@
 import { LAYERS } from "../catalog";
-import type { ExplorerState, Store } from "../state";
+import { toggleLayer, type ExplorerState, type Store } from "../state";
 import type { LayerDef, LayerGroup } from "../types";
 import { displayTitle, el } from "./dom";
 
@@ -70,7 +70,6 @@ export function mountLayersCard(root: HTMLElement, store: Store): void {
       const op = Math.round((s.opacity[id] ?? r.def.defaultOpacity) * 100);
       if (r.slider.value !== String(op)) r.slider.value = String(op);
       r.out.textContent = `${op}%`;
-      if (r.month && r.month.value !== s.month) r.month.value = s.month;
     }
   };
   store.subscribe(update);
@@ -82,9 +81,7 @@ function buildRow(def: LayerDef, store: Store): { box: HTMLElement; row: Row } {
   const check = el("input");
   check.type = "checkbox";
   check.addEventListener("change", () => {
-    const vis = store.get().visible.filter((id) => id !== def.id);
-    // Newly shown layers go on top (last in the draw order).
-    store.set({ visible: check.checked ? [...vis, def.id] : vis });
+    store.set(toggleLayer(store.get(), def.id, check.checked));
   });
   const title = el("span", "ltitle", displayTitle(def.title));
   const label = el("label", "lname", [check, title]);
@@ -113,15 +110,6 @@ function buildRow(def: LayerDef, store: Store): { box: HTMLElement; row: Row } {
   });
   body.append(el("div", "ctl", [el("span", "k", "Opacity"), slider, out]));
 
-  let month: HTMLSelectElement | undefined;
-  if (def.months?.length) {
-    month = el("select");
-    month.setAttribute("aria-label", "Month");
-    for (const m of def.months) month.append(new Option(m, m));
-    month.addEventListener("change", () => store.set({ month: month!.value }));
-    body.append(el("div", "ctl", [el("span", "k", "Month"), month]));
-  }
-
   const link = el("a", "", "Dataset page");
   link.href = def.sourceUrl;
   link.target = "_blank";
@@ -129,5 +117,5 @@ function buildRow(def: LayerDef, store: Store): { box: HTMLElement; row: Row } {
   body.append(el("div", "note", def.description), el("div", "note", link));
 
   box.append(head, body);
-  return { box, row: { def, check, slider, out, month } };
+  return { box, row: { def, check, slider, out } };
 }

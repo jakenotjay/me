@@ -1,22 +1,25 @@
 // Builds public/explorer/index/*.json from source.coop STAC GeoParquet files and a bucket listing.
-import { asyncBufferFromUrl, parquetReadObjects } from "hyparquet";
+import { asyncBufferFromUrl, parquetMetadataAsync, parquetReadObjects } from "hyparquet";
 import { compressors } from "hyparquet-compressors";
 import { mkdirSync, writeFileSync } from "node:fs";
 
 const UA = { "User-Agent": "Mozilla/5.0 (compatible; epoch-explorer-index-builder)" };
 const OUT = new URL("../public/explorer/index/", import.meta.url);
 const ROOT = "https://data.source.coop/epoch/";
-// ForTy source: the published v2 beta STAC items for one year. Every v2 year
-// (and v1) shares the same tile grid, so one year's items index them all.
+// ForTy source: the combined v2 beta STAC items (all years, row groups ordered
+// by year). Every v2 year (and v1) shares the same tile grid, so one year's
+// rows index them all.
 const FORTY_YEAR = 2025;
-const FORTY_SOURCE = `${ROOT}forest-typology-2020/v2_beta/${FORTY_YEAR}/items.parquet`;
-// Maps one ForTy STAC row to [id, w, s, e, n]; id is the path after
-// /v2_beta/<year>/ without .tif, e.g. "31U/raster_31U_20_0_0".
+const FORTY_SOURCE = `${ROOT}forest-typology-2020/v2_beta/items.parquet`;
+const FORTY_EXPECTED_ROWS = 135542;
+const FORTY_COLUMNS = ["year", "forty:cell", "forty:tile_id", "bbox"];
+// Maps one ForTy STAC row to [id, w, s, e, n]; id is "<cell>/<tile id>",
+// e.g. "31U/raster_31U_20_0_0" (the path after /v2_beta/<year>/ without .tif).
 function fortyItem(row) {
-  const href = hrefOf(row, "data");
-  const marker = `/v2_beta/${FORTY_YEAR}/`;
-  if (!href.includes(marker)) throw new Error(`unexpected ForTy href: ${href}`);
-  return [href.split(marker)[1].replace(/\.tif$/, ""), ...bboxOf(row)];
+  const cell = row["forty:cell"];
+  const tile = row["forty:tile_id"];
+  if (!cell || !tile) throw new Error("ForTy row without forty:cell/forty:tile_id");
+  return [`${cell}/${tile}`, ...bboxOf(row)];
 }
 const r4 = (x) => Math.round(x * 1e4) / 1e4;
 
@@ -58,8 +61,34 @@ function write(name, items) {
   console.log(`${name}: ${items.length} items, ${body.length} bytes`);
 }
 
+// Reads only the row groups whose `year` statistics include FORTY_YEAR, and
+// only the columns fortyItem needs (the full file is ~250 MB).
 async function forty() {
-  write("forty", (await readParquet(FORTY_SOURCE)).map(fortyItem));
+  const file = await asyncBufferFromUrl({ url: FORTY_SOURCE, requestInit: { headers: UA } });
+  const md = await parquetMetadataAsync(file);
+  const rows = [];
+  let start = 0;
+  for (const group of md.row_groups) {
+    const n = Number(group.num_rows);
+    const stats = group.columns.find((c) => c.meta_data.path_in_schema.join(".") === "year")?.meta_data?.statistics;
+    const lo = Number(stats?.min_value ?? stats?.min);
+    const hi = Number(stats?.max_value ?? stats?.max);
+    // Skip a group only when its statistics prove FORTY_YEAR is absent; with missing stats, read it.
+    if (Number.isFinite(lo) && Number.isFinite(hi) && (FORTY_YEAR < lo || FORTY_YEAR > hi)) {
+      start += n;
+      continue;
+    }
+    const part = await parquetReadObjects({
+      file, metadata: md, compressors, columns: FORTY_COLUMNS, rowStart: start, rowEnd: start + n,
+    });
+    rows.push(...part.filter((r) => Number(r.year) === FORTY_YEAR));
+    start += n;
+  }
+  if (rows.length === 0) throw new Error(`ForTy index: no rows for ${FORTY_YEAR}`);
+  if (Math.abs(rows.length - FORTY_EXPECTED_ROWS) > FORTY_EXPECTED_ROWS * 0.01) {
+    throw new Error(`ForTy index: ${rows.length} rows, expected about ${FORTY_EXPECTED_ROWS} (within 1%)`);
+  }
+  write("forty", rows.map(fortyItem));
 }
 
 async function byId(name, url) {

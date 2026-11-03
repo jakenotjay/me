@@ -23,23 +23,32 @@ export function pixelFor(
   return { col, row };
 }
 
-// --- GeoTIFF open cache (LRU 128) -----------------------------------------
+// --- GeoTIFF open caches (LRU) --------------------------------------------
 
-const CACHE_MAX = 128;
-const opened = new Map<string, Promise<GeoTIFF>>();
+type OpenCache = { max: number; chunkSize?: number; map: Map<string, Promise<GeoTIFF>> };
+const general: OpenCache = { max: 128, map: new Map() };
+// One surface-water click opens 96 monthly files. They get their own LRU (two zones' worth) so a water click
+// cannot evict the ForTy/TMF opens, and a second click in the same zone reuses all 96.
+// 16 KiB header chunks (the library default is 64 KiB) cut a pre-2022 `tiles/` file from ~200 KB / 4 requests to
+// ~52 KB / 4 requests per point read: its TileOffsets array is read lazily, one chunk of it, not eagerly.
+const water: OpenCache = { max: 192, chunkSize: 16 * 1024, map: new Map() };
+const cacheFor = (url: string): OpenCache => (url.includes("/jrc-global-surface-water-monthly/") ? water : general);
 
-function open(url: string): Promise<GeoTIFF> {
+function open(url: string, signal?: AbortSignal): Promise<GeoTIFF> {
+  const { max, chunkSize, map: opened } = cacheFor(url);
   const hit = opened.get(url);
   if (hit) {
     opened.delete(url); // refresh recency
     opened.set(url, hit);
     return hit;
   }
-  // Not tied to a caller's AbortSignal: the open is shared and cached.
-  const p = GeoTIFF.fromUrl(url, { concurrencyLimiter: sourceCoopLimiter });
+  // An aborted caller must not start a new open (it would queue requests in the shared limiter).
+  // Once started the open is shared and cached, so it is not tied to the signal.
+  signal?.throwIfAborted();
+  const p = GeoTIFF.fromUrl(url, { concurrencyLimiter: sourceCoopLimiter, ...(chunkSize ? { chunkSize } : {}) });
   p.catch(() => opened.delete(url));
   opened.set(url, p);
-  while (opened.size > CACHE_MAX) opened.delete(opened.keys().next().value as string);
+  while (opened.size > max) opened.delete(opened.keys().next().value as string);
   return p;
 }
 
@@ -49,7 +58,7 @@ function open(url: string): Promise<GeoTIFF> {
  * meaningful for some layers (e.g. "never deforested").
  */
 export async function readPoint(url: string, lon: number, lat: number, signal?: AbortSignal): Promise<number[] | null> {
-  const tiff = await open(url);
+  const tiff = await open(url, signal);
   signal?.throwIfAborted();
   const crs = tiff.crs;
   if (typeof crs !== "number") throw new Error(`unsupported CRS in ${url}`);
@@ -67,6 +76,15 @@ export async function readPoint(url: string, lon: number, lat: number, signal?: 
   return bands.map((band) => band[i]);
 }
 
+/** A 404 from source.coop (a month or zone that does not exist) as opposed to a real failure. */
+export function isNotFound(err: unknown): boolean {
+  const e = err as { code?: unknown; status?: unknown; statusCode?: unknown; cause?: unknown; message?: unknown } | null;
+  if (!e || typeof e !== "object") return false;
+  if ([e.code, e.status, e.statusCode].some((v) => v === 404)) return true;
+  if (e.cause && e.cause !== err && isNotFound(e.cause)) return true;
+  return typeof e.message === "string" && /\b404\b/.test(e.message);
+}
+
 /** Read one layer at a point for a year/month, trying each index item that contains the point. */
 export async function readLayerPoint(
   def: LayerDef,
@@ -76,17 +94,23 @@ export async function readLayerPoint(
   lat: number,
   signal?: AbortSignal,
 ): Promise<number[] | null> {
-  const month = t.month !== undefined ? monthFor(def, t.month) : undefined;
+  // Layers with an inspect url (surface water) read any month it covers, not just the map's.
+  const month = t.month === undefined ? undefined : def.inspectUrl ? t.month : monthFor(def, t.month);
+  const urlFor = def.inspectUrl && month !== undefined ? def.inspectUrl : def.url;
+  let failure: unknown;
   const candidates: (string | undefined)[] = def.index ? (items ?? []).map((i) => i.id) : [undefined];
   for (const id of candidates) {
     signal?.throwIfAborted();
     try {
-      const v = await readPoint(def.url({ id, year: t.year, month }), lon, lat, signal);
+      const v = await readPoint(urlFor({ id, year: t.year, month }), lon, lat, signal);
       if (v) return v;
     } catch (err) {
       if (signal?.aborted) throw err;
-      // A missing item file (404) or a failed read counts as no data for that item.
+      // A missing item file (404) counts as no data for that item. Layers with an inspect url (surface water,
+      // a data series) report any other failure instead of passing it off as "no observation".
+      if (def.inspectUrl && !isNotFound(err)) failure = err;
     }
   }
+  if (failure !== undefined) throw failure;
   return null;
 }

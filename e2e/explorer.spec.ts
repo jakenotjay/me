@@ -72,3 +72,22 @@ test("on a phone the layers card is a bottom sheet", async ({ page }) => {
     return b ? Math.round(b.y + b.height) : -1;
   }).toBeGreaterThanOrEqual(843);
 });
+
+test("surface water: time bar in months, and inspect shows the 96-month water strip", async ({ page }) => {
+  // Lake Volta, Ghana (a pixel that is open water), z8.
+  await page.goto("explorer/#v=0.1571,7.4183,8&l=surface-water&i=1&m=2023-06");
+  await expect(page.locator("#timebar output")).toHaveText(/^\d{4}-\d{2}$/, { timeout: 30_000 });
+  await expect(page.locator("#timebar output")).toHaveText("2023-06");
+  await expect(page.locator("#legend")).toContainText("Surface water");
+  // The slider moves by one month.
+  await page.locator('#timebar input[type="range"]').fill("0");
+  await expect(page.locator("#timebar output")).toHaveText("2022-01");
+
+  const box = (await page.locator("#map").boundingBox())!;
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  const cells = page.locator("#left svg [data-month]");
+  await expect(cells).toHaveCount(96, { timeout: 90_000 });
+  await expect(page.locator("#left")).toContainText("JRC GSW VER5-0");
+  // A water pixel: at least one cell is the water colour.
+  await expect(page.locator('#left svg [data-month][fill="#0905FF"]').first()).toBeVisible();
+});

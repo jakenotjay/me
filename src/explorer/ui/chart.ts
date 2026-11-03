@@ -15,6 +15,7 @@ const INK = "var(--ink)";
 const MUTED = "var(--muted)";
 const GRID = "var(--line)";
 const SURFACE = "var(--card)";
+const ERR = "#c0392b";
 
 /** Linear scale helper (exported for tests). */
 export function scale(d0: number, d1: number, r0: number, r1: number): (v: number) => number {
@@ -229,5 +230,137 @@ export function tmfStrip(def: LayerDef, series: StripSeries, currentYear: number
   const legend = el("div", "clegend");
   for (const c of classes) if (present.has(c.value)) legend.append(el("span", "", [swatch(c.color), c.label]));
   wrap.append(legend);
+  return wrap;
+}
+
+export type WaterSeries = {
+  /** `YYYY-MM`. */
+  month: string;
+  /** 0 no observation, 1 not water, 2 water; null when the file is missing or unreadable (shown as no observation). */
+  value: number | null | "failed";
+}[];
+
+export const WATER_FAILED_NOTE = "Some months failed to load — click again to retry.";
+
+export const WATER_SEAM_NOTE =
+  "2017–2021: JRC GSW VER5-0 (Landsat C1); 2022–2024: v1.5 (Landsat C2) — processing differs across the seam.";
+
+/** Tooltip / table wording for one monthly water class. */
+export function waterLabel(value: number | null | "failed"): string {
+  return value === "failed" ? "failed to load" : value === 2 ? "water" : value === 1 ? "not water" : "no observation";
+}
+
+/**
+ * Monthly water as a grid: one row per year, one column per month (12 x N years), so each month sits in the
+ * same column every year and seasonality reads down the columns. 96 cells in one line would be ~3 px wide in
+ * the 360 px card. A gap and rule mark the seam where the data source changes (`seamMonth` starts the new series).
+ */
+export function waterStrip(def: LayerDef, series: WaterSeries, currentMonth: string, seamMonth: string): HTMLElement {
+  const classes: ClassEntry[] = def.legend.kind === "classes" ? def.legend.classes : [];
+  const byValue = new Map(classes.map((c) => [c.value, c]));
+  const years = [...new Set(series.map((s) => s.month.slice(0, 4)))];
+  const L = 32;
+  const cw = (W - L) / 12;
+  const RH = 15;
+  const TOP = 13;
+  const GAP = 10;
+  const seamRow = years.indexOf(seamMonth.slice(0, 4));
+  const rowY = (r: number) => TOP + r * RH + (seamRow >= 0 && r >= seamRow ? GAP : 0);
+  const H = rowY(years.length - 1) + RH + 2;
+  const wrap = el("div", "chart");
+  const root = svg("svg", { viewBox: `0 0 ${W} ${H}`, class: "cv", role: "img" });
+  root.setAttribute("aria-label", `${def.title} by month, ${series[0]?.month} to ${series[series.length - 1]?.month}`);
+
+  const defs = svg("defs");
+  const pat = svg("pattern", { id: "nodata-hatch", width: 4, height: 4, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+  pat.append(svg("rect", { width: 4, height: 4, fill: "#eef0f3" }), svg("line", { x1: 0, y1: 0, x2: 0, y2: 4, stroke: "#c9cfd8", "stroke-width": 1.5 }));
+  defs.append(pat);
+  root.append(defs);
+
+  "JFMAMJJASOND".split("").forEach((ch, i) => {
+    const t = svg("text", { x: L + i * cw + cw / 2, y: 9, "text-anchor": "middle", fill: MUTED, "font-size": 9.5, "font-family": "var(--mono)" });
+    t.textContent = ch;
+    root.append(t);
+  });
+  years.forEach((yr, r) => {
+    const t = svg("text", { x: L - 5, y: rowY(r) + RH / 2 + 3.5, "text-anchor": "end", fill: MUTED, "font-size": 10, "font-family": "var(--mono)" });
+    t.textContent = yr;
+    root.append(t);
+  });
+
+  const cellXY = (s: { month: string }) => ({ x: L + (Number(s.month.slice(5, 7)) - 1) * cw, y: rowY(years.indexOf(s.month.slice(0, 4))) });
+  const present = new Set<number | null | "failed">();
+  for (const s of series) {
+    const failed = s.value === "failed";
+    const c = s.value === null || s.value === "failed" ? undefined : byValue.get(s.value);
+    present.add(failed ? "failed" : c ? c.value : null);
+    const { x, y } = cellXY(s);
+    const cell = svg("rect", {
+      x: x + 0.6, y: y + 0.6, width: cw - 1.2, height: RH - 1.2, rx: 1.5, fill: c ? c.color : "url(#nodata-hatch)",
+      stroke: failed ? ERR : c ? "rgba(10,22,40,.18)" : "none", "stroke-width": failed ? 1.5 : 0.6,
+    });
+    if (failed) cell.setAttribute("data-failed", "1");
+    cell.setAttribute("data-month", s.month);
+    root.append(cell);
+  }
+  if (seamRow > 0) {
+    const y = rowY(seamRow) - GAP / 2;
+    root.append(svg("line", { x1: 2, x2: W - 2, y1: y, y2: y, stroke: INK, "stroke-width": 1.5, "stroke-dasharray": "5 3" }));
+  }
+  const cur = series.find((s) => s.month === currentMonth);
+  if (cur) {
+    const { x, y } = cellXY(cur);
+    root.append(svg("rect", { x: x + 1, y: y + 1, width: cw - 2, height: RH - 2, rx: 1.5, fill: "none", stroke: INK, "stroke-width": 2 }));
+  }
+
+  const cursor = svg("rect", { width: cw, height: RH, fill: "none", stroke: SURFACE, "stroke-width": 2, visibility: "hidden" });
+  root.append(cursor);
+  const hit = svg("rect", { x: L, y: TOP, width: W - L, height: H - TOP, fill: "transparent" });
+  root.append(hit);
+
+  const tip = tooltip();
+  const show = (ev: PointerEvent) => {
+    const r = root.getBoundingClientRect();
+    const vx = ((ev.clientX - r.left) / r.width) * W;
+    const vy = ((ev.clientY - r.top) / r.height) * H;
+    const col = Math.max(0, Math.min(11, Math.floor((vx - L) / cw)));
+    let row = years.length - 1;
+    while (row > 0 && vy < rowY(row)) row--;
+    const s = series.find((c) => c.month === `${years[row]}-${String(col + 1).padStart(2, "0")}`);
+    if (!s) {
+      tip.hidden = true;
+      return;
+    }
+    const { x, y } = cellXY(s);
+    cursor.setAttribute("x", String(x));
+    cursor.setAttribute("y", String(y));
+    cursor.setAttribute("visibility", "visible");
+    const c = s.value === null || s.value === "failed" ? undefined : byValue.get(s.value);
+    tip.replaceChildren(el("div", "tip-r", [...(c ? [swatch(c.color)] : []), el("b", "mono", s.month), el("span", "", waterLabel(s.value))]));
+    placeTip(tip, wrap, ((x + cw / 2) * r.width) / W);
+  };
+  hit.addEventListener("pointermove", show);
+  hit.addEventListener("pointerdown", show);
+  hit.addEventListener("pointerleave", () => {
+    tip.hidden = true;
+    cursor.setAttribute("visibility", "hidden");
+  });
+  wrap.append(root, tip);
+
+  const legend = el("div", "clegend");
+  for (const c of classes) legend.append(el("span", "", [swatch(c.color), c.label]));
+  if (present.has(null) || present.has(0)) {
+    const sq = el("i", "sq");
+    sq.style.background = "#dfe3e9";
+    legend.append(el("span", "", [sq, "No observation"]));
+  }
+  if (present.has("failed")) {
+    const sq = el("i", "sq");
+    sq.style.background = "#eef0f3";
+    sq.style.borderColor = ERR;
+    legend.append(el("span", "", [sq, "Failed to load"]));
+  }
+  wrap.append(legend);
+  if (seamRow > 0) wrap.append(el("div", "note seamnote", WATER_SEAM_NOTE));
   return wrap;
 }

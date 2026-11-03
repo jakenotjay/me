@@ -17,7 +17,7 @@ import {
   rescaleToIndex,
   toClassIndices,
 } from "./colormap";
-import { monthFor, yearFor, type ExplorerState } from "../state";
+import { activeYear, monthFor, yearFor, type ExplorerState } from "../state";
 import { sourceCoopLimiter } from "./limiter";
 import { logFailureOnce } from "./retry-fetch";
 import { ARGMAX_NODATA, argmaxClasses } from "./forty";
@@ -313,7 +313,7 @@ export function buildDeckLayers(
     if (def.index && !items) continue;
     seen.add(def.id);
 
-    const t: TimeKey = { year: yearFor(def, state.year), month: monthFor(def, state.month) };
+    const t: TimeKey = { year: yearFor(def, activeYear(state)), month: monthFor(def, state.month) };
     const mode: Gen["mode"] = def.render === "presence-below-z14" && zoom < PRESENCE_MAX_ZOOM ? "presence" : "main";
     const key = genKey(def, t, mode);
 

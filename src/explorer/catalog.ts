@@ -138,9 +138,44 @@ const fortyUrl =
       ? `${BASE}/forest-typology-2020/v2_beta/${need(year, "year")}/${need(id, "id")}.tif`
       : `${BASE}/forest-typology-2020/v1/${need(id, "id")}.tif`;
 
-const SURFACE_WATER_MONTHS = range(2022, 2024).flatMap((y) =>
-  range(1, 12).map((m) => `${y}-${String(m).padStart(2, "0")}`),
-);
+export const monthsOf = (y0: number, y1: number) =>
+  range(y0, y1).flatMap((y) => range(1, 12).map((m) => `${y}-${String(m).padStart(2, "0")}`));
+const SURFACE_WATER_MONTHS = monthsOf(2022, 2024);
+
+/** Months the Pixel panel reads for surface water: the Landsat C1 `tiles/` archive plus v1.5 (2017-01..2024-12). */
+const SURFACE_WATER_INSPECT_MONTHS = monthsOf(2017, 2024);
+/** First month of the v1.5 (Landsat C2) series; everything before it is the older JRC GSW VER5-0 archive. */
+export const SURFACE_WATER_SEAM = "2022-01";
+
+const SW_BASE = `${BASE}/jrc-global-surface-water-monthly`;
+
+function parseMonth(mo: string): [string, string] {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(mo)) throw new Error(`catalog url: bad month ${mo}`);
+  return [mo.slice(0, 4), mo.slice(5, 7)];
+}
+
+/**
+ * Pixel offsets (rows from the north edge of the archive, columns from the west edge, both 4000 px per degree
+ * from 180W / 80N) of the 10-degree zone `id` (`<lon>_<lat>`, e.g. `0E_10N`, `10W_10S`), zero-padded to 10 digits.
+ */
+export function surfaceWaterOffsets(id: string): { y: string; x: string } {
+  const m = /^(\d{1,3})([EW])_(\d{1,2})([NS])$/.exec(id);
+  if (!m) throw new Error(`catalog url: bad zone id ${id}`);
+  const west = (m[2] === "W" ? -1 : 1) * Number(m[1]);
+  const north = (m[4] === "S" ? -1 : 1) * Number(m[3]);
+  const pad = (n: number) => String(n).padStart(10, "0");
+  return { y: pad((80 - north) * 4000), x: pad((west + 180) * 4000) };
+}
+
+/** Monthly water file for zone `id` in `YYYY-MM`: the `tiles/` archive before 2022 (no overviews), v1_5 COGs from 2022. */
+export function surfaceWaterInspectUrl(id: string | undefined, month: string | undefined): string {
+  const zone = need(id, "id");
+  const [y, m] = parseMonth(need(month, "month"));
+  if (Number(y) >= 2022) return `${SW_BASE}/v1_5/${y}/${y}_${m}/monthlyhistory_${zone}_v1_5_${y}_${m}.tif`;
+  const { y: yo, x: xo } = surfaceWaterOffsets(zone);
+  const name = y === "2021" ? `${yo}-${xo}` : `${y}_${m}-${yo}-${xo}`;
+  return `${SW_BASE}/tiles/${y}/${y}_${m}/${name}.tif`;
+}
 
 export const LAYERS: LayerDef[] = [
   {
@@ -343,17 +378,17 @@ export const LAYERS: LayerDef[] = [
     group: "other",
     title: "Surface water (monthly)",
     description:
-      "JRC monthly water observations at 0.00025 degrees, for 2022–2024 only: the 2017–2021 files have no overviews and are left out.",
+      "JRC monthly water observations at 0.00025 degrees. The map shows 2022–2024; the Pixel panel reads the monthly history back to 2017.",
     sourceUrl: readme("jrc-global-surface-water-monthly"),
     months: SURFACE_WATER_MONTHS,
     minZoom: 6,
     index: "surface-water",
+    inspectMonths: SURFACE_WATER_INSPECT_MONTHS,
+    inspectUrl: ({ id, month }) => surfaceWaterInspectUrl(id, month),
     url: ({ id, month }) => {
       const mo = need(month, "month");
       if (!/^\d{4}-\d{2}$/.test(mo)) throw new Error(`catalog url: bad month ${mo}`);
-      const [y, m] = mo.split("-");
-      need(id, "id");
-      return `${BASE}/jrc-global-surface-water-monthly/v1_5/${y}/${y}_${m}/monthlyhistory_${id}_v1_5_${y}_${m}.tif`;
+      return surfaceWaterInspectUrl(id, mo);
     },
     legend: {
       kind: "classes",
