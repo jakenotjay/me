@@ -15,7 +15,13 @@ const BASEMAPS: Array<{ id: ExplorerState["basemap"]; label: string }> = [
   { id: "none", label: "None" },
 ];
 
-type Row = { def: LayerDef; check: HTMLInputElement; slider: HTMLInputElement; out: HTMLOutputElement; month?: HTMLSelectElement };
+type Row = {
+  def: LayerDef; check: HTMLInputElement; slider: HTMLInputElement; out: HTMLOutputElement; month?: HTMLSelectElement;
+  /** Opens or closes the layer's info drop-down. */
+  setOpen: (open: boolean) => void;
+  /** Whether the layer was on at the last update, so the drop-down only moves when the layer is switched on or off. */
+  wasOn?: boolean;
+};
 
 /** The right "Map & layers" card. Built once; later state changes only patch values in place. */
 export function mountLayersCard(root: HTMLElement, store: Store): void {
@@ -66,7 +72,11 @@ export function mountLayersCard(root: HTMLElement, store: Store): void {
     root.hidden = !s.controlsOpen;
     for (const r of radios) r.checked = r.value === s.basemap;
     for (const [id, r] of rows) {
-      r.check.checked = s.visible.includes(id);
+      const on = s.visible.includes(id);
+      // Switching a layer on opens its info drop-down; switching it off closes it. In between, the user's own toggles stay.
+      if (on !== r.wasOn) r.setOpen(on);
+      r.wasOn = on;
+      r.check.checked = on;
       const op = Math.round((s.opacity[id] ?? r.def.defaultOpacity) * 100);
       if (r.slider.value !== String(op)) r.slider.value = String(op);
       r.out.textContent = `${op}%`;
@@ -94,9 +104,12 @@ function buildRow(def: LayerDef, store: Store): { box: HTMLElement; row: Row } {
 
   const body = el("div", "layer-body");
   body.hidden = true;
+  const setOpen = (open: boolean) => {
+    body.hidden = !open;
+    info.setAttribute("aria-expanded", String(open));
+  };
   info.addEventListener("click", () => {
-    body.hidden = !body.hidden;
-    info.setAttribute("aria-expanded", String(!body.hidden));
+    setOpen(body.hidden);
   });
 
   const slider = el("input");
@@ -110,12 +123,19 @@ function buildRow(def: LayerDef, store: Store): { box: HTMLElement; row: Row } {
   });
   body.append(el("div", "ctl", [el("span", "k", "Opacity"), slider, out]));
 
-  const link = el("a", "", "Dataset page");
-  link.href = def.sourceUrl;
-  link.target = "_blank";
-  link.rel = "noopener";
-  body.append(el("div", "note", def.description), el("div", "note", link));
+  const ext = (href: string, text: string) => {
+    const a = el("a", "", text);
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    return a;
+  };
+  body.append(
+    el("div", "note", def.description),
+    el("div", "note", ["Source: ", ext(def.origin.url, def.origin.by)]),
+    el("div", "note", ["Read from ", ext(def.sourceUrl, "Epoch's source.coop mirror")]),
+  );
 
   box.append(head, body);
-  return { box, row: { def, check, slider, out } };
+  return { box, row: { def, check, slider, out, setOpen } };
 }

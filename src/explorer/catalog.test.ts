@@ -14,6 +14,9 @@ describe("catalog", () => {
       expect(l.description.length).toBeGreaterThan(0);
       expect(l.legend).toBeTruthy();
       expect(l.sourceUrl).toMatch(/^https:\/\//);
+      expect(l.origin.by.length).toBeGreaterThan(0);
+      expect(l.origin.url).toMatch(/^https:\/\//);
+      expect(l.origin.url).not.toContain("source.coop");
     }
   });
   it("class and ramp colours are valid hex", () => {

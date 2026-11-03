@@ -50,6 +50,11 @@ function block(def: LayerDef, s: ExplorerState, failed: boolean): HTMLElement {
     box.append(el("div", "ramp", fill), el("div", "ends", [el("span", "mono", lg.minLabel), el("span", "mono", lg.maxLabel)]));
   }
   if (lg.note) box.append(el("div", "note", lg.note));
+  const src = el("a", "", def.origin.by);
+  src.href = def.origin.url;
+  src.target = "_blank";
+  src.rel = "noopener";
+  box.append(el("div", "note", ["Source: ", src]));
   return box;
 }
 

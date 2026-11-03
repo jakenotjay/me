@@ -1,7 +1,16 @@
 import type { ClassEntry, LayerDef, Legend } from "./types";
 
 const BASE = "https://data.source.coop/epoch";
-const readme = (slug: string) => `${BASE}/${slug}/README.md`;
+/** The product's page on source.coop (its README, files and metadata in one place). */
+const readme = (slug: string) => `https://source.coop/epoch/${slug}`;
+
+// Where each product was first published, before Epoch mirrored it on source.coop.
+const FORTY_V1_ORIGIN = { by: "Nature Trace (Neumann et al.), Figshare+", url: "https://doi.org/10.25452/figshare.plus.32288616.v1" };
+const FORTY_V2_ORIGIN = {
+  by: "Nature Trace (Neumann et al.), Scientific Data paper",
+  url: "https://www.nature.com/articles/s41597-026-08299-5",
+};
+const TMF_ORIGIN = { by: "European Commission JRC, TMF v1.2025", url: "https://forobs.jrc.ec.europa.eu/TMF/data" };
 function need<T>(v: T | undefined, name: string): T {
   if (v === undefined || v === null || (v as unknown) === "") throw new Error(`catalog url: missing ${name}`);
   return v;
@@ -185,6 +194,7 @@ export const LAYERS: LayerDef[] = [
     description:
       "Annual 10 m forest typology for 2017–2025 (beta), showing the most likely class per pixel: primary, naturally regenerating, planted, plantation, tree crops or other land.",
     sourceUrl: readme("forest-typology-2020"),
+    origin: FORTY_V2_ORIGIN,
     years: range(2017, 2025),
     minZoom: 8,
     index: "forty",
@@ -205,6 +215,7 @@ export const LAYERS: LayerDef[] = [
     description:
       "Forest typology for 2020 at 10 m, showing the most likely class per pixel; anything not forest is other land.",
     sourceUrl: readme("forest-typology-2020"),
+    origin: FORTY_V1_ORIGIN,
     minZoom: 8,
     index: "forty",
     url: fortyUrl("v1"),
@@ -224,6 +235,7 @@ export const LAYERS: LayerDef[] = [
     description:
       "JRC Tropical Moist Forests land-cover state for each year from 1990 to 2025: undisturbed, degraded, deforested, regrowth, water or other.",
     sourceUrl: readme("jrc-tmf"),
+    origin: TMF_ORIGIN,
     years: range(1990, 2025),
     minZoom: 3,
     index: "tmf",
@@ -239,6 +251,7 @@ export const LAYERS: LayerDef[] = [
     title: "TMF deforestation year",
     description: "JRC TMF: the year each pixel of tropical moist forest was first deforested, 1984–2025.",
     sourceUrl: readme("jrc-tmf"),
+    origin: TMF_ORIGIN,
     minZoom: 3,
     index: "tmf",
     url: tmfUrl(() => "DeforestationYear"),
@@ -253,6 +266,7 @@ export const LAYERS: LayerDef[] = [
     title: "TMF degradation year",
     description: "JRC TMF: the year each pixel of tropical moist forest was first degraded, 1984–2025.",
     sourceUrl: readme("jrc-tmf"),
+    origin: TMF_ORIGIN,
     minZoom: 3,
     index: "tmf",
     url: tmfUrl(() => "DegradationYear"),
@@ -267,6 +281,7 @@ export const LAYERS: LayerDef[] = [
     title: "TMF transition map (main classes)",
     description: "JRC TMF summary of what happened to each pixel between 1990 and the end of 2025, in 9 main classes.",
     sourceUrl: readme("jrc-tmf"),
+    origin: TMF_ORIGIN,
     minZoom: 3,
     index: "tmf",
     url: tmfUrl(() => "TransitionMap_MainClasses"),
@@ -282,6 +297,7 @@ export const LAYERS: LayerDef[] = [
     description:
       "JRC TMF transition map split into 39 detailed subtypes, such as degradation then deforestation or regrowth after plantation.",
     sourceUrl: readme("jrc-tmf"),
+    origin: TMF_ORIGIN,
     minZoom: 3,
     index: "tmf",
     url: tmfUrl(() => "TransitionMap_Subtypes"),
@@ -296,6 +312,7 @@ export const LAYERS: LayerDef[] = [
     title: "TMF undisturbed and degraded forest",
     description: "JRC TMF forest extent at the end of 2025, split into undisturbed and degraded forest.",
     sourceUrl: readme("jrc-tmf"),
+    origin: TMF_ORIGIN,
     minZoom: 3,
     index: "tmf",
     url: tmfUrl(() => "UndisturbedDegradedForest"),
@@ -311,6 +328,7 @@ export const LAYERS: LayerDef[] = [
     description:
       "Global map at 1 km of the main driver of forest loss for 2001–2025, such as agriculture, logging or wildfire.",
     sourceUrl: readme("global-forest-loss-drivers"),
+    origin: { by: "WRI and Google DeepMind (Sims et al. 2025), Zenodo", url: "https://doi.org/10.5281/zenodo.19485190" },
     minZoom: 0,
     url: () => `${BASE}/global-forest-loss-drivers/v1_3/drivers_forest_loss_1km_2001_2025_v1_3.tif`,
     legend: { kind: "classes", classes: DRIVER_CLASSES, note: "Dominant driver of loss, 2001–2025 composite." },
@@ -325,6 +343,7 @@ export const LAYERS: LayerDef[] = [
     title: "Natural and planted forests",
     description: "Global map at about 30 m of whether forest in 2020 is natural or planted.",
     sourceUrl: readme("global-natural-planted-forests"),
+    origin: { by: "Xiao Yuelong (2024), Zenodo", url: "https://doi.org/10.5281/zenodo.10701417" },
     minZoom: 6,
     index: "natural-planted",
     url: ({ id }) => `${BASE}/global-natural-planted-forests/v1/tiles/${need(id, "id")}.tif`,
@@ -345,6 +364,7 @@ export const LAYERS: LayerDef[] = [
     title: "JRC global forest cover 2020",
     description: "JRC map at 10 m of where forest stood in 2020 (version 4), used as the EUDR forest baseline.",
     sourceUrl: readme("jrc-global-forest-cover-2020"),
+    origin: { by: "European Commission JRC, GFC2020 v4", url: "https://data.europa.eu/89h/cf7c49ea-8f00-4c5a-bd40-6f25dc341580" },
     minZoom: 0,
     url: () => `${BASE}/jrc-global-forest-cover-2020/v4/JRC_GFC2020_V4_COG.tif`,
     legend: { kind: "classes", classes: [{ value: 1, label: "Forest", color: "#4D9221" }] },
@@ -358,6 +378,7 @@ export const LAYERS: LayerDef[] = [
     title: "JRC global forest types 2020",
     description: "JRC map at 10 m splitting 2020 forest into primary, naturally regenerating and planted/plantation.",
     sourceUrl: readme("jrc-global-forest-types-2020"),
+    origin: { by: "European Commission JRC, GFT2020 v1", url: "https://data.europa.eu/89h/45182662-3015-4a25-8d1e-aa857d75235d" },
     minZoom: 0,
     url: () => `${BASE}/jrc-global-forest-types-2020/v1/JRC_GFT2020_V1_cog.tif`,
     legend: {
@@ -380,6 +401,7 @@ export const LAYERS: LayerDef[] = [
     description:
       "JRC monthly water observations at 0.00025 degrees. The map shows 2022–2024; the Pixel panel reads the monthly history back to 2017.",
     sourceUrl: readme("jrc-global-surface-water-monthly"),
+    origin: { by: "EC JRC/Google, Global Surface Water", url: "https://global-surface-water.appspot.com/download" },
     months: SURFACE_WATER_MONTHS,
     minZoom: 6,
     index: "surface-water",

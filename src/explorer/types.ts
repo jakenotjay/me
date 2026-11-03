@@ -5,7 +5,11 @@ export type Legend =
 export type LayerGroup = "forty" | "tmf" | "other";
 export type IndexName = "forty" | "tmf" | "natural-planted" | "surface-water";
 export type LayerDef = {
-  id: string; group: LayerGroup; title: string; description: string; sourceUrl: string;
+  id: string; group: LayerGroup; title: string; description: string;
+  /** Epoch's product page on source.coop, e.g. https://source.coop/epoch/jrc-tmf. */
+  sourceUrl: string;
+  /** The original publication the mirror was made from: who published it and where. */
+  origin: { by: string; url: string };
   years?: number[]; months?: string[]; minZoom: number; maxNativeZoom?: number; index?: IndexName;
   /** Months the Pixel panel reads (can reach back further than `months`, which is what the map shows). */
   inspectMonths?: string[];

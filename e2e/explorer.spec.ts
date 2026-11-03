@@ -91,3 +91,29 @@ test("surface water: time bar in months, and inspect shows the 96-month water st
   // A water pixel: at least one cell is the water colour.
   await expect(page.locator('#left svg [data-month][fill="#0905FF"]').first()).toBeVisible();
 });
+
+test("switching a layer on opens its info, with links to the original source and the mirror", async ({ page }) => {
+  await page.goto("explorer/");
+  await page.getByRole("button", { name: "Layers" }).click();
+  const info = page.getByRole("button", { name: "About TMF deforestation year" });
+  const check = page.getByRole("checkbox", { name: "TMF deforestation year" });
+  await expect(info).toHaveAttribute("aria-expanded", "false");
+  await check.check();
+  await expect(info).toHaveAttribute("aria-expanded", "true");
+  const box = page.locator(".layer", { has: info });
+  await expect(box.getByRole("link", { name: /European Commission JRC/ })).toHaveAttribute(
+    "href",
+    "https://forobs.jrc.ec.europa.eu/TMF/data",
+  );
+  await expect(box.getByRole("link", { name: /source\.coop mirror/ })).toHaveAttribute(
+    "href",
+    "https://source.coop/epoch/jrc-tmf",
+  );
+  // The user can still close it while the layer stays on, and it stays closed.
+  await info.click();
+  await expect(info).toHaveAttribute("aria-expanded", "false");
+  // Switching it off and on again reopens it.
+  await check.uncheck();
+  await check.check();
+  await expect(info).toHaveAttribute("aria-expanded", "true");
+});

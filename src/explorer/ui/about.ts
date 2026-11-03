@@ -48,10 +48,18 @@ export function mountAbout(root: HTMLElement): void {
   const seen = new Set<string>();
   const list = el("ul", "plain");
   for (const def of LAYERS) {
-    if (seen.has(def.sourceUrl)) continue;
-    seen.add(def.sourceUrl);
-    const slug = def.sourceUrl.split("/").slice(-2, -1)[0];
-    list.append(el("li", "", link(def.sourceUrl, PRODUCT_NAMES[slug] ?? slug)));
+    const key = `${def.sourceUrl} ${def.origin.url}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const slug = def.sourceUrl.split("/").pop() ?? "";
+    list.append(
+      el("li", "", [
+        link(def.sourceUrl, PRODUCT_NAMES[slug] ?? slug),
+        " (source: ",
+        link(def.origin.url, def.origin.by),
+        ")",
+      ]),
+    );
   }
   body.append(list);
   const back = el("a", "", "Back to site");
