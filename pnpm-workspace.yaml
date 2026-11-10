@@ -1,3 +1,15 @@
 allowBuilds:
   sharp: true
   esbuild: true
+
+# This upgrade intentionally uses the exact deck.gl-raster v0.10 release.
+# Keep the release-age policy for all other packages and future versions.
+minimumReleaseAgeExclude:
+  - '@developmentseed/affine@0.10.0'
+  - '@developmentseed/deck.gl-geotiff@0.10.0'
+  - '@developmentseed/deck.gl-raster@0.10.0'
+  - '@developmentseed/geotiff@0.10.0'
+  - '@developmentseed/morecantile@0.10.0'
+  - '@developmentseed/proj@0.10.0'
+  - '@developmentseed/range-reader@0.10.0'
+  - '@developmentseed/raster-reproject@0.10.0'
