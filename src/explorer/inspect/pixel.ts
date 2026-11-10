@@ -1,3 +1,4 @@
+import { RangeReader } from "@developmentseed/range-reader";
 import { GeoTIFF } from "@developmentseed/geotiff";
 import { lonLatToCrs } from "../proj";
 import { readBands } from "../raster/bands";
@@ -25,17 +26,17 @@ export function pixelFor(
 
 // --- GeoTIFF open caches (LRU) --------------------------------------------
 
-type OpenCache = { max: number; chunkSize?: number; map: Map<string, Promise<GeoTIFF>> };
+type OpenCache = { max: number; reader?: RangeReader; map: Map<string, Promise<GeoTIFF>> };
 const general: OpenCache = { max: 128, map: new Map() };
 // One surface-water click opens 96 monthly files. They get their own LRU (two zones' worth) so a water click
 // cannot evict the ForTy/TMF opens, and a second click in the same zone reuses all 96.
-// 16 KiB header chunks (the library default is 64 KiB) cut a pre-2022 `tiles/` file from ~200 KB / 4 requests to
+// 16 KiB metadata reads (the library default is 64 KiB) cut a pre-2022 `tiles/` file from ~200 KB / 4 requests to
 // ~52 KB / 4 requests per point read: its TileOffsets array is read lazily, one chunk of it, not eagerly.
-const water: OpenCache = { max: 192, chunkSize: 16 * 1024, map: new Map() };
+const water: OpenCache = { max: 192, reader: new RangeReader({ minMetadataReadBytes: 16 * 1024 }), map: new Map() };
 const cacheFor = (url: string): OpenCache => (url.includes("/jrc-global-surface-water-monthly/") ? water : general);
 
 function open(url: string, signal?: AbortSignal): Promise<GeoTIFF> {
-  const { max, chunkSize, map: opened } = cacheFor(url);
+  const { max, reader, map: opened } = cacheFor(url);
   const hit = opened.get(url);
   if (hit) {
     opened.delete(url); // refresh recency
@@ -45,7 +46,7 @@ function open(url: string, signal?: AbortSignal): Promise<GeoTIFF> {
   // An aborted caller must not start a new open (it would queue requests in the shared limiter).
   // Once started the open is shared and cached, so it is not tied to the signal.
   signal?.throwIfAborted();
-  const p = GeoTIFF.fromUrl(url, { concurrencyLimiter: sourceCoopLimiter, ...(chunkSize ? { chunkSize } : {}) });
+  const p = GeoTIFF.fromUrl(url, { concurrencyLimiter: sourceCoopLimiter, ...(reader ? { reader } : {}) });
   p.catch(() => opened.delete(url));
   opened.set(url, p);
   while (opened.size > max) opened.delete(opened.keys().next().value as string);
@@ -82,7 +83,9 @@ export function isNotFound(err: unknown): boolean {
   if (!e || typeof e !== "object") return false;
   if ([e.code, e.status, e.statusCode].some((v) => v === 404)) return true;
   if (e.cause && e.cause !== err && isNotFound(e.cause)) return true;
-  return typeof e.message === "string" && /\b404\b/.test(e.message);
+  return typeof e.message === "string" && (
+    /\b404\b/.test(e.message) || /^https?:\/\/\S+ not found$/.test(e.message)
+  );
 }
 
 /** Read one layer at a point for a year/month, trying each index item that contains the point. */

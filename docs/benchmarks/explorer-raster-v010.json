@@ -1,0 +1,1879 @@
+{
+  "date": "2026-11-09",
+  "layer": "forty-v2",
+  "year": 2025,
+  "location": [
+    -55,
+    -11
+  ],
+  "viewport": [
+    1280,
+    800
+  ],
+  "method": [
+    "Production Astro builds, headless Chromium with software WebGL; no basemap.",
+    "Cold means a fresh browser context and disabled HTTP cache. Upstream/CDN caches and live network conditions were uncontrolled.",
+    "Versions alternate within each comparison. Separate experiments should not be treated as a single controlled comparison.",
+    "firstTilesMs measures first texture availability, not screenshot-confirmed visual paint. loadedMs uses generation/viewport completion callbacks on a fresh page.",
+    "warm-reenable toggles the layer off/on in the same page after disposing its generation; it retains in-memory byte caches but no previous-generation GPU textures.",
+    "requestCount and wireBytes include Source Cooperative data requests only, excluding local scripts, index JSON and fonts. Cold times include page boot and local index processing.",
+    "Three runs per version for paired comparisons. Lowzoom uses two contexts per zoom; both labels refer to the same experimental build.",
+    "Prefetching historic years has been investigated, not implemented or benchmarked here."
+  ],
+  "experiments": [
+    {
+      "name": "upgrade",
+      "configuration": "v0.9 vs v0.10; mosaic admission 6; v0.10 metadata 64 KiB",
+      "browser": "156.0.8078.4",
+      "results": [
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 3935.5,
+          "loadedMs": 5152.799999952316,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4343635,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 1290.9000000953674,
+          "loadedMs": 2957.2000000476837,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4230898,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 1039.3999998569489,
+          "loadedMs": 3188.5999999046326,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4230822,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 2505.699999809265,
+          "loadedMs": 4155.699999809265,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4342235,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 2155,
+          "loadedMs": 3872.2000000476837,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4343754,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 1071.7999999523163,
+          "loadedMs": 3371.2000000476837,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4230925,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 3188.4000000953674,
+          "loadedMs": 4954.900000095367,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3832469,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 3192.5,
+          "loadedMs": 3488,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943771,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 1954.5,
+          "loadedMs": 2238,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943523,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 2537.9000000953674,
+          "loadedMs": 4003.7000000476837,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3832445,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 2371.2000000476837,
+          "loadedMs": 4421.200000047684,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3832605,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 3071.2000000476837,
+          "loadedMs": 3291.2000000476837,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943578,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "warm-reenable",
+      "configuration": "v0.9 vs v0.10; mosaic admission 6; v0.10 metadata 64 KiB",
+      "browser": "156.0.8078.4",
+      "results": [
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 3973.5,
+          "loadedMs": 5355.5,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4343527,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 1043.5,
+          "loadedMs": 2694.199999809265,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4355732,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 1573.9000000953674,
+          "loadedMs": 3824.100000143051,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4230542,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 90.79999995231628,
+          "loadedMs": 201.79999995231628,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 1640.9000000953674,
+          "loadedMs": 3407.2000000476837,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4231139,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 94.79999995231628,
+          "loadedMs": 196.90000009536743,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 1788,
+          "loadedMs": 3704.2000000476837,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4346518,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 858.1999998092651,
+          "loadedMs": 2223.699999809265,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4354900,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 1952,
+          "loadedMs": 3138.4000000953674,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4346984,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 9,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 542.1000001430511,
+          "loadedMs": 1975.9000000953674,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 168,
+          "wireBytes": 4355234,
+          "requestedBytes": 4208805,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 1158.5,
+          "loadedMs": 3008.899999856949,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4231103,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 157.80000019073486,
+          "loadedMs": 157.80000019073486,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 2288.0999999046326,
+          "loadedMs": 5104.299999952316,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3832638,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 1604.9000000953674,
+          "loadedMs": 3122.7000000476837,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3844781,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 2673.600000143051,
+          "loadedMs": 3121.7000000476837,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943492,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 232.29999995231628,
+          "loadedMs": 232.29999995231628,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 2223.2999999523163,
+          "loadedMs": 2538.2999999523163,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943565,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 169.09999990463257,
+          "loadedMs": 169.09999990463257,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 2374.5999999046326,
+          "loadedMs": 4639.099999904633,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3832790,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 1212.2000000476837,
+          "loadedMs": 2491.5999999046326,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3845238,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 2288.2000000476837,
+          "loadedMs": 3971.5999999046326,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3832724,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.9",
+          "zoom": 13,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 2027.2000000476837,
+          "loadedMs": 3278,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 99,
+          "wireBytes": 3844984,
+          "requestedBytes": 3757961,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 2386.5999999046326,
+          "loadedMs": 2804.0999999046326,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943440,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 111.79999995231628,
+          "loadedMs": 142.39999985694885,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "metadata",
+      "configuration": "v0.10 only; mosaic admission 6; compare metadata 64 KiB vs 16 KiB",
+      "browser": "156.0.8078.4",
+      "results": [
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 3254.7999999523163,
+          "loadedMs": 5221.399999856949,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4231019,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 118,
+          "loadedMs": 171.80000019073486,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 1308.2000000476837,
+          "loadedMs": 3258,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3212943,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 9,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 88.89999985694885,
+          "loadedMs": 175.29999995231628,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 1573.5999999046326,
+          "loadedMs": 3755.7999999523163,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3212877,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 9,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 106,
+          "loadedMs": 256.89999985694885,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 2321.9000000953674,
+          "loadedMs": 3105.300000190735,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4231406,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 107.79999995231628,
+          "loadedMs": 193.79999995231628,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 1837.5,
+          "loadedMs": 3904.2000000476837,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 4231364,
+          "requestedBytes": 4195464,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 9,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 92.90000009536743,
+          "loadedMs": 162.5,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 1691,
+          "loadedMs": 3237.7999999523163,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3212066,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 9,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 111.90000009536743,
+          "loadedMs": 150.20000004768372,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 2876.0999999046326,
+          "loadedMs": 3221.5,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943440,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 90.29999995231628,
+          "loadedMs": 134,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 13,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 2406.2000000476837,
+          "loadedMs": 2622.9000000953674,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3894076,
+          "requestedBytes": 3870665,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 13,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 112.79999995231628,
+          "loadedMs": 145.5,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 13,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 2041.1000001430511,
+          "loadedMs": 2673.7000000476837,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3894480,
+          "requestedBytes": 3870665,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 13,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 95.20000004768372,
+          "loadedMs": 142.70000004768372,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 2603.7999999523163,
+          "loadedMs": 2971.4000000953674,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943725,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 110.5,
+          "loadedMs": 146,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 2654.7999999523163,
+          "loadedMs": 3104.7999999523163,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3943958,
+          "requestedBytes": 3919817,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10",
+          "zoom": 13,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 110.09999990463257,
+          "loadedMs": 144.79999995231628,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 13,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 2421.7999999523163,
+          "loadedMs": 2954.399999856949,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 35,
+          "wireBytes": 3894745,
+          "requestedBytes": 3870665,
+          "files": 1,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "version": "v0.10-16KiB",
+          "zoom": 13,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 96,
+          "loadedMs": 144.79999995231628,
+          "textures": 14,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "mosaic-6-vs-24",
+      "configuration": "v0.10; metadata 16 KiB; compare mosaic admission 6 vs 24",
+      "browser": "156.0.8078.4",
+      "results": [
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic6",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 4223.200000047684,
+          "loadedMs": 5639.799999952316,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3212922,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic6",
+          "zoom": 9,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 92.79999995231628,
+          "loadedMs": 151.09999990463257,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 1026.5,
+          "loadedMs": 2459.800000190735,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3207753,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 111.60000014305115,
+          "loadedMs": 143.60000014305115,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 971.3999998569489,
+          "loadedMs": 2338,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3208820,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 93,
+          "loadedMs": 148.29999995231628,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic6",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 1688.2000000476837,
+          "loadedMs": 2905.7000000476837,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3212361,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic6",
+          "zoom": 9,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 92.5,
+          "loadedMs": 150,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic6",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 2123,
+          "loadedMs": 4239.599999904633,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3211399,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic6",
+          "zoom": 9,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 96.90000009536743,
+          "loadedMs": 164.10000014305115,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 1656,
+          "loadedMs": 2721.5,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3209062,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 93.29999995231628,
+          "loadedMs": 150,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "mosaic-24-vs-48",
+      "configuration": "v0.10; metadata 16 KiB; compare mosaic admission 24 vs 48",
+      "browser": "156.0.8078.4",
+      "results": [
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 3658.2999999523163,
+          "loadedMs": 4641.699999809265,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3208668,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 108.19999980926514,
+          "loadedMs": 146,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic48",
+          "zoom": 9,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 1125.7000000476837,
+          "loadedMs": 2724.7000000476837,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3208665,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic48",
+          "zoom": 9,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 92.29999995231628,
+          "loadedMs": 260,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic48",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 1884,
+          "loadedMs": 3599.2999999523163,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3208668,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic48",
+          "zoom": 9,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 120.80000019073486,
+          "loadedMs": 202.20000004768372,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 2,
+          "phase": "cold",
+          "firstTilesMs": 1656.7000000476837,
+          "loadedMs": 2792.300000190735,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3208833,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 2,
+          "phase": "warm-reenable",
+          "firstTilesMs": 179.09999990463257,
+          "loadedMs": 179.09999990463257,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 1311.7999999523163,
+          "loadedMs": 2319.9000000953674,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3209035,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic24",
+          "zoom": 9,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 279.09999990463257,
+          "loadedMs": 279.09999990463257,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic48",
+          "zoom": 9,
+          "run": 3,
+          "phase": "cold",
+          "firstTilesMs": 1321.8000001907349,
+          "loadedMs": 3371.600000143051,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 42,
+          "wireBytes": 3208403,
+          "requestedBytes": 3177621,
+          "files": 21,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "mosaic48",
+          "zoom": 9,
+          "run": 3,
+          "phase": "warm-reenable",
+          "firstTilesMs": 220.60000014305115,
+          "loadedMs": 220.60000014305115,
+          "textures": 21,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "lowzoom",
+      "configuration": "v0.10; metadata 16 KiB; mosaic admission 24; two contexts per zoom of the same experimental build with minimum zoom 6",
+      "browser": "156.0.8078.4",
+      "results": [
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "v0.10-lowzoom",
+          "zoom": 7,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 3347.5,
+          "loadedMs": 9080,
+          "textures": 274,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 535,
+          "wireBytes": 7133248,
+          "requestedBytes": 6676091,
+          "files": 274,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "v0.10-lowzoom",
+          "zoom": 7,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 115.59999990463257,
+          "loadedMs": 592.9000000953674,
+          "textures": 274,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "v0.10-lowzoom",
+          "zoom": 7,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 1638,
+          "loadedMs": 6471.300000190735,
+          "textures": 274,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 535,
+          "wireBytes": 7133998,
+          "requestedBytes": 6676091,
+          "files": 274,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "v0.10-lowzoom",
+          "zoom": 7,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 139.59999990463257,
+          "loadedMs": 650.2999999523163,
+          "textures": 274,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "v0.10-lowzoom",
+          "zoom": 6,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 1505.2000000476837,
+          "loadedMs": 22504.300000190735,
+          "textures": 1104,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 2102,
+          "wireBytes": 27049502,
+          "requestedBytes": 25233352,
+          "files": 1104,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "v0.10-lowzoom",
+          "zoom": 6,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 122.79999995231628,
+          "loadedMs": 1976.5,
+          "textures": 1104,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "v0.10-lowzoom",
+          "zoom": 6,
+          "run": 1,
+          "phase": "cold",
+          "firstTilesMs": 1938.2999999523163,
+          "loadedMs": 24579.5,
+          "textures": 1104,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 2102,
+          "wireBytes": 27052631,
+          "requestedBytes": 25233352,
+          "files": 1104,
+          "failures": 0,
+          "errors": []
+        },
+        {
+          "layer": "forty-v2",
+          "year": 2025,
+          "version": "v0.10-lowzoom",
+          "zoom": 6,
+          "run": 1,
+          "phase": "warm-reenable",
+          "firstTilesMs": 115.40000009536743,
+          "loadedMs": 2073.2000000476837,
+          "textures": 1104,
+          "retries": {
+            "retries": 0,
+            "failures": 0
+          },
+          "requestCount": 0,
+          "wireBytes": 0,
+          "requestedBytes": 0,
+          "files": 0,
+          "failures": 0,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

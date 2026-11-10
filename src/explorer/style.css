@@ -127,9 +127,20 @@ i.sq { flex: none; display: inline-block; width: 10px; height: 10px; border-radi
   bottom: 36px; left: 12px; right: calc(var(--dock-w) + 24px); width: 560px; max-width: calc(100% - var(--dock-w) - 36px);
   margin: 0 auto; flex-direction: row; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px;
 }
-#timebar input[type="range"] { flex: 1; min-width: 0; accent-color: var(--blue); }
+#timebar .time-track { flex: 1; min-width: 0; }
+#timebar input[type="range"] { display: block; width: 100%; margin: 0; accent-color: var(--blue); }
+.time-progress { height: 3px; margin-top: 5px; overflow: hidden; background: var(--line); border-radius: 2px; }
+.time-progress-fill { display: block; height: 100%; background: var(--blue); transition: width 160ms linear; }
+.time-progress[data-state="ready"] .time-progress-fill { opacity: .55; }
+.time-progress[data-state="error"] .time-progress-fill { background: #b45b26; }
+.time-load-status { display: block; min-height: 12px; margin-top: 3px; font-size: 9px; line-height: 12px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .time-progress-fill { transition: none; } }
 .playbtn { font: inherit; font-size: 11px; width: 30px; height: 26px; flex: none; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 4px; cursor: pointer; }
 .playbtn:hover { background: var(--blue-soft); }
+.frame-interval { display: grid; grid-template-columns: minmax(42px, auto) auto; gap: 2px 3px; align-items: center; flex: none; font-size: 9px; color: var(--muted); }
+.frame-interval > span:first-child { grid-column: 1 / -1; }
+#timebar .frame-interval input { width: 45px; height: 23px; padding: 2px 3px; border: 1px solid var(--line); border-radius: 4px; background: var(--card); color: var(--ink); font: inherit; font-size: 11px; }
+#timebar .frame-interval input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 .yearout { min-width: 42px; text-align: right; font-size: 13px; font-weight: 700; }
 
 /* About */
@@ -140,7 +151,7 @@ i.sq { flex: none; display: inline-block; width: 10px; height: 10px; border-radi
 @media (max-width: 600px) {
   #topbtns { top: 8px; right: 8px; }
   #dock { top: auto; left: 8px; right: 8px; bottom: 36px; width: auto; }
-  body.has-time #dock { bottom: 94px; }
+  body.has-time #dock { bottom: 114px; }
   #legend { max-height: 32vh; }
   #timebar { left: 8px; right: 8px; bottom: 36px; width: auto; max-width: none; margin: 0; border-radius: 12px; }
   /* Layers and About are bottom sheets; the legend and time bar sit beneath them. */

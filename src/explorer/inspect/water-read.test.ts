@@ -25,10 +25,11 @@ describe("isNotFound", () => {
 
 describe("readLayerPoint on a water month", () => {
   it("404 is no observation (null)", async () => {
-    const fetchMock = vi.fn(async () => new Response("nope", { status: 404 }));
+    const fetchMock = vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => new Response("nope", { status: 404 }));
     vi.stubGlobal("fetch", fetchMock);
     await expect(readLayerPoint(water, items, { month: "2018-03" }, 5, 5)).resolves.toBeNull();
     expect(fetchMock).toHaveBeenCalled();
+    expect(new Headers(fetchMock.mock.calls[0][1]?.headers).get("range")).toBe("bytes=0-16383");
   });
   it("503 is an error, not no observation", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => new Response("busy", { status: 503 })));
@@ -39,7 +40,7 @@ describe("readLayerPoint on a water month", () => {
     await expect(readLayerPoint(water, items, { month: "2018-05" }, 5, 5)).rejects.toBeDefined();
   });
   it("an aborted signal starts no open and no request", async () => {
-    const fetchMock = vi.fn(async () => new Response("nope", { status: 404 }));
+    const fetchMock = vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => new Response("nope", { status: 404 }));
     vi.stubGlobal("fetch", fetchMock);
     const ctl = new AbortController();
     ctl.abort();

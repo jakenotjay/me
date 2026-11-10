@@ -1,7 +1,7 @@
-import type { Layer } from "@deck.gl/core";
-import { COGLayer, MosaicLayer, type GetTileDataOptions } from "@developmentseed/deck.gl-geotiff";
+import type { Layer, LayerProps } from "@deck.gl/core";
+import { COGLayer, COGSource, MosaicLayer, type COGInput, type GetTileDataOptions } from "@developmentseed/deck.gl-geotiff";
 import type { RenderTileResult } from "@developmentseed/deck.gl-raster";
-import type { GeoTIFF, Overview } from "@developmentseed/geotiff";
+import type { ConcurrencyLimiter, GeoTIFF, Overview } from "@developmentseed/geotiff";
 import type { Device, Texture } from "@luma.gl/core";
 import { layerById } from "../catalog";
 import { epsgResolver } from "../proj";
@@ -18,7 +18,8 @@ import {
   toClassIndices,
 } from "./colormap";
 import { activeYear, monthFor, yearFor, type ExplorerState } from "../state";
-import { sourceCoopLimiter } from "./limiter";
+import { fortyReader } from "./reader";
+import { createSourceLimiter, sourceCoopLimiter } from "./limiter";
 import { logFailureOnce } from "./retry-fetch";
 import { ARGMAX_NODATA, argmaxClasses } from "./forty";
 
@@ -94,15 +95,21 @@ function fnsFor(def: LayerDef, mode: "main" | "presence"): TileFns {
   return f;
 }
 
-// --- generations (year-swap with keep-previous) ---------------------------
+// --- generations (one selected time per layer) ---------------------------
 
 type Gen = {
   key: string;
+  renderId: string;
   t: TimeKey;
   mode: "main" | "presence";
   items: IndexItem[] | undefined;
   sources: { id: string; bbox: [number, number, number, number]; itemId: string }[] | undefined;
   loaded: boolean;
+  prepared: boolean;
+  background: boolean;
+  limiter: ConcurrencyLimiter;
+  byteLength: number;
+  lastUsed: number;
   viewport: string[] | null; // mosaic sources in the viewport (once known)
   loadedSources: Set<string>;
   failedSources: Set<string>; // sources whose header read failed: settled, so they do not stall the generation
@@ -115,7 +122,27 @@ type Gen = {
   textures: Set<Texture>;
   disposed: boolean;
 };
-type Track = { current: Gen; previous?: Gen; timer?: ReturnType<typeof setTimeout> };
+type Track = { current: Gen };
+const frames = new Map<string, Gen>();
+const geometries = new WeakMap<IndexItem[], NonNullable<Gen["sources"]>>();
+let preparingState: ExplorerState | null = null;
+let preparingUrgent = false;
+let clock = 0;
+// Nine default Retina frames need ~65–99 MiB of class textures. Keep a
+// bounded budget with headroom for larger viewports instead of evicting a year.
+const MAX_FRAME_BYTES = 256 * 1024 * 1024;
+
+export function setPreparingState(state: ExplorerState | null, urgent = false) { preparingState = state; preparingUrgent = urgent; }
+
+/** Camera changes invalidate prepared GPU frames, while preserving the visible frame. */
+export function invalidatePreparedFrames() {
+  preparingState = null;
+  const visible = new Set([...tracks.values()].map((t) => t.current));
+  for (const gen of [...frames.values()]) {
+    if (!visible.has(gen)) drop(gen);
+    else gen.prepared = false;
+  }
+}
 
 const tracks = new Map<string, Track>();
 let onChange: (() => void) | null = null;
@@ -141,7 +168,10 @@ export function layerFailed(def: LayerDef): boolean {
 // Generations that left the track but may still be drawn by deck until the next setProps.
 let dropped: Gen[] = [];
 function drop(gen: Gen | undefined) {
-  if (gen && !dropped.includes(gen)) dropped.push(gen);
+  if (gen && !dropped.includes(gen)) {
+    frames.delete(gen.key);
+    dropped.push(gen);
+  }
 }
 /** Destroy the textures of every dropped generation. Call after the overlay no longer holds their layers. */
 export function disposeDropped(): number {
@@ -155,6 +185,7 @@ export function disposeDropped(): number {
       n++;
     }
     g.textures.clear();
+    g.byteLength = 0;
   }
   return n;
 }
@@ -173,30 +204,19 @@ export function scheduleDispose() {
 /** Live (not yet destroyed) texture count over the generations still tracked, for measurement. */
 export function liveTextureCount(): number {
   let n = 0;
-  for (const t of tracks.values()) n += t.current.textures.size + (t.previous?.textures.size ?? 0);
+  for (const gen of frames.values()) n += gen.textures.size;
   for (const g of dropped) n += g.textures.size;
   return n;
 }
-/** Called when a previous-year layer is dropped (so the app can re-render). */
+/** Called when a same-date rendering fallback is dropped (so the app can re-render). */
 export function onLayersChanged(fn: (() => void) | null) {
   onChange = fn;
 }
 
-/** Give up waiting for the new year after this long (source.coop can be slow) and drop the previous layer. */
-const KEEP_PREVIOUS_MS = 20000;
-
 function finish(track: Track, gen: Gen) {
   gen.loaded = true;
-  const settled = track.current === gen;
-  if (settled && track.previous) {
-    drop(track.previous);
-    track.previous = undefined;
-    if (track.timer) clearTimeout(track.timer);
-    onChange?.();
-  }
-  if (settled) onFailures?.();
+  if (track.current === gen) onFailures?.();
 }
-const hasContent = (gen: Gen) => gen.loaded || gen.loadedSources.size > 0;
 function checkMosaic(track: Track, gen: Gen) {
   if (gen.loaded || !gen.viewport) return;
   if (gen.viewport.every((id) => gen.loadedSources.has(id) || gen.failedSources.has(id))) finish(track, gen);
@@ -205,39 +225,96 @@ function checkMosaic(track: Track, gen: Gen) {
 const genKey = (def: LayerDef, t: TimeKey, mode: Gen["mode"]) => `${def.id}|${t.year ?? ""}|${t.month ?? ""}|${mode}`;
 
 function newGen(def: LayerDef, t: TimeKey, mode: Gen["mode"], items: IndexItem[] | undefined): Gen {
-  return {
-    key: genKey(def, t, mode),
-    t,
-    mode,
-    items,
-    sources: items?.map((i) => ({ id: sourceId(def, i.id, t), bbox: i.bbox, itemId: i.id })),
-    loaded: false,
-    viewport: null,
-    loadedSources: new Set(),
-    failedSources: new Set(),
-    tileFailed: false,
-    textures: new Set(),
-    disposed: false,
-  };
+  let sources = items && geometries.get(items);
+  if (items && !sources) {
+    sources = items.map((i) => ({ id: i.id, bbox: i.bbox, itemId: i.id }));
+    geometries.set(items, sources);
+  }
+  const gen = {
+    key: genKey(def, t, mode), renderId: `${genKey(def, t, mode)}:${++clock}`, t, mode, items, sources,
+    loaded: false, prepared: false, background: true,
+    byteLength: 0, lastUsed: ++clock,
+    viewport: null, loadedSources: new Set<string>(), failedSources: new Set<string>(),
+    tileFailed: false, textures: new Set<Texture>(), disposed: false,
+  } as Gen;
+  gen.limiter = createSourceLimiter(() => gen.background);
+  frames.set(gen.key, gen);
+  return gen;
 }
 
-function cogFor(def: LayerDef, gen: Gen, id: string, url: string, opacity: number, track: Track, srcId?: string) {
+function frameFor(def: LayerDef, state: ExplorerState, zoom: number, items?: IndexItem[]) {
+  const t = { year: yearFor(def, activeYear(state)), month: monthFor(def, state.month) };
+  const mode = def.render === "presence-below-z14" && zoom < PRESENCE_MAX_ZOOM ? "presence" : "main";
+  return { t, mode: mode as Gen["mode"], key: genKey(def, t, mode) };
+}
+
+/** Prepared means its GPU sublayers have loaded, not merely its downloaded bytes. */
+export function isFramePrepared(state: ExplorerState, zoom: number): boolean {
+  return state.visible.every((id) => {
+    const def = layerById(id);
+    if (!def || zoom < def.minZoom) return true;
+    return !!frames.get(frameFor(def, state, zoom).key)?.prepared;
+  });
+}
+export function frameLayerIds(state: ExplorerState, zoom: number): string[] {
+  return state.visible.flatMap((id) => {
+    const def = layerById(id);
+    if (!def || zoom < def.minZoom) return [];
+    const key = frameFor(def, state, zoom).key;
+    const gen = frames.get(key);
+    return [gen?.sources ? `mosaic:${gen.renderId}` : `cog:${gen?.renderId ?? key}`];
+  });
+}
+export function preparationProgress(state: ExplorerState, zoom: number): LayerLoadProgress[] {
+  return state.visible.flatMap((id) => {
+    const def = layerById(id);
+    if (!def || zoom < def.minZoom) return [];
+    const gen = frames.get(frameFor(def, state, zoom).key);
+    // Historical years use the same footprint geometry and settled camera as
+    // the visible frame, so its actual selected areas give us an exact total
+    // before the historical COG headers have all opened.
+    const current = tracks.get(id)?.current;
+    const knownAreas = gen && current?.sources === gen.sources ? current?.viewport : null;
+    return [gen ? progressFor(gen, knownAreas) : layerLoadProgress(id)];
+  });
+}
+export function markFramePrepared(state: ExplorerState, zoom: number) {
+  for (const id of state.visible) {
+    const def = layerById(id);
+    if (!def || zoom < def.minZoom) continue;
+    const gen = frames.get(frameFor(def, state, zoom).key);
+    if (gen?.loaded && !gen.tileFailed && gen.failedSources.size === 0) gen.prepared = true;
+  }
+}
+
+// Keep standalone opens tied to deck's abort signal while applying our resolver and shared limiter.
+class ExplorerCOGLayer extends COGLayer<ClassTileData> {
+  static layerName = "ExplorerCOGLayer";
+
+  declare props: COGLayer<ClassTileData>["props"] & { explorerLimiter?: ConcurrencyLimiter };
+  protected _openSource(input: COGInput, signal: AbortSignal): Promise<COGSource> {
+    return COGSource.open(input, { signal, epsgResolver, concurrencyLimiter: this.props.explorerLimiter ?? sourceCoopLimiter });
+  }
+}
+
+function cogFor(def: LayerDef, gen: Gen, id: string, url: string, opacity: number, track: Track, srcId?: string, source?: COGSource, subLayerProps?: Partial<LayerProps>) {
   const fns = fnsFor(def, gen.mode);
-  return new COGLayer<ClassTileData>({
+  return new ExplorerCOGLayer({
+    ...subLayerProps,
     id,
-    geotiff: url,
-    concurrencyLimiter: sourceCoopLimiter,
-    epsgResolver,
+    source: source ?? url,
+    ...({ explorerLimiter: gen.limiter } as object),
+    maxRequests: gen.background ? 4 : 256,
     getTileData: async (image, o) => {
       const data = await fns.getTileData(image, o);
       if (gen.disposed) data.texture.destroy(); // finished after its generation was dropped
-      else gen.textures.add(data.texture);
+      else { gen.textures.add(data.texture); gen.byteLength += data.byteLength; }
       return data;
     },
     renderTile: fns.renderTile,
     onTileUnload: (tile: { content?: ClassTileData | null }) => {
       const tex = tile.content?.texture;
-      if (tex && gen.textures.delete(tex)) tex.destroy();
+      if (tex && gen.textures.delete(tex)) { gen.byteLength -= tile.content?.byteLength ?? 0; tex.destroy(); }
     },
     opacity,
     // A header that still fails after the fetch retries counts as settled, so the generation can finish.
@@ -271,90 +348,80 @@ function cogFor(def: LayerDef, gen: Gen, id: string, url: string, opacity: numbe
 function layersFor(def: LayerDef, gen: Gen, opacity: number, track: Track): Layer {
   const urlArgs = { year: gen.t.year, month: gen.t.month };
   if (!gen.sources) {
-    return cogFor(def, gen, `cog:${gen.key}`, def.url(urlArgs), opacity, track);
+    return cogFor(def, gen, `cog:${gen.renderId}`, def.url(urlArgs), opacity, track);
   }
-  return new MosaicLayer({
-    id: `mosaic:${gen.key}`,
-    sources: gen.sources,
+  return new MosaicLayer<NonNullable<Gen["sources"]>[number], COGSource>({
+    id: `mosaic:${gen.renderId}`,
+    data: gen.sources,
+    // Admit COG opens together; the shared per-origin limiter still caps HTTP requests.
+    maxRequests: gen.background ? 4 : 24,
+    ...(def.id === "forty-v2" ? { reader: fortyReader } : {}),
+    concurrencyLimiter: gen.limiter,
     opacity,
-    getSource: undefined,
-    renderSource: (source: { id: string; itemId: string }) => {
-      return cogFor(def, gen, source.id, def.url({ ...urlArgs, id: source.itemId }), opacity, track, source.id);
+    getSource: (item, options) => COGSource.open(def.url({ ...urlArgs, id: item.itemId }), { ...options, epsgResolver }),
+    renderSource: (item, { source, subLayerProps }) => {
+      return cogFor(def, gen, subLayerProps.id, def.url({ ...urlArgs, id: item.itemId }),
+        subLayerProps.opacity ?? opacity, track, item.id, source, subLayerProps);
     },
-    onViewportLoad: (entries: { source: { id: string } }[]) => {
-      gen.viewport = entries.map((e) => e.source.id);
+    onSourceError: (item, { error }) => {
+      logFailureOnce(def.url({ ...urlArgs, id: item.itemId }), error);
+      gen.failedSources.add(item.id);
+      checkMosaic(track, gen);
+      onFailures?.();
+    },
+    onViewportLoad: (entries) => {
+      gen.viewport = entries.map((e) => e.item.id);
       checkMosaic(track, gen);
     },
-  } as never) as unknown as Layer;
+  });
 }
 
-/**
- * Build the deck.gl layers for the visible catalog entries.
- *
- * - Layers below `def.minZoom` (or whose index has not loaded) render nothing.
- * - Index-backed layers become a MosaicLayer of COGLayers (one per index
- *   item in view); others a single COGLayer.
- * - Layer and source ids carry the year/month, so a time change creates new
- *   layers. The previous time's layer stays drawn underneath (at most one)
- *   until the new one reports its viewport loaded (or 20 s pass), then it is
- *   dropped and `onLayersChanged` fires so the app can re-render.
- */
-export function buildDeckLayers(
-  state: ExplorerState,
-  indexes: Partial<Record<IndexName, IndexItem[]>>,
-  zoom: number,
-): Layer[] {
-  const out: Layer[] = [];
+/** Keep prepared frames mounted but invisible; swap only after their GPU layers are ready. */
+export function buildDeckLayers(state: ExplorerState, indexes: Partial<Record<IndexName, IndexItem[]>>, zoom: number): Layer[] {
+  const selected = new Set<Gen>();
+  const warming = new Set<Gen>();
   const seen = new Set<string>();
   for (const id of state.visible) {
     const def = layerById(id);
     if (!def || zoom < def.minZoom) continue;
     const items = def.index ? indexes[def.index] : undefined;
     if (def.index && !items) continue;
-    seen.add(def.id);
-
-    const t: TimeKey = { year: yearFor(def, activeYear(state)), month: monthFor(def, state.month) };
-    const mode: Gen["mode"] = def.render === "presence-below-z14" && zoom < PRESENCE_MAX_ZOOM ? "presence" : "main";
-    const key = genKey(def, t, mode);
-
-    let track = tracks.get(def.id);
-    if (!track) {
-      track = { current: newGen(def, t, mode, items) };
-      tracks.set(def.id, track);
-    } else if (track.current.key !== key) {
-      // Only build a generation (135k sources for ForTy) when the key actually changed.
-      const gen = newGen(def, t, mode, items);
-      // Keep the old year underneath if it has anything on screen (even if some of its
-      // sources never finished), otherwise fall back to the one before it.
-      let previous = hasContent(track.current) ? track.current : track.previous;
-      if (previous?.key === gen.key) previous = undefined;
-      for (const g of [track.current, track.previous]) if (g !== previous) drop(g);
-      if (track.timer) clearTimeout(track.timer);
-      const next: Track = { current: gen, previous };
-      if (previous) {
-        next.timer = setTimeout(() => {
-          if (next.previous) {
-            drop(next.previous);
-            next.previous = undefined;
-            onChange?.();
-          }
-        }, KEEP_PREVIOUS_MS);
+    seen.add(id);
+    const info = frameFor(def, state, zoom);
+    let gen = frames.get(info.key);
+    if (!gen) gen = newGen(def, info.t, info.mode, items);
+    gen.lastUsed = ++clock;
+    gen.background = false;
+    tracks.set(id, { current: gen });
+    selected.add(gen);
+    if (preparingState) {
+      const target = frameFor(def, preparingState, zoom);
+      let candidate = frames.get(target.key);
+      if (!candidate) candidate = newGen(def, target.t, target.mode, items);
+      if (candidate !== gen) {
+        candidate.lastUsed = ++clock;
+        candidate.background = !preparingUrgent;
+        warming.add(candidate);
       }
-      track = next;
-      tracks.set(def.id, track);
     }
-
-    const opacity = state.opacity[def.id] ?? def.defaultOpacity;
-    if (track.previous) out.push(layersFor(def, track.previous, opacity, track));
-    out.push(layersFor(def, track.current, opacity, track));
   }
-  for (const [id, track] of tracks) {
-    if (!seen.has(id)) {
-      drop(track.current);
-      drop(track.previous);
-      if (track.timer) clearTimeout(track.timer);
-      tracks.delete(id);
-    }
+  for (const id of tracks.keys()) if (!seen.has(id)) tracks.delete(id);
+  for (const gen of [...frames.values()]) {
+    if (!seen.has(gen.key.split("|")[0]) || (!selected.has(gen) && !warming.has(gen) && !gen.prepared)) drop(gen);
+  }
+  // GPU class textures have a separate bounded LRU; compressed bytes remain in RangeReader.
+  const evictable = [...frames.values()].filter((g) => !selected.has(g) && !warming.has(g)).sort((a, b) => a.lastUsed - b.lastUsed);
+  const bytes = () => [...frames.values()].reduce((n, g) => n + g.byteLength, 0);
+  for (const gen of evictable) {
+    if (bytes() > MAX_FRAME_BYTES) drop(gen);
+  }
+  const out: Layer[] = [];
+  for (const gen of frames.values()) {
+    const def = layerById(gen.key.split("|")[0])!;
+    const active = selected.has(gen);
+    const visible = active || warming.has(gen);
+    const layer = layersFor(def, gen, active ? (state.opacity[def.id] ?? def.defaultOpacity) : 0, tracks.get(def.id)!);
+    out.push(layer.clone({ visible }));
   }
   return out;
 }
@@ -368,4 +435,35 @@ export function isLayerLoaded(defId: string): boolean {
 export function isLayerSettled(defId: string): boolean {
   const t = tracks.get(defId);
   return !t || t.current.loaded;
+}
+
+export type LayerLoadProgress = { loaded: number; total: number | null; failed: number; settled: boolean };
+
+/** Current selected frame: source discovery is indeterminate until its viewport is known. */
+export function layerLoadProgress(defId: string): LayerLoadProgress {
+  const gen = tracks.get(defId)?.current;
+  if (!gen) {
+    const def = layerById(defId);
+    const failed = def?.index && indexFailed.has(def.index) ? 1 : 0;
+    return { loaded: 0, total: failed ? 0 : null, failed, settled: !!failed };
+  }
+  return progressFor(gen);
+}
+function progressFor(gen: Gen | undefined, knownAreas: string[] | null = null): LayerLoadProgress {
+  if (!gen) return { loaded: 0, total: null, failed: 0, settled: false };
+  const ids = gen.viewport ?? knownAreas;
+  const failed = (ids ? ids.filter((id) => gen.failedSources.has(id)).length : gen.failedSources.size) + (gen.tileFailed ? 1 : 0);
+  if (!gen.sources) return { loaded: gen.loaded && !failed ? 1 : 0, total: 1, failed, settled: gen.loaded };
+  return { loaded: ids ? ids.filter((id) => gen.loadedSources.has(id)).length : gen.loadedSources.size,
+    total: ids?.length ?? null, failed, settled: gen.loaded };
+}
+
+/** Prepared-frame memory accounting for preload status and browser verification. */
+export function frameCacheStats() {
+  return {
+    limitBytes: MAX_FRAME_BYTES,
+    frameCount: frames.size,
+    usedBytes: [...frames.values()].reduce((n, gen) => n + gen.byteLength, 0),
+    frames: [...frames.values()].map((gen) => ({ key: gen.key, year: gen.t.year, byteLength: gen.byteLength, prepared: gen.prepared })),
+  };
 }

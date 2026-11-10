@@ -196,7 +196,8 @@ export const LAYERS: LayerDef[] = [
     sourceUrl: readme("forest-typology-2020"),
     origin: FORTY_V2_ORIGIN,
     years: range(2017, 2025),
-    minZoom: 8,
+    // Coarse overviews support regional views; wider extents need aggregated raster assets.
+    minZoom: 7,
     index: "forty",
     url: fortyUrl("v2"),
     legend: {

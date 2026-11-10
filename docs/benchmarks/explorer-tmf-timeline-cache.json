@@ -1,0 +1,6230 @@
+{
+  "date": "2026-11-10",
+  "layer": "tmf-annual-change",
+  "years": [
+    1990,
+    2025
+  ],
+  "change": "Removed both arbitrary nine-frame limits; retain the 256 MiB rendered class-texture budget.",
+  "measurement": {
+    "snapshots": [
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 2,
+        "progress": {
+          "state": "waiting",
+          "completed": 0,
+          "total": 36,
+          "loaded": 0,
+          "totalSources": null
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 0,
+          "usedBytes": 0,
+          "frames": []
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 0,
+        "bytes": 0,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 4,
+        "progress": {
+          "state": "loading",
+          "completed": 1,
+          "total": 36,
+          "manual": false,
+          "year": 1990,
+          "label": "1990",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 2,
+          "usedBytes": 7340032,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 1048576,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 11,
+        "bytes": 1258157,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 6,
+        "progress": {
+          "state": "loading",
+          "completed": 2,
+          "total": 36,
+          "manual": false,
+          "year": 1991,
+          "label": "1991",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 3,
+          "usedBytes": 13631488,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 1048576,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 33,
+        "bytes": 1777724,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 8,
+        "progress": {
+          "state": "loading",
+          "completed": 3,
+          "total": 36,
+          "manual": false,
+          "year": 1992,
+          "label": "1992",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 4,
+          "usedBytes": 18874368,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 52,
+        "bytes": 2216903,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 10,
+        "progress": {
+          "state": "waiting",
+          "completed": 4,
+          "total": 36,
+          "loaded": 0,
+          "totalSources": null
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 5,
+          "usedBytes": 25165824,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 71,
+        "bytes": 2721714,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 12,
+        "progress": {
+          "state": "loading",
+          "completed": 4,
+          "total": 36,
+          "manual": false,
+          "year": 1993,
+          "label": "1993",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 5,
+          "usedBytes": 30932992,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 5767168,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 93,
+        "bytes": 3278000,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 14,
+        "progress": {
+          "state": "loading",
+          "completed": 5,
+          "total": 36,
+          "manual": false,
+          "year": 1994,
+          "label": "1994",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 6,
+          "usedBytes": 36438016,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 4980736,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 114,
+        "bytes": 3838980,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 16,
+        "progress": {
+          "state": "loading",
+          "completed": 6,
+          "total": 36,
+          "manual": false,
+          "year": 1995,
+          "label": "1995",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 7,
+          "usedBytes": 41680896,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 3932160,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 132,
+        "bytes": 4403437,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 18,
+        "progress": {
+          "state": "loading",
+          "completed": 7,
+          "total": 36,
+          "manual": false,
+          "year": 1996,
+          "label": "1996",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 8,
+          "usedBytes": 48234496,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 4194304,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 156,
+        "bytes": 5089063,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 20,
+        "progress": {
+          "state": "loading",
+          "completed": 8,
+          "total": 36,
+          "manual": false,
+          "year": 1997,
+          "label": "1997",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 9,
+          "usedBytes": 50855936,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 524288,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 165,
+        "bytes": 5352036,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 22,
+        "progress": {
+          "state": "waiting",
+          "completed": 9,
+          "total": 36,
+          "loaded": 0,
+          "totalSources": null
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 10,
+          "usedBytes": 56623104,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 184,
+        "bytes": 5900277,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 24,
+        "progress": {
+          "state": "loading",
+          "completed": 9,
+          "total": 36,
+          "manual": false,
+          "year": 1998,
+          "label": "1998",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 10,
+          "usedBytes": 60030976,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 3407872,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 199,
+        "bytes": 6354012,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 26,
+        "progress": {
+          "state": "loading",
+          "completed": 10,
+          "total": 36,
+          "manual": false,
+          "year": 1999,
+          "label": "1999",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 11,
+          "usedBytes": 63963136,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 1048576,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 212,
+        "bytes": 6808333,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 28,
+        "progress": {
+          "state": "loading",
+          "completed": 11,
+          "total": 36,
+          "manual": false,
+          "year": 2000,
+          "label": "2000",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 12,
+          "usedBytes": 69206016,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 229,
+        "bytes": 7377560,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 32,
+        "progress": {
+          "state": "loading",
+          "completed": 12,
+          "total": 36,
+          "manual": false,
+          "year": 2001,
+          "label": "2001",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 13,
+          "usedBytes": 80740352,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 5242880,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 274,
+        "bytes": 8971725,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 34,
+        "progress": {
+          "state": "loading",
+          "completed": 13,
+          "total": 36,
+          "manual": false,
+          "year": 2002,
+          "label": "2002",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 14,
+          "usedBytes": 87556096,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 5767168,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 297,
+        "bytes": 9901936,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 36,
+        "progress": {
+          "state": "loading",
+          "completed": 14,
+          "total": 36,
+          "manual": false,
+          "year": 2003,
+          "label": "2003",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 15,
+          "usedBytes": 94109696,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6029312,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 320,
+        "bytes": 10847296,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 38,
+        "progress": {
+          "state": "loading",
+          "completed": 15,
+          "total": 36,
+          "manual": false,
+          "year": 2004,
+          "label": "2004",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 16,
+          "usedBytes": 100401152,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6029312,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 343,
+        "bytes": 11773733,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 40,
+        "progress": {
+          "state": "loading",
+          "completed": 16,
+          "total": 36,
+          "manual": false,
+          "year": 2005,
+          "label": "2005",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 17,
+          "usedBytes": 104857600,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 4194304,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 362,
+        "bytes": 12504285,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 42,
+        "progress": {
+          "state": "loading",
+          "completed": 17,
+          "total": 36,
+          "manual": false,
+          "year": 2006,
+          "label": "2006",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 18,
+          "usedBytes": 110100480,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 3145728,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 380,
+        "bytes": 13299982,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 44,
+        "progress": {
+          "state": "loading",
+          "completed": 18,
+          "total": 36,
+          "manual": false,
+          "year": 2007,
+          "label": "2007",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 19,
+          "usedBytes": 114294784,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 1048576,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 394,
+        "bytes": 13929044,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 46,
+        "progress": {
+          "state": "loading",
+          "completed": 19,
+          "total": 36,
+          "manual": false,
+          "year": 2008,
+          "label": "2008",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 20,
+          "usedBytes": 119537664,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 413,
+        "bytes": 14721212,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 48,
+        "progress": {
+          "state": "loading",
+          "completed": 20,
+          "total": 36,
+          "manual": false,
+          "year": 2009,
+          "label": "2009",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 21,
+          "usedBytes": 126877696,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 1048576,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 439,
+        "bytes": 15872483,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 50,
+        "progress": {
+          "state": "loading",
+          "completed": 21,
+          "total": 36,
+          "manual": false,
+          "year": 2010,
+          "label": "2010",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 22,
+          "usedBytes": 132120576,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 456,
+        "bytes": 16617456,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 54,
+        "progress": {
+          "state": "loading",
+          "completed": 22,
+          "total": 36,
+          "manual": false,
+          "year": 2011,
+          "label": "2011",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 23,
+          "usedBytes": 138412032,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 479,
+        "bytes": 17621189,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 58,
+        "progress": {
+          "state": "loading",
+          "completed": 23,
+          "total": 36,
+          "manual": false,
+          "year": 2012,
+          "label": "2012",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 24,
+          "usedBytes": 147849216,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 3145728,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 516,
+        "bytes": 19212752,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 60,
+        "progress": {
+          "state": "loading",
+          "completed": 24,
+          "total": 36,
+          "manual": false,
+          "year": 2013,
+          "label": "2013",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 25,
+          "usedBytes": 152043520,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 1048576,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 530,
+        "bytes": 19981243,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 62,
+        "progress": {
+          "state": "waiting",
+          "completed": 25,
+          "total": 36,
+          "loaded": 0,
+          "totalSources": null
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 25,
+          "usedBytes": 157286400,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 547,
+        "bytes": 20671300,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 64,
+        "progress": {
+          "state": "loading",
+          "completed": 26,
+          "total": 36,
+          "manual": false,
+          "year": 2015,
+          "label": "2015",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 27,
+          "usedBytes": 163577856,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 570,
+        "bytes": 21700346,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 66,
+        "progress": {
+          "state": "loading",
+          "completed": 27,
+          "total": 36,
+          "manual": false,
+          "year": 2016,
+          "label": "2016",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 28,
+          "usedBytes": 169869312,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 593,
+        "bytes": 22737179,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 68,
+        "progress": {
+          "state": "loading",
+          "completed": 28,
+          "total": 36,
+          "manual": false,
+          "year": 2017,
+          "label": "2017",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 29,
+          "usedBytes": 176160768,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 616,
+        "bytes": 23784565,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 72,
+        "progress": {
+          "state": "loading",
+          "completed": 29,
+          "total": 36,
+          "manual": false,
+          "year": 2018,
+          "label": "2018",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 30,
+          "usedBytes": 188481536,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6029312,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 660,
+        "bytes": 25852819,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 74,
+        "progress": {
+          "state": "loading",
+          "completed": 30,
+          "total": 36,
+          "manual": false,
+          "year": 2019,
+          "label": "2019",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 31,
+          "usedBytes": 192151552,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2019||main",
+              "year": 2019,
+              "byteLength": 3407872,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 676,
+        "bytes": 26532288,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 76,
+        "progress": {
+          "state": "loading",
+          "completed": 31,
+          "total": 36,
+          "manual": false,
+          "year": 2020,
+          "label": "2020",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 32,
+          "usedBytes": 196083712,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2019||main",
+              "year": 2019,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2020||main",
+              "year": 2020,
+              "byteLength": 1048576,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 690,
+        "bytes": 27205090,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 78,
+        "progress": {
+          "state": "loading",
+          "completed": 32,
+          "total": 36,
+          "manual": false,
+          "year": 2021,
+          "label": "2021",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 33,
+          "usedBytes": 201326592,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2019||main",
+              "year": 2019,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2020||main",
+              "year": 2020,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2021||main",
+              "year": 2021,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 707,
+        "bytes": 28028311,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 82,
+        "progress": {
+          "state": "loading",
+          "completed": 33,
+          "total": 36,
+          "manual": false,
+          "year": 2022,
+          "label": "2022",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 34,
+          "usedBytes": 208404480,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2019||main",
+              "year": 2019,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2020||main",
+              "year": 2020,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2021||main",
+              "year": 2021,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2022||main",
+              "year": 2022,
+              "byteLength": 786432,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 735,
+        "bytes": 29313316,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 84,
+        "progress": {
+          "state": "loading",
+          "completed": 34,
+          "total": 36,
+          "manual": false,
+          "year": 2023,
+          "label": "2023",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 35,
+          "usedBytes": 213909504,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2019||main",
+              "year": 2019,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2020||main",
+              "year": 2020,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2021||main",
+              "year": 2021,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2022||main",
+              "year": 2022,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2023||main",
+              "year": 2023,
+              "byteLength": 0,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 752,
+        "bytes": 30192898,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 88,
+        "progress": {
+          "state": "loading",
+          "completed": 35,
+          "total": 36,
+          "manual": false,
+          "year": 2024,
+          "label": "2024",
+          "loaded": 0,
+          "totalSources": 1
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 36,
+          "usedBytes": 222560256,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2019||main",
+              "year": 2019,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2020||main",
+              "year": 2020,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2021||main",
+              "year": 2021,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2022||main",
+              "year": 2022,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2023||main",
+              "year": 2023,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2024||main",
+              "year": 2024,
+              "byteLength": 2359296,
+              "prepared": false
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 787,
+        "bytes": 31758936,
+        "errors": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "elapsed": 90,
+        "progress": {
+          "state": "ready",
+          "completed": 36,
+          "total": 36,
+          "loaded": 0,
+          "totalSources": null
+        },
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 36,
+          "usedBytes": 226492416,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2019||main",
+              "year": 2019,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2020||main",
+              "year": 2020,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2021||main",
+              "year": 2021,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2022||main",
+              "year": 2022,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2023||main",
+              "year": 2023,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2024||main",
+              "year": 2024,
+              "byteLength": 6291456,
+              "prepared": true
+            }
+          ]
+        },
+        "dpr": 2,
+        "canvas": [
+          3840,
+          2160
+        ],
+        "requests": 798,
+        "bytes": 32391707,
+        "errors": [],
+        "swap": {
+          "year": 1990,
+          "newRequests": 0,
+          "cache": {
+            "limitBytes": 268435456,
+            "frameCount": 36,
+            "usedBytes": 226492416,
+            "frames": [
+              {
+                "key": "tmf-annual-change|2025||main",
+                "year": 2025,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1990||main",
+                "year": 1990,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1991||main",
+                "year": 1991,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1992||main",
+                "year": 1992,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1993||main",
+                "year": 1993,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1994||main",
+                "year": 1994,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1995||main",
+                "year": 1995,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1996||main",
+                "year": 1996,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1997||main",
+                "year": 1997,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1998||main",
+                "year": 1998,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|1999||main",
+                "year": 1999,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2000||main",
+                "year": 2000,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2001||main",
+                "year": 2001,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2002||main",
+                "year": 2002,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2003||main",
+                "year": 2003,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2004||main",
+                "year": 2004,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2005||main",
+                "year": 2005,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2006||main",
+                "year": 2006,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2007||main",
+                "year": 2007,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2008||main",
+                "year": 2008,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2009||main",
+                "year": 2009,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2010||main",
+                "year": 2010,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2011||main",
+                "year": 2011,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2012||main",
+                "year": 2012,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2013||main",
+                "year": 2013,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2014||main",
+                "year": 2014,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2015||main",
+                "year": 2015,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2016||main",
+                "year": 2016,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2017||main",
+                "year": 2017,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2018||main",
+                "year": 2018,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2019||main",
+                "year": 2019,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2020||main",
+                "year": 2020,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2021||main",
+                "year": 2021,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2022||main",
+                "year": 2022,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2023||main",
+                "year": 2023,
+                "byteLength": 6291456,
+                "prepared": true
+              },
+              {
+                "key": "tmf-annual-change|2024||main",
+                "year": 2024,
+                "byteLength": 6291456,
+                "prepared": true
+              }
+            ]
+          }
+        },
+        "sourceStats": {
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2025.tif": 5,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1990.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1991.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1992.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1993.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1994.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1995.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1996.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1997.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1998.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1999.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2000.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2001.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2002.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2003.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2004.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2005.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2006.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2007.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2008.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2009.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2010.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2011.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2012.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2013.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2014.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2015.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2016.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2017.tif": 22,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2018.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2019.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2020.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2021.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2022.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2023.tif": 23,
+          "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2024.tif": 23
+        }
+      }
+    ],
+    "final": {
+      "width": 1920,
+      "height": 1080,
+      "elapsed": 90,
+      "progress": {
+        "state": "ready",
+        "completed": 36,
+        "total": 36,
+        "loaded": 0,
+        "totalSources": null
+      },
+      "cache": {
+        "limitBytes": 268435456,
+        "frameCount": 36,
+        "usedBytes": 226492416,
+        "frames": [
+          {
+            "key": "tmf-annual-change|2025||main",
+            "year": 2025,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1990||main",
+            "year": 1990,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1991||main",
+            "year": 1991,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1992||main",
+            "year": 1992,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1993||main",
+            "year": 1993,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1994||main",
+            "year": 1994,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1995||main",
+            "year": 1995,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1996||main",
+            "year": 1996,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1997||main",
+            "year": 1997,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1998||main",
+            "year": 1998,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|1999||main",
+            "year": 1999,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2000||main",
+            "year": 2000,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2001||main",
+            "year": 2001,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2002||main",
+            "year": 2002,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2003||main",
+            "year": 2003,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2004||main",
+            "year": 2004,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2005||main",
+            "year": 2005,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2006||main",
+            "year": 2006,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2007||main",
+            "year": 2007,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2008||main",
+            "year": 2008,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2009||main",
+            "year": 2009,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2010||main",
+            "year": 2010,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2011||main",
+            "year": 2011,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2012||main",
+            "year": 2012,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2013||main",
+            "year": 2013,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2014||main",
+            "year": 2014,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2015||main",
+            "year": 2015,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2016||main",
+            "year": 2016,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2017||main",
+            "year": 2017,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2018||main",
+            "year": 2018,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2019||main",
+            "year": 2019,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2020||main",
+            "year": 2020,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2021||main",
+            "year": 2021,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2022||main",
+            "year": 2022,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2023||main",
+            "year": 2023,
+            "byteLength": 6291456,
+            "prepared": true
+          },
+          {
+            "key": "tmf-annual-change|2024||main",
+            "year": 2024,
+            "byteLength": 6291456,
+            "prepared": true
+          }
+        ]
+      },
+      "dpr": 2,
+      "canvas": [
+        3840,
+        2160
+      ],
+      "requests": 798,
+      "bytes": 32391707,
+      "errors": [],
+      "swap": {
+        "year": 1990,
+        "newRequests": 0,
+        "cache": {
+          "limitBytes": 268435456,
+          "frameCount": 36,
+          "usedBytes": 226492416,
+          "frames": [
+            {
+              "key": "tmf-annual-change|2025||main",
+              "year": 2025,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1990||main",
+              "year": 1990,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1991||main",
+              "year": 1991,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1992||main",
+              "year": 1992,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1993||main",
+              "year": 1993,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1994||main",
+              "year": 1994,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1995||main",
+              "year": 1995,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1996||main",
+              "year": 1996,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1997||main",
+              "year": 1997,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1998||main",
+              "year": 1998,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|1999||main",
+              "year": 1999,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2000||main",
+              "year": 2000,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2001||main",
+              "year": 2001,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2002||main",
+              "year": 2002,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2003||main",
+              "year": 2003,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2004||main",
+              "year": 2004,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2005||main",
+              "year": 2005,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2006||main",
+              "year": 2006,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2007||main",
+              "year": 2007,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2008||main",
+              "year": 2008,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2009||main",
+              "year": 2009,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2010||main",
+              "year": 2010,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2011||main",
+              "year": 2011,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2012||main",
+              "year": 2012,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2013||main",
+              "year": 2013,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2014||main",
+              "year": 2014,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2015||main",
+              "year": 2015,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2016||main",
+              "year": 2016,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2017||main",
+              "year": 2017,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2018||main",
+              "year": 2018,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2019||main",
+              "year": 2019,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2020||main",
+              "year": 2020,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2021||main",
+              "year": 2021,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2022||main",
+              "year": 2022,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2023||main",
+              "year": 2023,
+              "byteLength": 6291456,
+              "prepared": true
+            },
+            {
+              "key": "tmf-annual-change|2024||main",
+              "year": 2024,
+              "byteLength": 6291456,
+              "prepared": true
+            }
+          ]
+        }
+      },
+      "sourceStats": {
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2025.tif": 5,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1990.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1991.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1992.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1993.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1994.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1995.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1996.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1997.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1998.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_1999.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2000.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2001.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2002.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2003.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2004.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2005.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2006.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2007.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2008.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2009.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2010.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2011.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2012.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2013.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2014.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2015.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2016.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2017.tif": 22,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2018.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2019.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2020.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2021.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2022.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2023.tif": 23,
+        "https://data.source.coop/epoch/jrc-tmf/v1_2025/S10_W60/AnnualChange_2024.tif": 23
+      }
+    }
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "date": "2026-11-09",
+  "layer": "forty-v2",
+  "initialYear": 2025,
+  "location": [
+    -55,
+    -11
+  ],
+  "zoom": 9,
+  "method": "Production builds, DPR 2, prepare 2017\u20132024 after 2025. Fixed variant changes only class-texture cache budget 64 to 256 MiB.",
+  "before": [
+    {
+      "width": 1440,
+      "height": 900,
+      "elapsed": 38,
+      "progress": {
+        "state": "limited",
+        "completed": 8,
+        "total": 9,
+        "loaded": 0,
+        "totalSources": null
+      },
+      "cache": {
+        "limitBytes": 67108864,
+        "maxFramesPerLayer": 9,
+        "usedBytes": 59957248,
+        "frames": [
+          {
+            "key": "forty-v2|2025||main",
+            "year": 2025,
+            "byteLength": 7494656,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2018||main",
+            "year": 2018,
+            "byteLength": 7494656,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2019||main",
+            "year": 2019,
+            "byteLength": 7494656,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2020||main",
+            "year": 2020,
+            "byteLength": 7494656,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2021||main",
+            "year": 2021,
+            "byteLength": 7494656,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2022||main",
+            "year": 2022,
+            "byteLength": 7494656,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2023||main",
+            "year": 2023,
+            "byteLength": 7494656,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2024||main",
+            "year": 2024,
+            "byteLength": 7494656,
+            "prepared": true
+          }
+        ]
+      },
+      "dpr": 2,
+      "canvas": [
+        2880,
+        1800
+      ],
+      "requests": 576,
+      "bytes": 122051025,
+      "errors": []
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "elapsed": 54,
+      "progress": {
+        "state": "limited",
+        "completed": 5,
+        "total": 9,
+        "loaded": 0,
+        "totalSources": null
+      },
+      "cache": {
+        "limitBytes": 67108864,
+        "maxFramesPerLayer": 9,
+        "usedBytes": 57491200,
+        "frames": [
+          {
+            "key": "forty-v2|2025||main",
+            "year": 2025,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2021||main",
+            "year": 2021,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2022||main",
+            "year": 2022,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2023||main",
+            "year": 2023,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2024||main",
+            "year": 2024,
+            "byteLength": 11498240,
+            "prepared": true
+          }
+        ]
+      },
+      "dpr": 2,
+      "canvas": [
+        3840,
+        2160
+      ],
+      "requests": 904,
+      "bytes": 190091535,
+      "errors": []
+    }
+  ],
+  "after": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "elapsed": 50,
+      "progress": {
+        "state": "ready",
+        "completed": 9,
+        "total": 9,
+        "loaded": 0,
+        "totalSources": null
+      },
+      "cache": {
+        "limitBytes": 268435456,
+        "maxFramesPerLayer": 9,
+        "usedBytes": 103484160,
+        "frames": [
+          {
+            "key": "forty-v2|2025||main",
+            "year": 2025,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2017||main",
+            "year": 2017,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2018||main",
+            "year": 2018,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2019||main",
+            "year": 2019,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2020||main",
+            "year": 2020,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2021||main",
+            "year": 2021,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2022||main",
+            "year": 2022,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2023||main",
+            "year": 2023,
+            "byteLength": 11498240,
+            "prepared": true
+          },
+          {
+            "key": "forty-v2|2024||main",
+            "year": 2024,
+            "byteLength": 11498240,
+            "prepared": true
+          }
+        ]
+      },
+      "dpr": 2,
+      "canvas": [
+        3840,
+        2160
+      ],
+      "requests": 912,
+      "bytes": 190087227,
+      "errors": [],
+      "swap": {
+        "year": 2017,
+        "newRequests": 0,
+        "layerIds": [
+          "mosaic:forty-v2|2017||main:5"
+        ],
+        "cache": {
+          "limitBytes": 268435456,
+          "maxFramesPerLayer": 9,
+          "usedBytes": 103484160,
+          "frames": [
+            {
+              "key": "forty-v2|2025||main",
+              "year": 2025,
+              "byteLength": 11498240,
+              "prepared": true
+            },
+            {
+              "key": "forty-v2|2017||main",
+              "year": 2017,
+              "byteLength": 11498240,
+              "prepared": true
+            },
+            {
+              "key": "forty-v2|2018||main",
+              "year": 2018,
+              "byteLength": 11498240,
+              "prepared": true
+            },
+            {
+              "key": "forty-v2|2019||main",
+              "year": 2019,
+              "byteLength": 11498240,
+              "prepared": true
+            },
+            {
+              "key": "forty-v2|2020||main",
+              "year": 2020,
+              "byteLength": 11498240,
+              "prepared": true
+            },
+            {
+              "key": "forty-v2|2021||main",
+              "year": 2021,
+              "byteLength": 11498240,
+              "prepared": true
+            },
+            {
+              "key": "forty-v2|2022||main",
+              "year": 2022,
+              "byteLength": 11498240,
+              "prepared": true
+            },
+            {
+              "key": "forty-v2|2023||main",
+              "year": 2023,
+              "byteLength": 11498240,
+              "prepared": true
+            },
+            {
+              "key": "forty-v2|2024||main",
+              "year": 2024,
+              "byteLength": 11498240,
+              "prepared": true
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
